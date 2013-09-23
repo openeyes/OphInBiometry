@@ -24,17 +24,19 @@
 	data-element-type-name="<?php echo $element->elementType->name?>"
 	data-element-display-order="<?php echo $element->elementType->display_order?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name; ?></h4>
-	
-	<div class="eventDetail">
-		<div class="label">
+
+	<?php if (Yii::app()->params['OphInBiometry_enable_iol_import']) {?>
+		<div class="eventDetail">
+			<div class="label">
+			</div>
+			<div>
+				<button type="button" class="classy blue mini" title="Import data from IOL Master" id="clear_prescription" name="clear_prescription" onclick="importBiometry();">
+					<span class="button-span button-span-blue">Import</span>
+				</button>
+			</div>
 		</div>
-		<div>
-			<button type="button" class="classy blue mini" title="Import data from IOL Master" id="clear_prescription" name="clear_prescription" onclick="importBiometry();">
-				<span class="button-span button-span-blue">Import</span>
-			</button>
-		</div>
-	</div>
-		
+	<?php }?>
+
 	<!-- Split into two columns -->
 	<div style="width:1032; height:130px;" align="left">
 	
