@@ -114,7 +114,6 @@ function iolType(_index)
         
 function refreshCalculation()
 {
-	alert('Hello!');
 }
 
 function calculate()
