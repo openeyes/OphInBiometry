@@ -100,7 +100,7 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 			'id' => 'ID',
 			'event_id' => 'Event',
 			'target_refraction' => 'Target Refraction',
-			'predicted_refraction' => 'Predicted_refraction',
+			'predicted_refraction' => 'Predicted refraction',
 			'formula_id' => 'Formula',
 			'iol_power' => 'IOL Power',
 			'iol_selected' => 'Selected IOL',
