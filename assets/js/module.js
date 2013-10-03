@@ -60,14 +60,6 @@ $(document).ready(function() {
 			}
 		}
 	});
-	
-	// Javascript runs when page is ready. If in edit mode, set value
-	var tr = document.getElementById("Element_OphInBiometry_Calculation_target_refraction");
-	if (tr != null)
-	{
-		tr.value = -0.36;
-	}
-	
 });
 
 function ucfirst(str) { str += ''; var f = str.charAt(0).toUpperCase(); return f + str.substr(1); }

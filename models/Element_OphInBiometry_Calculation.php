@@ -131,22 +131,18 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 		));
 	}
 
-
-
-	protected function beforeSave()
+	public function setDefaultOptions()
 	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
-	}
-
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
+		// See if we can get the target refraction from a prior examination
+		if ($patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
+				if ($api = Yii::app()->moduleAPI->get('OphCiExamination')) {
+					if ($predicted_refraction = $api->getMostRecentPredictedRefractionInEpisode($episode)) {
+						$this->target_refraction = $predicted_refraction;
+					}
+				}
+			}
+		}
 	}
 }
 ?>
