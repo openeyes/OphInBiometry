@@ -76,6 +76,9 @@
 	<?php echo $form->dropDownList($element, 'formula_id', CHtml::listData(Element_OphInBiometry_Calculation_Formula::model()->findAll(array('order'=> 'display_order asc')),'id','name'), array('onchange' => 'refreshCalculation();'))?>
 	
 	<div class="eventDetail">
+		<div style="float: right; margin-right: 5em;">
+			<span style="color: #f00; font-weight: bold; font-size: 14px;">The calculation of lens power is for demonstration purposes only.</span>
+		</div>
 		<div class="label">
 			<button type="button" class="classy blue mini" id="clear_prescription" name="clear_prescription" onclick="calculate();">
 				<span class="button-span button-span-blue">Calculate</span>
