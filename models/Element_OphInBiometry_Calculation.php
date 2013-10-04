@@ -64,8 +64,8 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, target_refraction, predicted_refraction, formula_id, iol_power, iol_selected, ', 'safe'),
-			array('target_refraction, predicted_refraction, formula_id, iol_power, ', 'required'),
+			array('event_id, target_refraction, predicted_refraction, formula_id, iol_power, iol_selected, iol_type', 'safe'),
+			array('target_refraction, predicted_refraction, formula_id, iol_power, iol_type', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, target_refraction, predicted_refraction, formula_id, iol_power, iol_selected, ', 'safe', 'on' => 'search'),
@@ -104,6 +104,7 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 			'formula_id' => 'Formula',
 			'iol_power' => 'IOL Power',
 			'iol_selected' => 'Selected IOL',
+			'iol_type' => 'IOL type',
 		);
 	}
 

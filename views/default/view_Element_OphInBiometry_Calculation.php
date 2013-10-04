@@ -30,7 +30,11 @@
 		</tr>
 		<tr>
 			<td width="15%">IOL type</td>
-			<td><span class="big">SA60</span></td>
+			<td><span class="big">
+				<?php foreach (array('CZ70BD','MC50BD','MTA3U0','MTA4U0','MA30AC','MA60AC','MA60MA','SA60AT','SN60AT') as $i => $iol) {
+					if ($element->iol_type == $i) echo $iol;
+				}?>
+			</span></td>
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?>:</td>
 			<td><span class="big" style="background-color:yellow;font-size:50px;padding:10px;"><?php echo $element->iol_power?></span></td>
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:</td>
@@ -38,4 +42,3 @@
 		</tr>
 	</tbody>
 </table>
-

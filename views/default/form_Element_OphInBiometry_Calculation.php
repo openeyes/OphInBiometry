@@ -25,48 +25,29 @@
 	data-element-display-order="<?php echo $element->elementType->display_order?>">
 	<h4 class="elementTypeName"><?php echo $element->elementType->name; ?></h4>
 
-	<!-- Lens selection -->
-	
-	<div class="eventDetail">
-		<div class="label">IOL selection</div>
-		<div>
-			<select style="width:80px;" onchange="iolType(this.value);">
-				<option value="0">MA60AC</option>
-				<option value="1">SA60AT</option>
-				<option value="2">SN60WF</option>
-				<option value="3">MTA3U0</option>
-			</select>
-		</div>
-	</div>
+	<?php echo $form->dropDownList($element,'iol_type',array('CZ70BD','MC50BD','MTA3U0','MTA4U0','MA30AC','MA60AC','MA60MA','SA60AT','SN60AT'),array('empty'=>'- Select -'))?>
 
 	<div style="width:1032; height:130px;" align="left">
-	
-		<!-- Left column -->
 		<div style="width:548px; float:left;">
-
 			<div class="eventDetail">
-				<div class="label">Description</div>
+				<div class="label">Description:</div>
 				<div class="data"><p id="iolType" class="readonly">MA60AC Acrysof® Multi-Piece Intraocular Lens</p></div>
 			</div>
 			<div class="eventDetail">
-				<div class="label">A constant</div>
+				<div class="label">A constant:</div>
 				<div class="data"><p id="iolAcon" class="readonly">118.9</p></div>
 			</div>
-			
 		</div>
 		
-		<!-- Right columns -->
 		<div style="width:480px; float:left;">
-		
 			<div class="eventDetail">
-				<div class="label">Position</div>
+				<div class="label">Position:</div>
 				<div class="data"><p id="iolPosition" class="readonly">Posterior chamber</p></div>
 			</div>
 			<div class="eventDetail">
-				<div class="label">Comments</div>
+				<div class="label">Comments:</div>
 				<div class="data"><p id="iolComments" class="readonly">Available from 5 to 35D</p></div>
 			</div>
-		
 		</div>
 	</div>
 

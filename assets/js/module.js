@@ -60,6 +60,12 @@ $(document).ready(function() {
 			}
 		}
 	});
+
+	$('select#Element_OphInBiometry_Calculation_iol_type').change(function(e) {
+		iolType($(this).val());
+	});
+
+	$('select#Element_OphInBiometry_Calculation_iol_type').change();
 });
 
 function ucfirst(str) { str += ''; var f = str.charAt(0).toUpperCase(); return f + str.substr(1); }
@@ -73,10 +79,15 @@ function eDparameterListener(_drawing) {
 // Collection of Lenses
 var lensSet = 
 [
-	{model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon:118.9},
-	{model: "SA60AT", description: "Acrysof® Single-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 6 to 40D", acon:118.4},
-	{model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon:118.0},
-	{model: "MTA3U0", description: "Acrysof® Anterior Chamber Intraocular lens", position: "Anterior chamber", comments: "Default AC Lens", acon:115.8}
+	{model: "CZ70BD", description: "Single-Piece PMMA", position: "Posterior chamber", comments: "", acon: 118.8},
+	{model: "MC50BD", description: "Single-Piece PMMA", position: "Posterior chamber", comments: "", acon: 118.7},
+	{model: "MTA3U0", description: "Anterior chamber", position: "Anterior chamber", comments: "", acon: 115.3},
+	{model: "MTA4U0", description: "Anterior chamber", position: "Anterior chamber", comments: "", acon: 115.3},
+	{model: "MA30AC", description: "ACRYSOF® Multipiece", position: "Anterior chamber", comments: "", acon: 118.4},
+	{model: "MA60AC", description: "ACRYSOF® Multipiece", position: "Anterior chamber", comments: "", acon: 118.4},
+	{model: "MA60MA", description: "ACRYSOF® Multipiece - EXpand® Series", position: "Anterior chamber", comments: "", acon: 118.9},
+	{model: "SA60AT", description: "ACRYSOF® Single-Piece IOL", position: "Anterior chamber", comments: "", acon: 118.4},
+	{model: "SN60AT", description: "ACRYSOF® Single-Piece - Natural IOL", position: "Anterior chamber", comments: "", acon: 118.4},
 ];
 		
 /* Called by import button on edit page */
@@ -97,11 +108,18 @@ function iolType(_index)
 	var type = document.getElementById('iolType');
 	var position = document.getElementById('iolPosition');
 	var comments = document.getElementById('iolComments');
-	
-	acon.innerHTML = this.lensSet[_index].acon.toFixed(1);
-	type.innerHTML = this.lensSet[_index].model + " " + this.lensSet[_index].description;
-	position.innerHTML = this.lensSet[_index].position;
-	comments.innerHTML = this.lensSet[_index].comments;
+
+	if (typeof(this.lensSet[_index]) == 'undefined') {
+		acon.innerHTML = '';
+		type.innerHTML = '';
+		position.innerHTML = '';
+		comments.innerHTML = '';
+	} else {
+		acon.innerHTML = this.lensSet[_index].acon.toFixed(1);
+		type.innerHTML = this.lensSet[_index].model + " " + this.lensSet[_index].description;
+		position.innerHTML = this.lensSet[_index].position;
+		comments.innerHTML = this.lensSet[_index].comments;
+	}
 }
         
 function refreshCalculation()
