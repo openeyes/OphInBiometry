@@ -36,13 +36,6 @@
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:</td>
 			<td><span class="big"><?php echo $element->predicted_refraction?></span></td>
 		</tr>
-		<tr>
-			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?>:</td>
-			<td><span class="big">17.0</span></td>
-			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?>:</td>
-			<td><span class="big">-0.33</span></td>
-		</tr>
-		
 	</tbody>
 </table>
 
