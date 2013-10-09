@@ -63,7 +63,6 @@ class Element_OphInBiometry_Measurements extends BaseEventTypeElement
 		// will receive user inputs.
 		return array(
 			array('event_id, right_axial_length, left_axial_length, right_k1, left_k1, right_k2, left_k2, ', 'safe'),
-			array('right_axial_length, left_axial_length, right_k1, left_k1, right_k2, left_k2, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, right_axial_length, left_axial_length, right_k1, left_k1, right_k2, left_k2, ', 'safe', 'on' => 'search'),
@@ -132,24 +131,6 @@ class Element_OphInBiometry_Measurements extends BaseEventTypeElement
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
-	}
-
-
-
-	protected function beforeSave()
-	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
-	}
-
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
 	}
 }
 ?>

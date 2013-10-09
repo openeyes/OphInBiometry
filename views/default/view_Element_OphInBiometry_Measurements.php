@@ -24,23 +24,23 @@
 	<tbody>
 		<tr>
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('right_axial_length'))?>:</td>
-			<td><span class="big"><?php echo $element->right_axial_length?></span></td>
+			<td><span class="big"><?php echo strlen($element->right_axial_length) ? $element->right_axial_length : 'Not recorded'?></span></td>
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('left_axial_length'))?>:</td>
-			<td><span class="big"><?php echo $element->left_axial_length?></span></td>
+			<td><span class="big"><?php echo strlen($element->left_axial_length) ? $element->left_axial_length : 'Not recorded'?></span></td>
 		</tr>
 
 		<tr>
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('right_k1'))?>:</td>
-			<td><span class="big"><?php echo $element->right_k1?></span></td>
+			<td><span class="big"><?php echo strlen($element->right_k1) ? $element->right_k1 : 'Not recorded'?></span></td>
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('left_k1'))?>:</td>
-			<td><span class="big"><?php echo $element->left_k1?></span></td>
+			<td><span class="big"><?php echo strlen($element->left_k1) ? $element->left_k1 : 'Not recorded'?></span></td>
 		</tr>
 
 		<tr>
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('right_k2'))?>:</td>
-			<td><span class="big"><?php echo $element->right_k2?></span></td>
+			<td><span class="big"><?php echo strlen($element->right_k2) ? $element->right_k2 : 'Not recorded'?></span></td>
 			<td width="15%"><?php echo CHtml::encode($element->getAttributeLabel('left_k2'))?>:</td>
-			<td><span class="big"><?php echo $element->left_k2?></span></td>
+			<td><span class="big"><?php echo strlen($element->left_k2) ? $element->left_k2 : 'Not recorded'?></span></td>
 		</tr>
 	</tbody>
 </table>
