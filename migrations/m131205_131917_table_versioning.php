@@ -119,12 +119,9 @@ CREATE TABLE `ophinbiometry_calculation_formula_version` (
 	public function down()
 	{
 		$this->dropColumn('ophinbiometry_calculation_formula','deleted');
-		$this->dropColumn('ophinbiometry_calculation_formula_version','deleted');
 
 		$this->dropColumn('et_ophinbiometry_calculation','deleted');
-		$this->dropColumn('et_ophinbiometry_calculation_version','deleted');
 		$this->dropColumn('et_ophinbiometry_measurement','deleted');
-		$this->dropColumn('et_ophinbiometry_measurement_version','deleted');
 
 		$this->dropTable('et_ophinbiometry_calculation_version');
 		$this->dropTable('et_ophinbiometry_measurement_version');
