@@ -27,7 +27,7 @@ CREATE TABLE `et_ophinbiometry_calculation_version` (
 	CONSTRAINT `acv_et_ophinbiometry_calculation_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 	CONSTRAINT `acv_et_ophinbiometry_calculation_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophinbiometry_calculation_formula_fk` FOREIGN KEY (`formula_id`) REFERENCES `ophinbiometry_calculation_formula` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophinbiometry_calculation_version','id','int(10) unsigned NOT NULL');
@@ -46,12 +46,12 @@ CREATE TABLE `et_ophinbiometry_calculation_version` (
 CREATE TABLE `et_ophinbiometry_measurement_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 	`event_id` int(10) unsigned NOT NULL,
-	`right_axial_length` varchar(16) COLLATE utf8_bin NOT NULL,
-	`left_axial_length` varchar(16) COLLATE utf8_bin NOT NULL,
-	`right_k1` varchar(16) COLLATE utf8_bin NOT NULL,
-	`left_k1` varchar(16) COLLATE utf8_bin NOT NULL,
-	`right_k2` varchar(16) COLLATE utf8_bin NOT NULL,
-	`left_k2` varchar(16) COLLATE utf8_bin NOT NULL,
+	`right_axial_length` varchar(16) NOT NULL,
+	`left_axial_length` varchar(16) NOT NULL,
+	`right_k1` varchar(16) NOT NULL,
+	`left_k1` varchar(16) NOT NULL,
+	`right_k2` varchar(16) NOT NULL,
+	`left_k2` varchar(16) NOT NULL,
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
 	`created_user_id` int(10) unsigned NOT NULL DEFAULT '1',
@@ -63,7 +63,7 @@ CREATE TABLE `et_ophinbiometry_measurement_version` (
 	CONSTRAINT `acv_et_ophinbiometry_measurement_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_et_ophinbiometry_measurement_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
 	CONSTRAINT `acv_et_ophinbiometry_measurement_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('et_ophinbiometry_measurement_version','id','int(10) unsigned NOT NULL');
@@ -81,7 +81,7 @@ CREATE TABLE `et_ophinbiometry_measurement_version` (
 		$this->execute("
 CREATE TABLE `ophinbiometry_calculation_formula_version` (
 	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-	`name` varchar(128) COLLATE utf8_bin NOT NULL,
+	`name` varchar(128) NOT NULL,
 	`display_order` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_user_id` int(10) unsigned NOT NULL DEFAULT '1',
 	`last_modified_date` datetime NOT NULL DEFAULT '1901-01-01 00:00:00',
@@ -92,7 +92,7 @@ CREATE TABLE `ophinbiometry_calculation_formula_version` (
 	KEY `acv_ophinbiometry_calculation_formula_cui_fk` (`created_user_id`),
 	CONSTRAINT `acv_ophinbiometry_calculation_formula_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`),
 	CONSTRAINT `acv_ophinbiometry_calculation_formula_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 		");
 
 		$this->alterColumn('ophinbiometry_calculation_formula_version','id','int(10) unsigned NOT NULL');
