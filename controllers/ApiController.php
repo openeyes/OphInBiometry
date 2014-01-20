@@ -22,7 +22,9 @@ class ApiController extends BaseApiController {
 		'iol' => 'IOLService',
 	);
 
-	public function actionCreate() {
+	public $status_message;
+
+	public function Create(){
 
 		$resource = $_GET['resource'];
 		if (!$service = $this->getService($resource)) {
@@ -31,26 +33,17 @@ class ApiController extends BaseApiController {
 		$contents = file_get_contents("php://input");
 		$json = json_decode($contents, true);
 
-
-
 		if (!is_array($json)) {
-			// error parsing json - 400 error:
-			return $this->sendResponse(400, $this->status_codes[400]);
+			return 400;
 		}
-
-
+		
 		$results=OphiniolmasterIolreading::model()->findAll("iol_poll_id = '" . $json['iol_poll_id']."'");
 
-
-
 		if(!empty($results)) {
-		return $this->sendResponse(302,  $this->status_codes[302]);
+			return 302;
 		}
 
-
-
 		$reading = new OphiniolmasterIolreading();
-		//$reading->created_date=$json['created_date'];
 		$reading->first_name=$json['first_name'];
 		$reading->last_name=$json['last_name'];
 		$reading->patient_id=$json['patient_id'];
@@ -61,30 +54,19 @@ class ApiController extends BaseApiController {
 
 		$reading->data=Serialize($json);
 
-
-
-
 		if ($reading->save()) {
-			return $this->sendResponse(201, $this->status_codes[201]);
+			return 201;
 		} else {
-			return $this->sendResponse(200, var_dump($reading->getErrors()));
+			$this->status_message = var_dump($reading->getErrors());
+			return 500;
 		}
 	}
 
-	public function actionRead() {
-		$resource = $_GET['resource'];
-		$id = $_GET['id'];
-		if (!$service = $this->getService($resource)) {
-			return $this->sendResponse(400);
-		}
-		if ($resource_object = $service->findById($id)) {
-			$fhirMarshal = new FhirMarshal();
-			$data = $fhirMarshal->marshal($resource_object, 'json');
-			return $this->sendResponse(200, (string) $data);
-		} else {
-			// TODO - deleted resources should return 410:
-			return $this->sendResponse(404);
-		}
+	public function actionCreate() {
+		$status_code = $this->Create();
+		if(!isset($status_code)) $status_code=500;
+		if(!isset($this->status_message)) $this->status_message = $this->status_codes[$status_code];
+		$this->sendResponse($status_code, $this->status_message);
 	}
 
 
