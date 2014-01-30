@@ -28,7 +28,7 @@
 	</header>
 	<div class="element-fields">
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<h2>Biometry Data</h2>
 				<?php echo $form->textField($element, 'axial_length', array('size' => '10','maxlength' => '4', 'append-text'=>'SNR = 193.0'), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
 				<?php echo $form->textField($element, 'r1', array('size' => '10','maxlength' => '4', 'append-text'=>'0 D @ 54°'), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
 						<span class="field-info">R/SE:</span>
@@ -51,7 +51,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
 						<span class="field-info">Cyl:</span>
@@ -63,7 +63,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
 						<span class="field-info">Acd:</span>
@@ -75,13 +75,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<h2>Lens Selection</h2>
 				<?php echo $form->dropDownList($element, 'iol_selection_id', CHtml::listData(OphInBiometry_IolCalculation_IolSelection::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),null,array('label'=>2, 'field'=>6))?>
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
 						<span class="field-info">Description:</span>
@@ -93,7 +93,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
 						<span class="field-info">A constant:</span>
@@ -105,7 +105,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
 						<span class="field-info">Position:</span>
@@ -117,7 +117,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
 						<span class="field-info">Comments:</span>
@@ -129,11 +129,73 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 column">
+			<div class="large-8 column">
+
 				<h2>Calculation</h2>
 				<?php echo $form->textField($element, 'targeted_refraction', null, null, array('label'=>2, 'field'=>2))?>
 				<?php echo $form->dropDownList($element, 'formula_id', CHtml::listData(OphInBiometry_IolCalculation_Formula::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),null,array('label'=>2, 'field'=>6))?>
-				<?php echo $form->textField($element, 'iol_power', null, null, array('label'=>2, 'field'=>2))?>
 			</div>
 		</div>
+		<div class="row">
+			<div class="large-4 column">
+				<table name="table" id="iolTable" align="center" cellspacing="0" width="200" style="margin-top: 10px">
+					<thead>
+					<tr>
+						<td align="left" width="60%"><h4 style="margin-left: 4px">IOL power</h4></td>
+						<td align="right" width="40%"><h4>Refraction</h4></td>
+					</tr>
+					</thead>
+					<tbody id="tableBody">
+					<tr>
+						<td>
+							<button>25.0</button>
+						</td>
+						<td>
+							<p>-1.49</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button onclick="iolSelected(this.innerHTML)">24.5</button>
+						</td>
+						<td>
+							<p>-0.97</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button onclick="iolSelected(this.innerHTML)">24.0</button>
+						</td>
+						<td>
+							<p><b>-0.47</b></p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button onclick="iolSelected(this.innerHTML)">23.5</button>
+						</td>
+						<td>
+							<p>+0.03</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button onclick="iolSelected(this.innerHTML)">23.0</button>
+						</td>
+						<td>
+							<p>+0.53</p>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-8 column">
+
+					<?php echo $form->textField($element, 'iol_power', null, null, array('label'=>2, 'field'=>2))?>
+			</div>
+		</div>
+	</div>
+
 </section>
