@@ -51,7 +51,9 @@ class m140129_150855_event_type_OphInBiometry extends CDbMigration
 				'CONSTRAINT `ophinbiometry_iolcalc_iol_selection_aid_fk` FOREIGN KEY (`id`) REFERENCES `ophinbiometry_iolcalc_iol_selection` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
-		$this->insert('ophinbiometry_iolcalc_iol_selection',array('name'=>'Iol 1','display_order'=>1));
+		$this->insert('ophinbiometry_iolcalc_iol_selection',array('name'=>'MA60AC','display_order'=>1));
+		$this->insert('ophinbiometry_iolcalc_iol_selection',array('name'=>'SN60WF','display_order'=>2));
+		$this->insert('ophinbiometry_iolcalc_iol_selection',array('name'=>'MTA3U0','display_order'=>3));
 
 		$this->createTable('ophinbiometry_iolcalc_formula', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',

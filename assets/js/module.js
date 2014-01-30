@@ -2,7 +2,8 @@
 /* Module-specific javascript can be placed here */
 
 $(document).ready(function() {
-			handleButton($('#et_save'),function() {
+
+	handleButton($('#et_save'),function() {
 					});
 	
 	handleButton($('#et_cancel'),function(e) {
@@ -66,7 +67,7 @@ $(document).ready(function() {
 
 		var r2 = parseFloat($('#Element_OphInBiometry_IolCalculation_r2').val());
 		var k2Value = 337.5 / r2;
-		$('#div_Element_OphInBiometry_IolCalculation_r2').find('.field-info').text(k1Value.toFixed(2) + " D @ 144°");
+		$('#div_Element_OphInBiometry_IolCalculation_r2').find('.field-info').text(k2Value.toFixed(2) + " D @ 144°");
 
 
 		var se = document.getElementById('rse');
@@ -78,7 +79,32 @@ $(document).ready(function() {
 		var cylValue = k1Value - k2Value;
 		cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
 	}
+
+	$('#Element_OphInBiometry_IolCalculation_iol_selection_id').change(function() {
+		iolType($(this).val());
+	})
 });
+
+function iolType(_index) {
+	var acon = document.getElementById('acon');
+	var type = document.getElementById('type');
+	var position = document.getElementById('position');
+	var comments = document.getElementById('comments');
+
+
+	var lens = [
+		{model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.9},
+		{model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0},
+		{model: "MTA3U0", description: "Acrysof® Anterior Chamber Intraocular lens", position: "Anterior chamber", comments: "Default AC Lens", acon: 115.8}
+	];
+
+	acon.innerHTML = lens[_index].acon.toFixed(1);
+	type.innerHTML = lens[_index].model + " " + lens[_index].description;
+	position.innerHTML = lens[_index].position;
+	comments.innerHTML = lens[_index].comments;
+}
+
+
 
 function ucfirst(str) { str += ''; var f = str.charAt(0).toUpperCase(); return f + str.substr(1); }
 

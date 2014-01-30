@@ -78,6 +78,59 @@
 			<div class="large-6 column">
 				<h2>Lens Selection</h2>
 				<?php echo $form->dropDownList($element, 'iol_selection_id', CHtml::listData(OphInBiometry_IolCalculation_IolSelection::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'))?>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 column">
+				<div class="row field-row">
+					<div class="large-2 column">
+						<span class="field-info">Description:</span>
+					</div>
+					<div class="large-10 column">
+						<span id="type" class="field-info"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 column">
+				<div class="row field-row">
+					<div class="large-2 column">
+						<span class="field-info">A constant:</span>
+					</div>
+					<div class="large-10 column">
+						<span id="acon" class="field-info"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 column">
+				<div class="row field-row">
+					<div class="large-2 column">
+						<span class="field-info">Position:</span>
+					</div>
+					<div class="large-10 column">
+						<span id="position" class="field-info"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 column">
+				<div class="row field-row">
+					<div class="large-2 column">
+						<span class="field-info">Comments:</span>
+					</div>
+					<div class="large-10 column">
+						<span id="comments" class="field-info"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 column">
+				<h2>Calculation</h2>
 				<?php echo $form->textField($element, 'targeted_refraction', array('size' => '10'))?>
 				<?php echo $form->dropDownList($element, 'formula_id', CHtml::listData(OphInBiometry_IolCalculation_Formula::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'))?>
 				<?php echo $form->textField($element, 'iol_power', array('size' => '10'))?>
