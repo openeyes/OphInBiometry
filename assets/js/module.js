@@ -45,6 +45,39 @@ $(document).ready(function() {
 			}
 		}
 	});
+
+	$('#Element_OphInBiometry_IolCalculation_axial_length').change(function() {
+		update_biometry_data();
+	})
+
+	$('#Element_OphInBiometry_IolCalculation_r1').change(function() {
+		update_biometry_data();
+	})
+
+	$('#Element_OphInBiometry_IolCalculation_r2').change(function() {
+		update_biometry_data();
+	})
+
+	function update_biometry_data()
+	{
+		var r1 = parseFloat($('#Element_OphInBiometry_IolCalculation_r1').val());
+		var k1Value = 337.5 / r1;
+		$('#div_Element_OphInBiometry_IolCalculation_r1').find('.field-info').text(k1Value.toFixed(2) + " D @ 54°");
+
+		var r2 = parseFloat($('#Element_OphInBiometry_IolCalculation_r2').val());
+		var k2Value = 337.5 / r2;
+		$('#div_Element_OphInBiometry_IolCalculation_r2').find('.field-info').text(k1Value.toFixed(2) + " D @ 144°");
+
+
+		var se = document.getElementById('rse');
+		var cyl = document.getElementById('cyl');
+
+		var seValue = (r1 + r2) / 2;
+		se.innerHTML = seValue.toFixed(2) + " mm";
+
+		var cylValue = k1Value - k2Value;
+		cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
+	}
 });
 
 function ucfirst(str) { str += ''; var f = str.charAt(0).toUpperCase(); return f + str.substr(1); }
