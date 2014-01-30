@@ -77,7 +77,7 @@
 		<div class="row">
 			<div class="large-6 column">
 				<h2>Lens Selection</h2>
-				<?php echo $form->dropDownList($element, 'iol_selection_id', CHtml::listData(OphInBiometry_IolCalculation_IolSelection::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'))?>
+				<?php echo $form->dropDownList($element, 'iol_selection_id', CHtml::listData(OphInBiometry_IolCalculation_IolSelection::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),null,array('label'=>2, 'field'=>6))?>
 			</div>
 		</div>
 		<div class="row">
@@ -131,9 +131,9 @@
 		<div class="row">
 			<div class="large-6 column">
 				<h2>Calculation</h2>
-				<?php echo $form->textField($element, 'targeted_refraction', array('size' => '10'))?>
-				<?php echo $form->dropDownList($element, 'formula_id', CHtml::listData(OphInBiometry_IolCalculation_Formula::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'))?>
-				<?php echo $form->textField($element, 'iol_power', array('size' => '10'))?>
+				<?php echo $form->textField($element, 'targeted_refraction', null, null, array('label'=>2, 'field'=>2))?>
+				<?php echo $form->dropDownList($element, 'formula_id', CHtml::listData(OphInBiometry_IolCalculation_Formula::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),null,array('label'=>2, 'field'=>6))?>
+				<?php echo $form->textField($element, 'iol_power', null, null, array('label'=>2, 'field'=>2))?>
 			</div>
 		</div>
 </section>
