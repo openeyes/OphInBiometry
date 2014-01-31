@@ -92,8 +92,10 @@ class m140129_150855_event_type_OphInBiometry extends CDbMigration
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->insert('ophinbiometry_iolcalc_formula',array('name'=>'SRK/T','display_order'=>1));
-
-
+		$this->insert('ophinbiometry_iolcalc_formula',array('name'=>'Holladay 1','display_order'=>2));
+		$this->insert('ophinbiometry_iolcalc_formula',array('name'=>'Hoffer Q','display_order'=>3));
+		$this->insert('ophinbiometry_iolcalc_formula',array('name'=>'T2','display_order'=>4));
+		$this->insert('ophinbiometry_iolcalc_formula',array('name'=>'Haggis','display_order'=>5));
 
 		$this->createTable('et_ophinbiometry_iolcalc', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
