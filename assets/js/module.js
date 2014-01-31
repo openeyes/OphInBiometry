@@ -269,94 +269,54 @@ function calculateSRKT(_eyeMeasurements, _dioptresIOL, _dioptresRefraction) {
 	var returnPower = false;
 
 	// Calculate IOL power for a given refraction
+	var na = 1.336; // ***TODO***  What is this?
+	var vertexDistance = 12;
+	var retinalThickness = 0.65696 - 0.02029 * _axialLength;
+	var opticalAxialLength = _axialLength + retinalThickness;
+
+	// 'A' constant correction
+	if (_aConstant > 100) {
+		var aConstantSRK = _aConstant * 0.62467 - 68 - 0.74709;
+	}
+	else {
+		var aConstantSRK = _aConstant
+	}
+
+	// Difference between natural lens and IOL to cornea
+	var diff = aConstantSRK - 3.3357;
+
+	// Axial length correction for high myopes
+	var axialLength;
+	if (_axialLength > 24.2) {
+		axialLength = -3.446 + 1.716 * _axialLength - 0.0237 * _axialLength * _axialLength;
+	}
+	else {
+		axialLength = _axialLength;
+	}
+
+	// Corneal width
+	var cornealWidth = -5.40948 + 0.58412 * axialLength + 0.098 * dioptresCornea;
+
+	// Corneal dome height
+	var cornealDomeHeight = averageRadius - Math.sqrt(averageRadius * averageRadius - cornealWidth * cornealWidth / 4);
+	if (cornealDomeHeight > 5.5) cornealDomeHeight = 5.5;
+
+	// Post-op anterior chamber depth
+	var postopACDepth = cornealDomeHeight + diff;
+
 	if (_dioptresIOL == null) {
-
-		var na = 1.336; // ***TODO***  What is this?
-		var vertexDistance = 12;
-		var retinalThickness = 0.65696 - 0.02029 * _axialLength;
-		var opticalAxialLength = _axialLength + retinalThickness;
-
-		// 'A' constant correction
-		if (_aConstant > 100) {
-			var aConstantSRK = _aConstant * 0.62467 - 68 - 0.74709;
-		}
-		else {
-			var aConstantSRK = _aConstant
-		}
-
-		// Difference between natural lens and IOL to cornea
-		var diff = aConstantSRK - 3.3357;
-
-		// Axial length correction for high myopes
-		var axialLength;
-		if (_axialLength > 24.2) {
-			axialLength = -3.446 + 1.716 * _axialLength - 0.0237 * _axialLength * _axialLength;
-		}
-		else {
-			axialLength = _axialLength;
-		}
-
-		// Corneal width
-		var cornealWidth = -5.40948 + 0.58412 * axialLength + 0.098 * dioptresCornea;
-
-		// Corneal dome height
-		var cornealDomeHeight = averageRadius - Math.sqrt(averageRadius * averageRadius - cornealWidth * cornealWidth / 4);
-		if (cornealDomeHeight > 5.5) cornealDomeHeight = 5.5;
-
-		// Post-op anterior chamber depth
-		var postopACDepth = cornealDomeHeight + diff;
 
 		var top = 1000 * na * (na * averageRadius - diffRI * opticalAxialLength - 0.001 * _dioptresRefraction * (vertexDistance * (na * averageRadius - diffRI * opticalAxialLength) + opticalAxialLength * averageRadius));
 		var bottom = (opticalAxialLength - postopACDepth) * (na * averageRadius - diffRI * postopACDepth - 0.001 * _dioptresRefraction * (vertexDistance * (na * averageRadius - diffRI * postopACDepth) + postopACDepth * averageRadius));
-
-		returnPower = top / bottom;
-
 	}
-	// Calculate Refractive result for a given IOL
-	else {
-
-		var na = 1.336; // ***TODO***  What is this?
-		var vertexDistance = 12;
-		var retinalThickness = 0.65696 - 0.02029 * _axialLength;
-		var opticalAxialLength = _axialLength + retinalThickness;
-
-		// 'A' constant correction
-		if (_aConstant > 100) {
-			var aConstantSRK = _aConstant * 0.62467 - 68 - 0.74709;
-		}
-		else {
-			var aConstantSRK = _aConstant;
-		}
-
-		// Difference between natural lens and IOL to cornea
-		var diff = aConstantSRK - 3.3357;
-
-		// Axial length correction for high myopes
-		var axialLength;
-		if (_axialLength > 24.2) {
-			axialLength = -3.446 + 1.716 * _axialLength - 0.0237 * _axialLength * _axialLength;
-		}
-		else {
-			axialLength = _axialLength;
-		}
-
-		// Corneal width
-		var cornealWidth = -5.40948 + 0.58412 * axialLength + 0.098 * dioptresCornea;
-
-		// Corneal dome height
-		var cornealDomeHeight = averageRadius - Math.sqrt(averageRadius * averageRadius - cornealWidth * cornealWidth / 4);
-		if (cornealDomeHeight > 5.5) cornealDomeHeight = 5.5;
-
-		// Post-op anterior chamber depth
-		var postopACDepth = cornealDomeHeight + diff;
-
+	else
+	{
 		var top = 1000 * na * (na * averageRadius - diffRI * opticalAxialLength) - _dioptresIOL * (opticalAxialLength - postopACDepth) * (na * averageRadius - diffRI * postopACDepth);
 		var bottom = (na * (vertexDistance * (na * averageRadius - diffRI * opticalAxialLength) + opticalAxialLength * averageRadius) - 0.001 * _dioptresIOL * (opticalAxialLength - postopACDepth) * (vertexDistance * (na * averageRadius - diffRI * postopACDepth) + postopACDepth * averageRadius));
 
-		returnPower = top / bottom;
 	}
 
-
+	returnPower = top / bottom;
 	return returnPower;
 }
 
