@@ -59,6 +59,11 @@ $(document).ready(function() {
 		update_biometry_data();
 	})
 
+
+	$('#Element_OphInBiometry_IolCalculation_formula_id').change(function() {
+		refreshCalculation();
+	})
+
 	function update_biometry_data()
 	{
 		var r1 = parseFloat($('#Element_OphInBiometry_IolCalculation_r1').val());
@@ -93,6 +98,7 @@ function iolType(_index) {
 
 
 	var lens = [
+		{model: "", description: "", position: "", comments: "", acon: 0},
 		{model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.9},
 		{model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0},
 		{model: "MTA3U0", description: "Acrysof® Anterior Chamber Intraocular lens", position: "Anterior chamber", comments: "Default AC Lens", acon: 115.8}
@@ -104,9 +110,6 @@ function iolType(_index) {
 	comments.innerHTML = lens[_index].comments;
 }
 
-$('#Element_OphInBiometry_IolCalculation_r2').change(function() {
-	refreshCalculation();
-})
 
 /**
  * Defines a namespace
@@ -125,11 +128,10 @@ BI.Formula =
 
 // Calculate lens powers
 function refreshCalculation() {
-	// Clear existing values
+	// Clear existing value
 	clearTable();
-
 	// Get values
-	var al = parseFloat($('#Element_OphInBiometry_IolCalculation_acial_length').val());
+	var al = parseFloat($('#Element_OphInBiometry_IolCalculation_axial_length').val());
 	var r1 = parseFloat($('#Element_OphInBiometry_IolCalculation_r1').val());
 	var r2 = parseFloat($('#Element_OphInBiometry_IolCalculation_r2').val());
 
@@ -169,8 +171,8 @@ function refreshCalculation() {
 	}
 
 // Clear choice
-	var selection = document.getElementById('rsi');
-	selection.value = "";
+	var selection = document.getElementById('Element_OphInBiometry_IolCalculation_iol_power');
+	selection.innerHTML = "";
 	var pred = document.getElementById('rpr');
 	pred.innerHTML = "";
 
@@ -180,8 +182,10 @@ function refreshCalculation() {
 
 // Add row
 function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
+
+
 	// Get reference to table
-	var table = document.getElementById('iolTable');
+	var table = document.getElementById('iol-table');
 
 	// Index of next row is equal to number of rows
 	var nextRowIndex = table.tBodies[0].rows.length;
@@ -208,7 +212,7 @@ function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
 // Delete all rows
 function clearTable() {
 	// Get reference to table
-	var table = document.getElementById('iolTable');
+	var table = document.getElementById('iol-table');
 
 	// Get number of rows
 	var numberOfRows = table.tBodies[0].rows.length;

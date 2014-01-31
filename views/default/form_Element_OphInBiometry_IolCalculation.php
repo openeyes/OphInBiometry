@@ -138,7 +138,7 @@
 		</div>
 		<div class="row">
 			<div class="large-4 column">
-				<table name="table" id="iolTable" align="center" cellspacing="0" width="200" style="margin-top: 10px">
+				<table name="table" id="iol-table" align="center" cellspacing="0" width="200" style="margin-top: 10px">
 					<thead>
 					<tr>
 						<td align="left" width="60%"><h4 style="margin-left: 4px">IOL power</h4></td>
@@ -194,6 +194,18 @@
 			<div class="large-8 column">
 
 					<?php echo $form->textField($element, 'iol_power', null, null, array('label'=>2, 'field'=>2))?>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-8 column">
+				<div class="row field-row">
+					<div class="large-2 column">
+						<span class="field-info">Predicted Refraction:</span>
+					</div>
+					<div class="large-10 column">
+						<span id="rpr" class="field-info"></span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
