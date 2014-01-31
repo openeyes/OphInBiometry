@@ -104,6 +104,64 @@ function iolType(_index) {
 	comments.innerHTML = lens[_index].comments;
 }
 
+$('#Element_OphInBiometry_IolCalculation_r2').change(function() {
+	refreshCalculation();
+})
+
+// Calculate lens powers
+function refreshCalculation() {
+	// Clear existing values
+	clearTable();
+
+	// Get values
+	var al = parseFloat(document.getElementById('ral').value);
+	var r1 = parseFloat(document.getElementById('rr1').value);
+	var r2 = parseFloat(document.getElementById('rr2').value);
+	var acon = parseFloat(document.getElementById('iolAcon').innerHTML);
+	var tr = parseFloat(document.getElementById('rtr').value);
+
+	// Calculate lens power for target refraction
+	var powerIOL = calculate(al, r1, r2, acon, null, tr, BI.Formula.SRKT);
+	if (powerIOL) {
+		// Round to nearest 0.5
+		var roundIOL = Math.round(powerIOL * 2) / 2;
+
+		// Get power for that IOL
+		var refraction = calculate(al, r1, r2, acon, roundIOL, null, BI.Formula.SRKT);
+
+		// Iterate towards myopia until value is less than target
+		while (refraction > tr) {
+			roundIOL = roundIOL + 0.5;
+			refraction = calculate(al, r1, r2, acon, roundIOL, null, BI.Formula.SRKT);
+		}
+
+// Produce results for range of refraction around this one
+		var startPower = roundIOL + 1.0;
+
+		for (var i = 0; i < 5; i++) {
+			refraction = calculate(al, r1, r2, acon, startPower, null, BI.Formula.SRKT);
+
+			// Enforce plus sign
+			var refString = refraction > 0 ? "+" + refraction.toFixed(2) : refraction.toFixed(2);
+
+			addRow(startPower.toFixed(1), refString, i == 2 ? true : false);
+			startPower = startPower - 0.5;
+		}
+	}
+	else {
+		console.log('Unable to calculate power');
+	}
+
+// Clear choice
+	var selection = document.getElementById('rsi');
+	selection.value = "";
+	var pred = document.getElementById('rpr');
+	pred.innerHTML = "";
+
+	// Glaucoma: add scleral thickness input if axial length low
+	scleralThickness(al);
+}
+
 function calculate(_axialLength, _radius1, _radius2, _aConstant, _dioptresIOL, _dioptresRefraction, _formula) {
 	// Fixed parameters here (could come from parameter file)
 	var cornealRI = 1.333;	//Refractive index of the cornea as set in IOL Master
