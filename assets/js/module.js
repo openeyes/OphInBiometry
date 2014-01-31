@@ -47,6 +47,18 @@ $(document).ready(function() {
 		}
 	});
 
+	function ucfirst(str) { str += ''; var f = str.charAt(0).toUpperCase(); return f + str.substr(1); }
+
+	function eDparameterListener(_drawing) {
+		if (_drawing.selectedDoodle != null) {
+			// handle event
+		}
+	}
+
+
+
+
+
 	$('#Element_OphInBiometry_IolCalculation_axial_length').change(function() {
 		update_biometry_data();
 	})
@@ -66,7 +78,6 @@ $(document).ready(function() {
 
 	function execute_forumula(formula)
 	{
-		alert(formula);
 		var forumulae = [];
 
 		clearTable();
@@ -74,65 +85,6 @@ $(document).ready(function() {
 		forumulae['Holladay 1'] = function() { Holladay1(); };
 		forumulae[formula]();
 	}
-
-	function eye_measurements()
-	{
-		this.al=parseFloat($('#Element_OphInBiometry_IolCalculation_axial_length').val());;
-		this.r1=parseFloat($('#Element_OphInBiometry_IolCalculation_r1').val());
-		this.r2=parseFloat($('#Element_OphInBiometry_IolCalculation_r2').val());
-		this.acon=parseFloat(document.getElementById('acon').innerHTML);
-		this.tr=parseFloat($('#Element_OphInBiometry_IolCalculation_targeted_refraction').val());
-	}
-
-
-	function SRKT()
-	{
-		clearTable();
-		// Get values
-		var e = new eye_measurements();
-
-		// Calculate lens power for target refraction
-		var powerIOL = calculateSRKT(e, null, e.tr);
-		if (powerIOL) {
-			// Round to nearest 0.5
-			var roundIOL = Math.round(powerIOL * 2) / 2;
-
-			// Get power for that IOL
-			var refraction = calculateSRKT(e, roundIOL, null);
-
-			// Iterate towards myopia until value is less than target
-			while (refraction > e.tr) {
-				roundIOL = roundIOL + 0.5;
-				refraction = calculateSRKT(e, roundIOL, null);
-			}
-
-// Produce results for range of refraction around this one
-			var startPower = roundIOL + 1.0;
-
-			for (var i = 0; i < 5; i++) {
-				refraction = calculateSRKT(e, startPower, null);
-
-				// Enforce plus sign
-				var refString = refraction > 0 ? "+" + refraction.toFixed(2) : refraction.toFixed(2);
-
-				addRow(startPower.toFixed(1), refString, i == 2 ? true : false);
-				startPower = startPower - 0.5;
-			}
-		}
-		else {
-			console.log('Unable to calculate power');
-		}
-
-// Clear choice
-		var selection = document.getElementById('Element_OphInBiometry_IolCalculation_iol_power');
-		selection.innerHTML = "";
-		var pred = document.getElementById('rpr');
-		pred.innerHTML = "";
-
-		// Glaucoma: add scleral thickness input if axial length low
-		//scleralThickness(e.al);
-	}
-
 
 	function write(what) {
 
@@ -166,6 +118,15 @@ $(document).ready(function() {
 	})
 });
 
+function eye_measurements()
+{
+	this.al=parseFloat($('#Element_OphInBiometry_IolCalculation_axial_length').val());
+	this.r1=parseFloat($('#Element_OphInBiometry_IolCalculation_r1').val());
+	this.r2=parseFloat($('#Element_OphInBiometry_IolCalculation_r2').val());
+	this.acon=parseFloat(document.getElementById('acon').innerHTML);
+	this.tr=parseFloat($('#Element_OphInBiometry_IolCalculation_targeted_refraction').val());
+}
+
 function iolType(_index) {
 	var acon = document.getElementById('acon');
 	var type = document.getElementById('type');
@@ -175,33 +136,14 @@ function iolType(_index) {
 
 	var lens = [
 		{model: "", description: "", position: "", comments: "", acon: 0},
-		{model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.9},
-		{model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0},
-		{model: "MTA3U0", description: "Acrysof® Anterior Chamber Intraocular lens", position: "Anterior chamber", comments: "Default AC Lens", acon: 115.8}
+		{model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.9, sf: 1.90},
+		{model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0, sf: 1.85}
 	];
 
 	acon.innerHTML = lens[_index].acon.toFixed(1);
 	type.innerHTML = lens[_index].model + " " + lens[_index].description;
 	position.innerHTML = lens[_index].position;
 	comments.innerHTML = lens[_index].comments;
-}
-
-
-/**
- * Defines a namespace
- * @namespace Namespace for all Biometry calculation
- */
-var BI = new Object();
-
-/**
- * Lens power formulae
- */
-BI.Formula =
-{
-	SRK: 0,
-	SRKT: 1,
-	Holladay1: 2
-
 }
 
 // Add row
@@ -245,6 +187,54 @@ function clearTable() {
 	for (var i = 0; i < numberOfRows; i++) {
 		table.deleteRow(1);
 	}
+}
+
+function SRKT()
+{
+	clearTable();
+	// Get values
+	var e = new eye_measurements();
+
+	// Calculate lens power for target refraction
+	var powerIOL = calculateSRKT(e, null, e.tr);
+	if (powerIOL) {
+		// Round to nearest 0.5
+		var roundIOL = Math.round(powerIOL * 2) / 2;
+
+		// Get power for that IOL
+		var refraction = calculateSRKT(e, roundIOL, null);
+
+		// Iterate towards myopia until value is less than target
+		while (refraction > e.tr) {
+			roundIOL = roundIOL + 0.5;
+			refraction = calculateSRKT(e, roundIOL, null);
+		}
+
+// Produce results for range of refraction around this one
+		var startPower = roundIOL + 1.0;
+
+		for (var i = 0; i < 5; i++) {
+			refraction = calculateSRKT(e, startPower, null);
+
+			// Enforce plus sign
+			var refString = refraction > 0 ? "+" + refraction.toFixed(2) : refraction.toFixed(2);
+
+			addRow(startPower.toFixed(1), refString, i == 2 ? true : false);
+			startPower = startPower - 0.5;
+		}
+	}
+	else {
+		console.log('Unable to calculate power');
+	}
+
+// Clear choice
+	var selection = document.getElementById('Element_OphInBiometry_IolCalculation_iol_power');
+	selection.innerHTML = "";
+	var pred = document.getElementById('rpr');
+	pred.innerHTML = "";
+
+	// Glaucoma: add scleral thickness input if axial length low
+	//scleralThickness(e.al);
 }
 
 function calculateSRKT(_eyeMeasurements, _dioptresIOL, _dioptresRefraction) {
@@ -320,12 +310,94 @@ function calculateSRKT(_eyeMeasurements, _dioptresIOL, _dioptresRefraction) {
 	return returnPower;
 }
 
+function Holladay1()
+{
+	clearTable();
+	// Get values
+	var e = new eye_measurements();
 
+	// Calculate lens power for target refraction
+	var powerIOL = Holladay1_SuggestedPower(e);
+	if (powerIOL) {
+		// Round to nearest 0.5
+		var roundIOL = Math.round(powerIOL * 2) / 2;
 
-function ucfirst(str) { str += ''; var f = str.charAt(0).toUpperCase(); return f + str.substr(1); }
+		// Get power for that IOL
+		var refraction = Holladay1_PowerFor(e, roundIOL);
 
-function eDparameterListener(_drawing) {
-	if (_drawing.selectedDoodle != null) {
-		// handle event
+		// Iterate towards myopia until value is less than target
+		while (refraction > e.tr) {
+			roundIOL = roundIOL + 0.5;
+			refraction = Holladay1_PowerFor(e, roundIOL);
+		}
+
+// Produce results for range of refraction around this one
+		var startPower = roundIOL + 1.0;
+
+		for (var i = 0; i < 5; i++) {
+			refraction = Holladay1_PowerFor(e, roundIOL);
+
+			// Enforce plus sign
+			var refString = refraction > 0 ? "+" + refraction.toFixed(2) : refraction.toFixed(2);
+
+			addRow(startPower.toFixed(1), refString, i == 2 ? true : false);
+			startPower = startPower - 0.5;
+		}
 	}
+	else {
+		console.log('Unable to calculate power');
+	}
+
+// Clear choice
+	var selection = document.getElementById('Element_OphInBiometry_IolCalculation_iol_power');
+	selection.innerHTML = "";
+	var pred = document.getElementById('rpr');
+	pred.innerHTML = "";
+
+	// Glaucoma: add scleral thickness input if axial length low
+	//scleralThickness(e.al);
 }
+
+function Holladay1_SuggestedPower(eye_measurements)
+{
+	var r = (eye_measurements.r1 + eye_measurements.r2) / 2;
+	var AL = eye_measurements.al;
+	var RefTgt = eye_measurements.tr;
+	var SF = 1.90; //TODO LOAD THIS FROM CONSTANTS
+	var Alm = AL + 0.2;
+	var Rag = r < 7.0 ? 7.0 : r;
+	var AG = (12.5 * AL / 23.45 > 13.5) ? 13.5 : 12.5 * AL / 23.45;
+	var BF7 = (Rag * Rag - (AG * AG / 4.0));
+	var BF8 = Math.sqrt(BF7);
+	var ACD = 0.56 + Rag - BF8;
+	var AConstant =  1.1; //TODO LOAD THIS FROM CONSTANTS
+	const na = 1.336;
+	const nc_1 = 1.0 / 3.0;
+
+	var Numerator = (1000.0 * na * (na * r - nc_1 * Alm - 0.001 * RefTgt * (12.0 * (na * r - nc_1 * Alm) + Alm * r)));
+	var Denominator = ((Alm - ACD - SF) * (na * r - nc_1 * (ACD + SF) - 0.001 * RefTgt * (12.0 * (na * r - nc_1 * (ACD + SF)) + (ACD + SF) * r)));
+	return Numerator / Denominator;	return Numerator / Denominator;
+}
+
+function Holladay1_PowerFor(eye_measurements, LensPower)
+{
+	var r = (eye_measurements.r1 + eye_measurements.r2) / 2;
+	var AL = eye_measurements.al;
+	var RefTgt = eye_measurements.tr;
+	var SF = 1.90; //TODO LOAD THIS FROM CONSTANTS
+	var Alm = AL + 0.2;
+	var Rag = r < 7.0 ? 7.0 : r;
+	var AG = (12.5 * AL / 23.45 > 13.5) ? 13.5 : 12.5 * AL / 23.45;
+	var BF7 = (Rag * Rag - (AG * AG / 4.0));
+	var BF8 = Math.sqrt(BF7);
+	var ACD = 0.56 + Rag - BF8;
+	var AConstant =  1.1; //TODO LOAD THIS FROM CONSTANTS
+	const na = 1.336;
+	const nc_1 = 1.0 / 3.0;
+
+	var Numerator = (1000.0 * na * (na * r - (nc_1) * Alm) - LensPower * (Alm - ACD - SF) * (na * r - (nc_1) * (ACD + SF)));
+	var Denominator = (na * (12.0 * (na * r - (nc_1) * Alm) + Alm * r) - 0.001 * LensPower * (Alm - ACD - SF) * (12.0 * (na * r - (nc_1) * (ACD + SF)) + (ACD + SF) * r));
+	return Numerator / Denominator;
+}
+
+
