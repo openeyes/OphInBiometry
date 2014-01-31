@@ -162,6 +162,20 @@ function refreshCalculation() {
 	scleralThickness(al);
 }
 
+// Delete all rows
+function clearTable() {
+	// Get reference to table
+	var table = document.getElementById('iolTable');
+
+	// Get number of rows
+	var numberOfRows = table.tBodies[0].rows.length;
+
+	// Delete them
+	for (var i = 0; i < numberOfRows; i++) {
+		table.deleteRow(1);
+	}
+}
+
 function calculate(_axialLength, _radius1, _radius2, _aConstant, _dioptresIOL, _dioptresRefraction, _formula) {
 	// Fixed parameters here (could come from parameter file)
 	var cornealRI = 1.333;	//Refractive index of the cornea as set in IOL Master
