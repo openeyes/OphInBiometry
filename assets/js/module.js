@@ -178,6 +178,33 @@ function refreshCalculation() {
 	scleralThickness(al);
 }
 
+// Add row
+function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
+	// Get reference to table
+	var table = document.getElementById('iolTable');
+
+	// Index of next row is equal to number of rows
+	var nextRowIndex = table.tBodies[0].rows.length;
+
+	// Add new row
+	var newRow = table.tBodies[0].insertRow(nextRowIndex);
+
+	// IOL
+	var cell0 = newRow.insertCell(0);
+	var node = document.createElement('button');
+	node.setAttribute('onclick', 'iolSelected(this.innerHTML)');
+	node.innerHTML = _dioptresIOL;
+	cell0.appendChild(node);
+
+// Refraction
+	var cell1 = newRow.insertCell(1);
+	node = document.createElement('p');
+	if (!_bold) node.innerHTML = _dioptresRefraction;
+	else node.innerHTML = '<b>' + _dioptresRefraction + '</b>';
+	cell1.appendChild(node);
+}
+
+
 // Delete all rows
 function clearTable() {
 	// Get reference to table
