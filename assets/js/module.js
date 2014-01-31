@@ -108,17 +108,33 @@ $('#Element_OphInBiometry_IolCalculation_r2').change(function() {
 	refreshCalculation();
 })
 
+/**
+ * Defines a namespace
+ * @namespace Namespace for all Biometry calculation
+ */
+var BI = new Object();
+
+/**
+ * Lens power formulae
+ */
+BI.Formula =
+{
+	SRK: 0,
+	SRKT: 1
+}
+
 // Calculate lens powers
 function refreshCalculation() {
 	// Clear existing values
 	clearTable();
 
 	// Get values
-	var al = parseFloat(document.getElementById('ral').value);
-	var r1 = parseFloat(document.getElementById('rr1').value);
-	var r2 = parseFloat(document.getElementById('rr2').value);
-	var acon = parseFloat(document.getElementById('iolAcon').innerHTML);
-	var tr = parseFloat(document.getElementById('rtr').value);
+	var al = parseFloat($('#Element_OphInBiometry_IolCalculation_acial_length').val());
+	var r1 = parseFloat($('#Element_OphInBiometry_IolCalculation_r1').val());
+	var r2 = parseFloat($('#Element_OphInBiometry_IolCalculation_r2').val());
+
+	var acon = parseFloat(document.getElementById('acon').innerHTML);
+	var tr =  parseFloat($('#Element_OphInBiometry_IolCalculation_targeted_refraction').val());
 
 	// Calculate lens power for target refraction
 	var powerIOL = calculate(al, r1, r2, acon, null, tr, BI.Formula.SRKT);
