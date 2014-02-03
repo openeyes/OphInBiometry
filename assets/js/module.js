@@ -55,36 +55,42 @@ $(document).ready(function() {
 		}
 	}
 
-
-
-
-
 	$('#Element_OphInBiometry_IolCalculation_axial_length').change(function() {
-		update_biometry_data();
+		updateBiometryData();
 	})
 
 	$('#Element_OphInBiometry_IolCalculation_r1').change(function() {
-		update_biometry_data();
+		updateBiometryData();
 	})
 
 	$('#Element_OphInBiometry_IolCalculation_r2').change(function() {
-		update_biometry_data();
+		updateBiometryData();
 	})
 
+
+	$('#Element_OphInBiometry_IolCalculation_targeted_refraction').change(function() {
+		updateSuggestedPowerTable();
+	})
 
 	$('#Element_OphInBiometry_IolCalculation_formula_id').change(function() {
-		execute_forumula($('option:selected', $(this)).text());
+		updateSuggestedPowerTable();
 	})
 
-	function execute_forumula(formula)
+	function updateSuggestedPowerTable()
+	{
+		executeFormula($('#Element_OphInBiometry_IolCalculation_formula_id option:selected').text());
+	}
+
+	function executeFormula(formula)
 	{
 		var formulae = [];
 		formulae['SRK/T'] = 'SRKT';
 		formulae['Holladay 1'] = 'Holladay1';
+		formulae['T2'] = 'T2';
 		fillTableUsingFormula(formulae[formula]);
 	}
 
-	function update_biometry_data()
+	function updateBiometryData()
 	{
 		var r1 = parseFloat($('#Element_OphInBiometry_IolCalculation_r1').val());
 		var k1Value = 337.5 / r1;
@@ -110,17 +116,23 @@ $(document).ready(function() {
 	})
 });
 
-function eye_measurements()
+function EyeMeasurements()
 {
 	this.al=parseFloat($('#Element_OphInBiometry_IolCalculation_axial_length').val());
 	this.r1=parseFloat($('#Element_OphInBiometry_IolCalculation_r1').val());
 	this.r2=parseFloat($('#Element_OphInBiometry_IolCalculation_r2').val());
-	this.acon=parseFloat(document.getElementById('acon').innerHTML);
 	this.tr=parseFloat($('#Element_OphInBiometry_IolCalculation_targeted_refraction').val());
+}
+
+function IolConstants()
+{
+	this.acon=parseFloat(document.getElementById('acon').innerHTML);
+	this.sf=parseFloat(document.getElementById('sf').innerHTML);
 }
 
 function iolType(_index) {
 	var acon = document.getElementById('acon');
+	var sf = document.getElementById('sf');
 	var type = document.getElementById('type');
 	var position = document.getElementById('position');
 	var comments = document.getElementById('comments');
@@ -133,14 +145,13 @@ function iolType(_index) {
 	];
 
 	acon.innerHTML = lens[_index].acon.toFixed(1);
+	sf.innerHTML = lens[_index].sf.toFixed(2);
 	type.innerHTML = lens[_index].model + " " + lens[_index].description;
 	position.innerHTML = lens[_index].position;
 	comments.innerHTML = lens[_index].comments;
 }
 
-// Add row
 function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
-
 
 	// Get reference to table
 	var table = document.getElementById('iol-table');
@@ -158,7 +169,7 @@ function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
 	node.innerHTML = _dioptresIOL;
 	cell0.appendChild(node);
 
-// Refraction
+	// Refraction
 	var cell1 = newRow.insertCell(1);
 	node = document.createElement('p');
 	if (!_bold) node.innerHTML = _dioptresRefraction;
@@ -181,32 +192,35 @@ function clearTable() {
 	}
 }
 
-function SRKT()
+function fillTableUsingFormula(formulaName)
 {
 	clearTable();
 	// Get values
-	var e = new eye_measurements();
+	var e = new EyeMeasurements();
+	var iol = new IolConstants();
+	var formulaClass = this[formulaName];
+	var formula = new formulaClass(e);
 
 	// Calculate lens power for target refraction
-	var powerIOL = calculateSRKT(e, null, e.tr);
+	var powerIOL = formula.suggestedPower();
 	if (powerIOL) {
 		// Round to nearest 0.5
 		var roundIOL = Math.round(powerIOL * 2) / 2;
 
 		// Get power for that IOL
-		var refraction = calculateSRKT(e, roundIOL, null);
+		var refraction = formula.powerFor(roundIOL);
 
 		// Iterate towards myopia until value is less than target
 		while (refraction > e.tr) {
 			roundIOL = roundIOL + 0.5;
-			refraction = calculateSRKT(e, roundIOL, null);
+			refraction = formula.powerFor(roundIOL);
 		}
 
-// Produce results for range of refraction around this one
+		// Produce results for range of refraction around this one
 		var startPower = roundIOL + 1.0;
 
 		for (var i = 0; i < 5; i++) {
-			refraction = calculateSRKT(e, startPower, null);
+			refraction = formula.powerFor(startPower);
 
 			// Enforce plus sign
 			var refString = refraction > 0 ? "+" + refraction.toFixed(2) : refraction.toFixed(2);
@@ -218,23 +232,44 @@ function SRKT()
 	else {
 		console.log('Unable to calculate power');
 	}
-
-// Clear choice
-	var selection = document.getElementById('Element_OphInBiometry_IolCalculation_iol_power');
-	selection.innerHTML = "";
-	var pred = document.getElementById('rpr');
-	pred.innerHTML = "";
-
-	// Glaucoma: add scleral thickness input if axial length low
-	//scleralThickness(e.al);
 }
 
-function calculateSRKT(_eyeMeasurements, _dioptresIOL, _dioptresRefraction) {
+function Holladay1 (eyeMeasurements, iolConstants) {
 
-	var _axialLength = _eyeMeasurements.al;
-	var _radius1 = _eyeMeasurements.r1;
-	var _radius2 = _eyeMeasurements.r2;
-	var _aConstant = _eyeMeasurements.acon;
+	var r = (eyeMeasurements.r1 + eyeMeasurements.r2) / 2;
+	var AL = eyeMeasurements.al;
+	var RefTgt = eyeMeasurements.tr;
+
+	var SF = iolConstants.sf;
+
+	var Alm = AL + 0.2;
+	var Rag = r < 7.0 ? 7.0 : r;
+	var AG = (12.5 * AL / 23.45 > 13.5) ? 13.5 : 12.5 * AL / 23.45;
+	var BF7 = (Rag * Rag - (AG * AG / 4.0));
+	var BF8 = Math.sqrt(BF7);
+	var ACD = 0.56 + Rag - BF8;
+	const na = 1.336;
+	const nc_1 = 1.0 / 3.0;
+
+	this.suggestedPower = function() {
+		var numerator = (1000.0 * na * (na * r - nc_1 * Alm - 0.001 * RefTgt * (12.0 * (na * r - nc_1 * Alm) + Alm * r)));
+		var denominator = ((Alm - ACD - SF) * (na * r - nc_1 * (ACD + SF) - 0.001 * RefTgt * (12.0 * (na * r - nc_1 * (ACD + SF)) + (ACD + SF) * r)));
+		return numerator / denominator;	};
+
+	this.powerFor = function(lensPower) {
+		var Numerator = (1000.0 * na * (na * r - (nc_1) * Alm) - lensPower * (Alm - ACD - SF) * (na * r - (nc_1) * (ACD + SF)));
+		var Denominator = (na * (12.0 * (na * r - (nc_1) * Alm) + Alm * r) - 0.001 * lensPower * (Alm - ACD - SF) * (12.0 * (na * r - (nc_1) * (ACD + SF)) + (ACD + SF) * r));
+		return Numerator / Denominator;
+	};
+}
+
+function SRKT (eyeMeasurements, iolConstants) {
+
+	var e = eyeMeasurements;
+	var _axialLength = eyeMeasurements.al;
+	var _radius1 = eyeMeasurements.r1;
+	var _radius2 = eyeMeasurements.r2;
+	var _aConstant = iolConstants.acon;
 
 	// Fixed parameters here (could come from parameter file)
 	var cornealRI = 1.333;	//Refractive index of the cornea as set in IOL Master
@@ -286,97 +321,20 @@ function calculateSRKT(_eyeMeasurements, _dioptresIOL, _dioptresRefraction) {
 	// Post-op anterior chamber depth
 	var postopACDepth = cornealDomeHeight + diff;
 
-	if (_dioptresIOL == null) {
-
-		var top = 1000 * na * (na * averageRadius - diffRI * opticalAxialLength - 0.001 * _dioptresRefraction * (vertexDistance * (na * averageRadius - diffRI * opticalAxialLength) + opticalAxialLength * averageRadius));
-		var bottom = (opticalAxialLength - postopACDepth) * (na * averageRadius - diffRI * postopACDepth - 0.001 * _dioptresRefraction * (vertexDistance * (na * averageRadius - diffRI * postopACDepth) + postopACDepth * averageRadius));
-	}
-	else
-	{
-		var top = 1000 * na * (na * averageRadius - diffRI * opticalAxialLength) - _dioptresIOL * (opticalAxialLength - postopACDepth) * (na * averageRadius - diffRI * postopACDepth);
-		var bottom = (na * (vertexDistance * (na * averageRadius - diffRI * opticalAxialLength) + opticalAxialLength * averageRadius) - 0.001 * _dioptresIOL * (opticalAxialLength - postopACDepth) * (vertexDistance * (na * averageRadius - diffRI * postopACDepth) + postopACDepth * averageRadius));
-
+	this.suggestedPower = function() {
+		var top = 1000 * na * (na * averageRadius - diffRI * opticalAxialLength - 0.001 * e.tr * (vertexDistance * (na * averageRadius - diffRI * opticalAxialLength) + opticalAxialLength * averageRadius));
+		var bottom = (opticalAxialLength - postopACDepth) * (na * averageRadius - diffRI * postopACDepth - 0.001 * e.tr * (vertexDistance * (na * averageRadius - diffRI * postopACDepth) + postopACDepth * averageRadius));
+		returnPower = top / bottom;
+		return returnPower;
 	}
 
-	returnPower = top / bottom;
-	return returnPower;
+	this.powerFor = function(lensPower) {
+		var top = 1000 * na * (na * averageRadius - diffRI * opticalAxialLength) - lensPower * (opticalAxialLength - postopACDepth) * (na * averageRadius - diffRI * postopACDepth);
+		var bottom = (na * (vertexDistance * (na * averageRadius - diffRI * opticalAxialLength) + opticalAxialLength * averageRadius) - 0.001 * lensPower * (opticalAxialLength - postopACDepth) * (vertexDistance * (na * averageRadius - diffRI * postopACDepth) + postopACDepth * averageRadius));
+		returnPower = top / bottom;
+		return returnPower;
+	}
 }
 
-function fillTableUsingFormula(formula_name)
-{
-	clearTable();
-	// Get values
-	debugger;
-	var e = new eye_measurements();
-	var formulaClass = this[formula_name];
-	var formula = new formulaClass(e);
-
-	// Calculate lens power for target refraction
-	var powerIOL = formula.suggestPower(e);
-	if (powerIOL) {
-		// Round to nearest 0.5
-		var roundIOL = Math.round(powerIOL * 2) / 2;
-		// Get power for that IOL
-		var refraction = formula.powerFor(roundIOL);
-		// Iterate towards myopia until value is less than target
-		while (refraction > e.tr) {
-			roundIOL = roundIOL + 0.5;
-			refraction = formula.powerFor(roundIOL);
-		}
-		// Produce results for range of refraction around this one
-		var startPower = roundIOL + 1.0;
-		for (var i = 0; i < 5; i++) {
-			refraction = formula.powerFor(roundIOL);
-
-			// Enforce plus sign
-			var refString = refraction > 0 ? "+" + refraction.toFixed(2) : refraction.toFixed(2);
-
-			addRow(startPower.toFixed(1), refString, i == 2 ? true : false);
-			startPower = startPower - 0.5;
-		}
-	}
-	else {
-		console.log('Unable to calculate power');
-	}
-
-// Clear choice
-	var selection = document.getElementById('Element_OphInBiometry_IolCalculation_iol_power');
-	selection.innerHTML = "";
-	var pred = document.getElementById('rpr');
-	pred.innerHTML = "";
-
-	// Glaucoma: add scleral thickness input if axial length low
-	//scleralThickness(e.al);
-}
-
-//http://www.phpied.com/3-ways-to-define-a-javascript-class/
-function Holladay1 (eye_measurements) {
-
-	this.r = (eye_measurements.r1 + eye_measurements.r2) / 2;
-	this.AL = eye_measurements.al;
-	this.RefTgt = eye_measurements.tr;
-	this.SF = 1.90; //TODO LOAD THIS FROM CONSTANTS
-	this.Alm = this.AL + 0.2;
-	this.Rag = this.r < 7.0 ? 7.0 : this.r;
-	this.AG = (12.5 * this.AL / 23.45 > 13.5) ? 13.5 : 12.5 * this.AL / 23.45;
-	this.BF7 = (this.Rag * this.Rag - (this.AG * this.AG / 4.0));
-	this.BF8 = Math.sqrt(this.BF7);
-	this.ACD = 0.56 + this.Rag - this.BF8;
-	this.AConstant =  1.1; //TODO LOAD THIS FROM CONSTANTS
-	this.na = 1.336;
-	this.nc_1 = 1.0 / 3.0;
-	
-	this.suggestPower = function() {
-		var Numerator = (1000.0 * this.na * (this.na * this.r - this.nc_1 * this.Alm - 0.001 * this.RefTgt * (12.0 * (this.na * this.r - this.nc_1 * this.Alm) + this.Alm * this.r)));
-		var Denominator = ((this.Alm - this.ACD - this.SF) * (this.na * this.r - this.nc_1 * (this.ACD + this.SF) - 0.001 * this.RefTgt * (12.0 * (this.na * this.r - this.nc_1 * (this.ACD + this.SF)) + (this.ACD + this.SF) * this.r)));
-		return Numerator / Denominator;
-	};
-
-	this.powerFor = function(LensPower) {
-		var Numerator = (1000.0 * this.na * (this.na * this.r - (this.nc_1) * this.Alm) - LensPower * (this.Alm - this.ACD - this.SF) * (this.na * this.r - (this.nc_1) * (this.ACD + this.SF)));
-		var Denominator = (this.na * (12.0 * (this.na * this.r - (this.nc_1) * this.Alm) + this.Alm * this.r) - 0.001 * LensPower * (this.Alm - this.ACD - this.SF) * (12.0 * (this.na * this.r - (this.nc_1) * (this.ACD + this.SF)) + (this.ACD + this.SF) * this.r));
-		return Numerator / Denominator;
-	};
-}
 
 

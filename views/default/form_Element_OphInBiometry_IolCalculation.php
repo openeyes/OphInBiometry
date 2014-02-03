@@ -108,6 +108,18 @@
 			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
+						<span class="field-info">SF:</span>
+					</div>
+					<div class="large-10 column">
+						<span id="sf" class="field-info"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-8 column">
+				<div class="row field-row">
+					<div class="large-2 column">
 						<span class="field-info">Position:</span>
 					</div>
 					<div class="large-10 column">
