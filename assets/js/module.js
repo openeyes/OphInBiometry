@@ -78,18 +78,10 @@ $(document).ready(function() {
 
 	function execute_forumula(formula)
 	{
-		var forumulae = [];
-
-		clearTable();
-		forumulae['SRK/T'] = function() {SRKT(); };
-		forumulae['Holladay 1'] = function() { Holladay1(); };
-		forumulae[formula]();
-	}
-
-	function write(what) {
-
-		colors[what]();
-
+		var formulae = [];
+		formulae['SRK/T'] = 'SRKT';
+		formulae['Holladay 1'] = 'Holladay1';
+		fillTableUsingFormula(formulae[formula]);
 	}
 
 	function update_biometry_data()
@@ -310,32 +302,31 @@ function calculateSRKT(_eyeMeasurements, _dioptresIOL, _dioptresRefraction) {
 	return returnPower;
 }
 
-function Holladay1()
+function fillTableUsingFormula(formula_name)
 {
 	clearTable();
 	// Get values
+	debugger;
 	var e = new eye_measurements();
+	var formulaClass = this[formula_name];
+	var formula = new formulaClass(e);
 
 	// Calculate lens power for target refraction
-	var powerIOL = Holladay1_SuggestedPower(e);
+	var powerIOL = formula.suggestPower(e);
 	if (powerIOL) {
 		// Round to nearest 0.5
 		var roundIOL = Math.round(powerIOL * 2) / 2;
-
 		// Get power for that IOL
-		var refraction = Holladay1_PowerFor(e, roundIOL);
-
+		var refraction = formula.powerFor(roundIOL);
 		// Iterate towards myopia until value is less than target
 		while (refraction > e.tr) {
 			roundIOL = roundIOL + 0.5;
-			refraction = Holladay1_PowerFor(e, roundIOL);
+			refraction = formula.powerFor(roundIOL);
 		}
-
-// Produce results for range of refraction around this one
+		// Produce results for range of refraction around this one
 		var startPower = roundIOL + 1.0;
-
 		for (var i = 0; i < 5; i++) {
-			refraction = Holladay1_PowerFor(e, roundIOL);
+			refraction = formula.powerFor(roundIOL);
 
 			// Enforce plus sign
 			var refString = refraction > 0 ? "+" + refraction.toFixed(2) : refraction.toFixed(2);
@@ -358,46 +349,34 @@ function Holladay1()
 	//scleralThickness(e.al);
 }
 
-function Holladay1_SuggestedPower(eye_measurements)
-{
-	var r = (eye_measurements.r1 + eye_measurements.r2) / 2;
-	var AL = eye_measurements.al;
-	var RefTgt = eye_measurements.tr;
-	var SF = 1.90; //TODO LOAD THIS FROM CONSTANTS
-	var Alm = AL + 0.2;
-	var Rag = r < 7.0 ? 7.0 : r;
-	var AG = (12.5 * AL / 23.45 > 13.5) ? 13.5 : 12.5 * AL / 23.45;
-	var BF7 = (Rag * Rag - (AG * AG / 4.0));
-	var BF8 = Math.sqrt(BF7);
-	var ACD = 0.56 + Rag - BF8;
-	var AConstant =  1.1; //TODO LOAD THIS FROM CONSTANTS
-	const na = 1.336;
-	const nc_1 = 1.0 / 3.0;
+//http://www.phpied.com/3-ways-to-define-a-javascript-class/
+function Holladay1 (eye_measurements) {
 
-	var Numerator = (1000.0 * na * (na * r - nc_1 * Alm - 0.001 * RefTgt * (12.0 * (na * r - nc_1 * Alm) + Alm * r)));
-	var Denominator = ((Alm - ACD - SF) * (na * r - nc_1 * (ACD + SF) - 0.001 * RefTgt * (12.0 * (na * r - nc_1 * (ACD + SF)) + (ACD + SF) * r)));
-	return Numerator / Denominator;	return Numerator / Denominator;
-}
+	this.r = (eye_measurements.r1 + eye_measurements.r2) / 2;
+	this.AL = eye_measurements.al;
+	this.RefTgt = eye_measurements.tr;
+	this.SF = 1.90; //TODO LOAD THIS FROM CONSTANTS
+	this.Alm = this.AL + 0.2;
+	this.Rag = this.r < 7.0 ? 7.0 : this.r;
+	this.AG = (12.5 * this.AL / 23.45 > 13.5) ? 13.5 : 12.5 * this.AL / 23.45;
+	this.BF7 = (this.Rag * this.Rag - (this.AG * this.AG / 4.0));
+	this.BF8 = Math.sqrt(this.BF7);
+	this.ACD = 0.56 + this.Rag - this.BF8;
+	this.AConstant =  1.1; //TODO LOAD THIS FROM CONSTANTS
+	this.na = 1.336;
+	this.nc_1 = 1.0 / 3.0;
+	
+	this.suggestPower = function() {
+		var Numerator = (1000.0 * this.na * (this.na * this.r - this.nc_1 * this.Alm - 0.001 * this.RefTgt * (12.0 * (this.na * this.r - this.nc_1 * this.Alm) + this.Alm * this.r)));
+		var Denominator = ((this.Alm - this.ACD - this.SF) * (this.na * this.r - this.nc_1 * (this.ACD + this.SF) - 0.001 * this.RefTgt * (12.0 * (this.na * this.r - this.nc_1 * (this.ACD + this.SF)) + (this.ACD + this.SF) * this.r)));
+		return Numerator / Denominator;
+	};
 
-function Holladay1_PowerFor(eye_measurements, LensPower)
-{
-	var r = (eye_measurements.r1 + eye_measurements.r2) / 2;
-	var AL = eye_measurements.al;
-	var RefTgt = eye_measurements.tr;
-	var SF = 1.90; //TODO LOAD THIS FROM CONSTANTS
-	var Alm = AL + 0.2;
-	var Rag = r < 7.0 ? 7.0 : r;
-	var AG = (12.5 * AL / 23.45 > 13.5) ? 13.5 : 12.5 * AL / 23.45;
-	var BF7 = (Rag * Rag - (AG * AG / 4.0));
-	var BF8 = Math.sqrt(BF7);
-	var ACD = 0.56 + Rag - BF8;
-	var AConstant =  1.1; //TODO LOAD THIS FROM CONSTANTS
-	const na = 1.336;
-	const nc_1 = 1.0 / 3.0;
-
-	var Numerator = (1000.0 * na * (na * r - (nc_1) * Alm) - LensPower * (Alm - ACD - SF) * (na * r - (nc_1) * (ACD + SF)));
-	var Denominator = (na * (12.0 * (na * r - (nc_1) * Alm) + Alm * r) - 0.001 * LensPower * (Alm - ACD - SF) * (12.0 * (na * r - (nc_1) * (ACD + SF)) + (ACD + SF) * r));
-	return Numerator / Denominator;
+	this.powerFor = function(LensPower) {
+		var Numerator = (1000.0 * this.na * (this.na * this.r - (this.nc_1) * this.Alm) - LensPower * (this.Alm - this.ACD - this.SF) * (this.na * this.r - (this.nc_1) * (this.ACD + this.SF)));
+		var Denominator = (this.na * (12.0 * (this.na * this.r - (this.nc_1) * this.Alm) + this.Alm * this.r) - 0.001 * LensPower * (this.Alm - this.ACD - this.SF) * (12.0 * (this.na * this.r - (this.nc_1) * (this.ACD + this.SF)) + (this.ACD + this.SF) * this.r));
+		return Numerator / Denominator;
+	};
 }
 
 
