@@ -1,4 +1,5 @@
-<?php /**
+<?php
+/**
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -17,11 +18,12 @@
  */
 
 /**
- * This is the model class for table "ophinbiometry_iolcalc_iol_selection".
+ * This is the model class for table "et_ophinbiometry_lenstype".
  *
  * The followings are the available columns in table:
  * @property string $id
- * @property string $name
+ * @property integer $event_id
+ * @property integer $lens_id
  *
  * The followings are the available model relations:
  *
@@ -30,10 +32,13 @@
  * @property Event $event
  * @property User $user
  * @property User $usermodified
+ * @property OphInBiometry_LensType_Lens $lens
  */
 
-class OphInBiometry_IolCalculation_IolSelection extends BaseActiveRecordVersioned
+class Element_OphInBiometry_LensType extends BaseEventTypeElement
 {
+	public $service;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -48,7 +53,7 @@ class OphInBiometry_IolCalculation_IolSelection extends BaseActiveRecordVersione
 	 */
 	public function tableName()
 	{
-		return 'ophinbiometry_iolcalc_iol_selection';
+		return 'et_ophinbiometry_lenstype';
 	}
 
 	/**
@@ -59,11 +64,11 @@ class OphInBiometry_IolCalculation_IolSelection extends BaseActiveRecordVersione
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'safe'),
-			array('name', 'required'),
+			array('event_id, lens_id, ', 'safe'),
+			array('lens_id, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name', 'safe', 'on' => 'search'),
+			array('id, event_id, lens_id, ', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -80,6 +85,7 @@ class OphInBiometry_IolCalculation_IolSelection extends BaseActiveRecordVersione
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+			'lens' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id'),
 		);
 	}
 
@@ -90,7 +96,8 @@ class OphInBiometry_IolCalculation_IolSelection extends BaseActiveRecordVersione
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
+			'event_id' => 'Event',
+			'lens_id' => 'Len',
 		);
 	}
 
@@ -106,19 +113,15 @@ class OphInBiometry_IolCalculation_IolSelection extends BaseActiveRecordVersione
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('name', $this->name, true);
+		$criteria->compare('event_id', $this->event_id, true);
+		$criteria->compare('lens_id', $this->lens_id);
 
 		return new CActiveDataProvider(get_class($this), array(
-				'criteria' => $criteria,
-			));
+			'criteria' => $criteria,
+		));
 	}
 
-	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
-	}
+
 
 	protected function beforeSave()
 	{
@@ -127,6 +130,7 @@ class OphInBiometry_IolCalculation_IolSelection extends BaseActiveRecordVersione
 
 	protected function afterSave()
 	{
+
 		return parent::afterSave();
 	}
 

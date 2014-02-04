@@ -1,4 +1,5 @@
-<?php /**
+<?php
+/**
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -17,11 +18,14 @@
  */
 
 /**
- * This is the model class for table "ophinbiometry_iolcalc_formula".
+ * This is the model class for table "et_ophinbiometry_biometrydat".
  *
  * The followings are the available columns in table:
  * @property string $id
- * @property string $name
+ * @property integer $event_id
+ * @property string $axial_length
+ * @property string $r1
+ * @property string $r2
  *
  * The followings are the available model relations:
  *
@@ -32,8 +36,10 @@
  * @property User $usermodified
  */
 
-class OphInBiometry_IolCalculation_Formula extends BaseActiveRecordVersioned
+class Element_OphInBiometry_BiometryData extends BaseEventTypeElement
 {
+	public $service;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -48,7 +54,7 @@ class OphInBiometry_IolCalculation_Formula extends BaseActiveRecordVersioned
 	 */
 	public function tableName()
 	{
-		return 'ophinbiometry_iolcalc_formula';
+		return 'et_ophinbiometry_biometrydat';
 	}
 
 	/**
@@ -59,11 +65,11 @@ class OphInBiometry_IolCalculation_Formula extends BaseActiveRecordVersioned
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'safe'),
-			array('name', 'required'),
+			array('event_id, axial_length, r1, r2, ', 'safe'),
+			array('axial_length, r1, r2, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name', 'safe', 'on' => 'search'),
+			array('id, event_id, axial_length, r1, r2, ', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -90,7 +96,10 @@ class OphInBiometry_IolCalculation_Formula extends BaseActiveRecordVersioned
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
+			'event_id' => 'Event',
+			'axial_length' => 'Axial Length',
+			'r1' => 'R1',
+			'r2' => 'R2',
 		);
 	}
 
@@ -106,19 +115,17 @@ class OphInBiometry_IolCalculation_Formula extends BaseActiveRecordVersioned
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('name', $this->name, true);
+		$criteria->compare('event_id', $this->event_id, true);
+		$criteria->compare('axial_length', $this->axial_length);
+		$criteria->compare('r1', $this->r1);
+		$criteria->compare('r2', $this->r2);
 
 		return new CActiveDataProvider(get_class($this), array(
-				'criteria' => $criteria,
-			));
+			'criteria' => $criteria,
+		));
 	}
 
-	/**
-	 * Set default values for forms on create
-	 */
-	public function setDefaultOptions()
-	{
-	}
+
 
 	protected function beforeSave()
 	{
@@ -127,6 +134,7 @@ class OphInBiometry_IolCalculation_Formula extends BaseActiveRecordVersioned
 
 	protected function afterSave()
 	{
+
 		return parent::afterSave();
 	}
 

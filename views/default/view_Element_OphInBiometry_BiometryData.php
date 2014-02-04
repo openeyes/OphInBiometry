@@ -25,31 +25,15 @@
 	<div class="element-data">
 				<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('axial_length'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo $element->axial_length?></div></div>
+			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->axial_length)?></div></div>
 		</div>
 		<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r1'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo $element->r1?></div></div>
+			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->r1)?></div></div>
 		</div>
 		<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r2'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo $element->r2?></div></div>
-		</div>
-		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_selection_id'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo $element->iol_selection ? $element->iol_selection->name : 'None'?></div></div>
-		</div>
-		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('targeted_refraction'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->targeted_refraction)?></div></div>
-		</div>
-		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('formula_id'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo $element->formula ? $element->formula->name : 'None'?></div></div>
-		</div>
-		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->iol_power)?></div></div>
+			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->r2)?></div></div>
 		</div>
 	</div>
 </section>

@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -18,15 +17,11 @@
  */
 
 /**
- * This is the model class for table "et_ophinbiometry_iolcalc".
+ * This is the model class for table "ophinbiometry_calculation_formula".
  *
  * The followings are the available columns in table:
  * @property string $id
- * @property integer $event_id
- * @property integer $iol_selection_id
- * @property string $targeted_refraction
- * @property integer $formula_id
- * @property string $iol_power
+ * @property string $name
  *
  * The followings are the available model relations:
  *
@@ -35,14 +30,10 @@
  * @property Event $event
  * @property User $user
  * @property User $usermodified
- * @property OphInBiometry_IolCalculation_IolSelection $iol_selection
- * @property OphInBiometry_IolCalculation_Formula $formula
  */
 
-class Element_OphInBiometry_IolCalculation extends BaseEventTypeElement
+class OphInBiometry_Calculation_Formula extends BaseActiveRecordVersioned
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -57,7 +48,7 @@ class Element_OphInBiometry_IolCalculation extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophinbiometry_iolcalc';
+		return 'ophinbiometry_calculation_formula';
 	}
 
 	/**
@@ -68,14 +59,11 @@ class Element_OphInBiometry_IolCalculation extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, axial_length, r1, r2, iol_selection_id, targeted_refraction, formula_id, iol_power, ', 'safe'),
-			array('axial_length, r1, r2, iol_selection_id, targeted_refraction, formula_id, iol_power, ', 'required'),
+			array('name', 'safe'),
+			array('name', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, axial_length, r1, r2, iol_selection_id, targeted_refraction, formula_id, iol_power, ', 'safe', 'on' => 'search'),
-			array('axial_length', 'numerical', 'numberPattern' => '/^\s*[\+\-]?\d+\.?\d*\s*$/',),
-			array('r1', 'numerical', 'numberPattern' => '/^\s*[\+\-]?\d+\.?\d*\s*$/',),
-			array('r2', 'numerical', 'numberPattern' => '/^\s*[\+\-]?\d+\.?\d*\s*$/',),
+			array('id, name', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -92,8 +80,6 @@ class Element_OphInBiometry_IolCalculation extends BaseEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'iol_selection' => array(self::BELONGS_TO, 'OphInBiometry_IolCalculation_IolSelection', 'iol_selection_id'),
-			'formula' => array(self::BELONGS_TO, 'OphInBiometry_IolCalculation_Formula', 'formula_id'),
 		);
 	}
 
@@ -104,14 +90,7 @@ class Element_OphInBiometry_IolCalculation extends BaseEventTypeElement
 	{
 		return array(
 			'id' => 'ID',
-			'event_id' => 'Event',
-			'axial_length' => 'Axial Length',
-			'r1' => 'R1',
-			'r2' => 'R2',
-			'iol_selection_id' => 'IOL Selection',
-			'targeted_refraction' => 'Targeted Refraction',
-			'formula_id' => 'Formula',
-			'iol_power' => 'IOL Power',
+			'name' => 'Name',
 		);
 	}
 
@@ -127,21 +106,19 @@ class Element_OphInBiometry_IolCalculation extends BaseEventTypeElement
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('axial_length', $this->axial_length);
-		$criteria->compare('r1', $this->r1);
-		$criteria->compare('r2', $this->r2);
-		$criteria->compare('iol_selection_id', $this->iol_selection_id);
-		$criteria->compare('targeted_refraction', $this->targeted_refraction);
-		$criteria->compare('formula_id', $this->formula_id);
-		$criteria->compare('iol_power', $this->iol_power);
+		$criteria->compare('name', $this->name, true);
 
 		return new CActiveDataProvider(get_class($this), array(
-			'criteria' => $criteria,
-		));
+				'criteria' => $criteria,
+			));
 	}
 
-
+	/**
+	 * Set default values for forms on create
+	 */
+	public function setDefaultOptions()
+	{
+	}
 
 	protected function beforeSave()
 	{
@@ -150,7 +127,6 @@ class Element_OphInBiometry_IolCalculation extends BaseEventTypeElement
 
 	protected function afterSave()
 	{
-
 		return parent::afterSave();
 	}
 

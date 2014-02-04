@@ -22,32 +22,16 @@
 <table class="subtleWhite normalText">
 	<tbody>
 		<tr>
-			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('axial_length'))?></td>
-			<td><span class="big"><?php echo $element->axial_length?></span></td>
-		</tr>
-		<tr>
-			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('r1'))?></td>
-			<td><span class="big"><?php echo $element->r1?></span></td>
-		</tr>
-		<tr>
-			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('r2'))?></td>
-			<td><span class="big"><?php echo $element->r2?></span></td>
-		</tr>
-		<tr>
-			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('iol_selection_id'))?></td>
-			<td><span class="big"><?php echo $element->iol_selection ? $element->iol_selection->name : 'None'?></span></td>
-		</tr>
-		<tr>
-			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('targeted_refraction'))?></td>
-			<td><span class="big"><?php echo CHtml::encode($element->targeted_refraction)?></span></td>
-		</tr>
-		<tr>
-			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('formula_id'))?></td>
-			<td><span class="big"><?php echo $element->formula ? $element->formula->name : 'None'?></span></td>
+			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('lens'))?></td>
+			<td><span class="big"><?php echo CHtml::encode($element->lens)?></span></td>
 		</tr>
 		<tr>
 			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?></td>
 			<td><span class="big"><?php echo CHtml::encode($element->iol_power)?></span></td>
+		</tr>
+		<tr>
+			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refration'))?></td>
+			<td><span class="big"><?php echo CHtml::encode($element->predicted_refration)?></span></td>
 		</tr>
 	</tbody>
 </table>
