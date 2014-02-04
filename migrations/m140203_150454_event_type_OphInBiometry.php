@@ -255,7 +255,7 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'lens' => 'varchar(255) DEFAULT \'\'', // Lens
 				'iol_power' => 'varchar(255) DEFAULT \'\'', // IOL Power
-				'predicted_refration' => 'varchar(255) DEFAULT \'\'', // Predicted Refration
+				'predicted_refraction' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',

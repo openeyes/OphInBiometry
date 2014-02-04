@@ -43,46 +43,6 @@
 					</tr>
 					</thead>
 					<tbody id="tableBody">
-					<tr>
-						<td>
-							<button>25.0</button>
-						</td>
-						<td>
-							<p>-1.49</p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button onclick="iolSelected(this.innerHTML)">24.5</button>
-						</td>
-						<td>
-							<p>-0.97</p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button onclick="iolSelected(this.innerHTML)">24.0</button>
-						</td>
-						<td>
-							<p><b>-0.47</b></p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button onclick="iolSelected(this.innerHTML)">23.5</button>
-						</td>
-						<td>
-							<p>+0.03</p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<button onclick="iolSelected(this.innerHTML)">23.0</button>
-						</td>
-						<td>
-							<p>+0.53</p>
-						</td>
-					</tr>
 					</tbody>
 				</table>
 			</div>

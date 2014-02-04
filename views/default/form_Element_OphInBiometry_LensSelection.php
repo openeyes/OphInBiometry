@@ -29,6 +29,6 @@
 	<div class="element-fields">
 	<?php echo $form->textField($element, 'lens', array('size' => '10'),null, array('label'=>2, 'field'=>3))?>
 	<?php echo $form->textField($element, 'iol_power', array('size' => '10'), null, array('label'=>2, 'field'=>3))?>
-	<?php echo $form->textField($element, 'predicted_refration', array('size' => '10'), null, array('label'=>2, 'field'=>3))?>
+	<?php echo $form->textField($element, 'predicted_refraction', array('size' => '10'), null, array('label'=>2, 'field'=>3))?>
 	</div>
 </section>

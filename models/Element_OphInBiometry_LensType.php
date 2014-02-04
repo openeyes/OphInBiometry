@@ -97,7 +97,7 @@ class Element_OphInBiometry_LensType extends BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'lens_id' => 'Len',
+			'lens_id' => 'Lens',
 		);
 	}
 
