@@ -117,6 +117,7 @@ $(document).ready(function() {
 	}
 
 	$('#Element_OphInBiometry_LensType_lens_id').change(function() {
+		updateSuggestedPowerTable();
 		iolType($(this).val());
 	})
 });

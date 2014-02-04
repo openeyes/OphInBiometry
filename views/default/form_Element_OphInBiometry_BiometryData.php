@@ -29,9 +29,9 @@
 	<div class="element-fields">
 		<div class="row">
 			<div class="large-8 column">
-				<?php echo $form->textField($element, 'axial_length', array('size' => '10','maxlength' => '4', 'append-text'=>'SNR = 193.0'), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
-				<?php echo $form->textField($element, 'r1', array('size' => '10','maxlength' => '4', 'append-text'=>'0 D @ 54°'), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
-				<?php echo $form->textField($element, 'r2', array('size' => '10','maxlength' => '4', 'append-text'=>'0 D @ 144° '), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
+				<?php echo $form->textField($element, 'axial_length', array('size' => '10','maxlength' => '5', 'append-text'=>'SNR = 193.0'), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
+				<?php echo $form->textField($element, 'r1', array('size' => '10','maxlength' => '5', 'append-text'=>'0 D @ 54°'), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
+				<?php echo $form->textField($element, 'r2', array('size' => '10','maxlength' => '5', 'append-text'=>'0 D @ 144° '), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
 			</div>
 		</div>
 		<div class="row">

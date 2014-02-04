@@ -35,9 +35,9 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 		$this->createTable('et_ophinbiometry_biometrydat', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'axial_length' => 'varchar(255) DEFAULT \'\'', // Axial Length
-				'r1' => 'varchar(255) DEFAULT \'\'', // R1
-				'r2' => 'varchar(255) DEFAULT \'\'', // R2
+				'axial_length' => 'decimal (2, 2) NOT NULL', // Axial Length
+				'r1' => 'decimal (2, 2) NOT NULL', // R1
+				'r2' => 'decimal (2, 2) NOT NULL', // R2
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -55,9 +55,9 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 		$this->createTable('et_ophinbiometry_biometrydat_version', array(
 				'id' => 'int(10) unsigned NOT NULL',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'axial_length' => 'varchar(255) DEFAULT \'\'', // Axial Length
-				'r1' => 'varchar(255) DEFAULT \'\'', // R1
-				'r2' => 'varchar(255) DEFAULT \'\'', // R2
+				'axial_length' => 'decimal (2, 2) NOT NULL', // Axial Length
+				'r1' => 'decimal (2, 2) NOT NULL', // R1
+				'r2' => 'decimal (2, 2) NOT NULL', // R2
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
