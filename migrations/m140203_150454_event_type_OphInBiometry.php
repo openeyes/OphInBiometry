@@ -35,9 +35,9 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 		$this->createTable('et_ophinbiometry_biometrydat', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'axial_length' => 'decimal (2, 2) NOT NULL', // Axial Length
-				'r1' => 'decimal (2, 2) NOT NULL', // R1
-				'r2' => 'decimal (2, 2) NOT NULL', // R2
+				'axial_length' => 'decimal (5, 2) NOT NULL', // Axial Length
+				'r1' => 'decimal (5, 2) NOT NULL', // R1
+				'r2' => 'decimal (5, 2) NOT NULL', // R2
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -55,9 +55,9 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 		$this->createTable('et_ophinbiometry_biometrydat_version', array(
 				'id' => 'int(10) unsigned NOT NULL',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'axial_length' => 'decimal (2, 2) NOT NULL', // Axial Length
-				'r1' => 'decimal (2, 2) NOT NULL', // R1
-				'r2' => 'decimal (2, 2) NOT NULL', // R2
+				'axial_length' => 'decimal (5, 2) NOT NULL', // Axial Length
+				'r1' => 'decimal (5, 2) NOT NULL', // R1
+				'r2' => 'decimal (5, 2) NOT NULL', // R2
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -298,15 +298,11 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 
 	public function down()
 	{
-
 		$this->dropTable('et_ophinbiometry_biometrydat_version');
 		$this->dropTable('et_ophinbiometry_biometrydat');
 
-
-
 		$this->dropTable('et_ophinbiometry_lenstype_version');
 		$this->dropTable('et_ophinbiometry_lenstype');
-
 
 		$this->dropTable('ophinbiometry_lenstype_lens_version');
 		$this->dropTable('ophinbiometry_lenstype_lens');
@@ -314,15 +310,11 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 		$this->dropTable('et_ophinbiometry_calculation_version');
 		$this->dropTable('et_ophinbiometry_calculation');
 
-
 		$this->dropTable('ophinbiometry_calculation_formula_version');
 		$this->dropTable('ophinbiometry_calculation_formula');
 
 		$this->dropTable('et_ophinbiometry_lensselecti_version');
 		$this->dropTable('et_ophinbiometry_lensselecti');
-
-
-
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('class_name=:class_name', array(':class_name'=>'OphInBiometry'))->queryRow();
 

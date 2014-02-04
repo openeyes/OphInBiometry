@@ -1,6 +1,4 @@
 
-/* Module-specific javascript can be placed here */
-
 $(document).ready(function() {
 
 	handleButton($('#et_save'),function() {
@@ -55,13 +53,6 @@ $(document).ready(function() {
 		}
 	}
 
-	function update()
-	{
-		clearChoice();
-		updateBiometryData();
-		updateSuggestedPowerTable();
-	}
-
 	$('#Element_OphInBiometry_BiometryData_axial_length').change(function() {
 		update();
 	})
@@ -83,63 +74,56 @@ $(document).ready(function() {
 	})
 
 	$('#Element_OphInBiometry_LensType_lens_id').change(function() {
-		iolType($(this).val());
 		update();
 	})
 
-	function updateSuggestedPowerTable()
-	{
-		executeFormula($('#Element_OphInBiometry_Calculation_formula_id option:selected').text());
-	}
-
-	function executeFormula(formula)
-	{
-		var formulae = [];
-		formulae['SRK/T'] = 'SRKT';
-		formulae['Holladay 1'] = 'Holladay1';
-		formulae['T2'] = 'T2';
-		fillTableUsingFormula(formulae[formula]);
-	}
-
-	function updateBiometryData()
-	{
-		var r1 = parseFloat($('#Element_OphInBiometry_BiometryData_r1').val());
-		var k1Value = 337.5 / r1;
-		$('#div_Element_OphInBiometry_BiometryData_r1').find('.field-info').text(k1Value.toFixed(2) + " D @ 54°");
-
-		var r2 = parseFloat($('#Element_OphInBiometry_BiometryData_r2').val());
-		var k2Value = 337.5 / r2;
-		$('#div_Element_OphInBiometry_BiometryData_r2').find('.field-info').text(k2Value.toFixed(2) + " D @ 144°");
-
-
-		var se = document.getElementById('rse');
-		var cyl = document.getElementById('cyl');
-
-		var seValue = (r1 + r2) / 2;
-		se.innerHTML = seValue.toFixed(2) + " mm";
-
-		var cylValue = k1Value - k2Value;
-		cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
-	}
-
+	renderCalculatedValues();
 
 });
 
-function EyeMeasurements()
+function update()
 {
-	this.al=parseFloat($('#Element_OphInBiometry_BiometryData_axial_length').val());
-	this.r1=parseFloat($('#Element_OphInBiometry_BiometryData_r1').val());
-	this.r2=parseFloat($('#Element_OphInBiometry_BiometryData_r2').val());
-	this.tr=parseFloat($('#Element_OphInBiometry_Calculation_target_refraction').val());
+	clearChoice();
+	renderCalculatedValues();
 }
 
-function IolConstants()
-{
-	this.acon=parseFloat(document.getElementById('acon').innerHTML);
-	this.sf=parseFloat(document.getElementById('sf').innerHTML);
+function clearChoice() {
+	var lens = document.getElementById('Element_OphInBiometry_LensSelection_lens');
+	lens.value = "";
+	var iolPower = document.getElementById('Element_OphInBiometry_LensSelection_iol_power');
+	iolPower.value = "";
+	var refraction = document.getElementById('Element_OphInBiometry_LensSelection_predicted_refraction');
+	refraction.value = "";
 }
 
-function iolType(_index) {
+function renderCalculatedValues()
+{
+	updateBiometryData();
+	updateIolData($('#Element_OphInBiometry_LensType_lens_id').val());
+	updateSuggestedPowerTable();
+}
+
+function updateBiometryData()
+{
+	var r1 = parseFloat($('#Element_OphInBiometry_BiometryData_r1').val());
+	var k1Value = 337.5 / r1;
+	$('#div_Element_OphInBiometry_BiometryData_r1').find('.field-info').text(k1Value.toFixed(2) + " D @ 54°");
+
+	var r2 = parseFloat($('#Element_OphInBiometry_BiometryData_r2').val());
+	var k2Value = 337.5 / r2;
+	$('#div_Element_OphInBiometry_BiometryData_r2').find('.field-info').text(k2Value.toFixed(2) + " D @ 144°");
+
+	var se = document.getElementById('rse');
+	var cyl = document.getElementById('cyl');
+
+	var seValue = (r1 + r2) / 2;
+	se.innerHTML = seValue.toFixed(2) + " mm";
+
+	var cylValue = k1Value - k2Value;
+	cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
+}
+
+function updateIolData(_index) {
 	var acon = document.getElementById('acon');
 	var sf = document.getElementById('sf');
 	var type = document.getElementById('type');
@@ -159,45 +143,18 @@ function iolType(_index) {
 	comments.innerHTML = lens[_index].comments;
 }
 
-function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
-
-	// Get reference to table
-	var table = document.getElementById('iol-table');
-
-	// Index of next row is equal to number of rows
-	var nextRowIndex = table.tBodies[0].rows.length;
-
-	// Add new row
-	var newRow = table.tBodies[0].insertRow(nextRowIndex);
-
-	// IOL
-	var cell0 = newRow.insertCell(0);
-	var node = document.createElement('button');
-	node.setAttribute('onclick', 'iolSelected(' + _dioptresIOL + ',' + _dioptresRefraction +')');
-	node.innerHTML = _dioptresIOL;
-	cell0.appendChild(node);
-
-	// Refraction
-	var cell1 = newRow.insertCell(1);
-	node = document.createElement('p');
-	if (!_bold) node.innerHTML = _dioptresRefraction;
-	else node.innerHTML = '<b>' + _dioptresRefraction + '</b>';
-	cell1.appendChild(node);
+function updateSuggestedPowerTable()
+{
+	executeFormula($('#Element_OphInBiometry_Calculation_formula_id option:selected').text());
 }
 
-
-// Delete all rows
-function clearTable() {
-	// Get reference to table
-	var table = document.getElementById('iol-table');
-
-	// Get number of rows
-	var numberOfRows = table.tBodies[0].rows.length;
-
-	// Delete them
-	for (var i = 0; i < numberOfRows; i++) {
-		table.deleteRow(1);
-	}
+function executeFormula(formula)
+{
+	var formulae = [];
+	formulae['SRK/T'] = 'SRKT';
+	formulae['Holladay 1'] = 'Holladay1';
+	formulae['T2'] = 'T2';
+	fillTableUsingFormula(formulae[formula]);
 }
 
 function fillTableUsingFormula(formulaName)
@@ -242,6 +199,46 @@ function fillTableUsingFormula(formulaName)
 	}
 }
 
+// Delete all rows
+function clearTable() {
+	// Get reference to table
+	var table = document.getElementById('iol-table');
+
+	// Get number of rows
+	var numberOfRows = table.tBodies[0].rows.length;
+
+	// Delete them
+	for (var i = 0; i < numberOfRows; i++) {
+		table.deleteRow(1);
+	}
+}
+
+function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
+
+	// Get reference to table
+	var table = document.getElementById('iol-table');
+
+	// Index of next row is equal to number of rows
+	var nextRowIndex = table.tBodies[0].rows.length;
+
+	// Add new row
+	var newRow = table.tBodies[0].insertRow(nextRowIndex);
+
+	// IOL
+	var cell0 = newRow.insertCell(0);
+	var node = document.createElement('button');
+	node.setAttribute('onclick', 'iolSelected(' + _dioptresIOL + ',' + _dioptresRefraction +')');
+	node.innerHTML = _dioptresIOL;
+	cell0.appendChild(node);
+
+	// Refraction
+	var cell1 = newRow.insertCell(1);
+	node = document.createElement('p');
+	if (!_bold) node.innerHTML = _dioptresRefraction;
+	else node.innerHTML = '<b>' + _dioptresRefraction + '</b>';
+	cell1.appendChild(node);
+}
+
 function iolSelected(power, refraction) {
 	event.preventDefault();
 	clearChoice();
@@ -253,13 +250,18 @@ function iolSelected(power, refraction) {
 	predictedRefraction.value = refraction;
 }
 
-function clearChoice() {
-	var lens = document.getElementById('Element_OphInBiometry_LensSelection_lens');
-	lens.value = "";
-	var iolPower = document.getElementById('Element_OphInBiometry_LensSelection_iol_power');
-	iolPower.value = "";
-	var refraction = document.getElementById('Element_OphInBiometry_LensSelection_predicted_refraction');
-	refraction.value = "";
+function EyeMeasurements()
+{
+	this.al=parseFloat($('#Element_OphInBiometry_BiometryData_axial_length').val());
+	this.r1=parseFloat($('#Element_OphInBiometry_BiometryData_r1').val());
+	this.r2=parseFloat($('#Element_OphInBiometry_BiometryData_r2').val());
+	this.tr=parseFloat($('#Element_OphInBiometry_Calculation_target_refraction').val());
+}
+
+function IolConstants()
+{
+	this.acon=parseFloat(document.getElementById('acon').innerHTML);
+	this.sf=parseFloat(document.getElementById('sf').innerHTML);
 }
 
 function Holladay1 (eyeMeasurements, iolConstants) {
