@@ -30,8 +30,8 @@
 			<td><span class="big"><?php echo CHtml::encode($element->iol_power)?></span></td>
 		</tr>
 		<tr>
-			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refration'))?></td>
-			<td><span class="big"><?php echo CHtml::encode($element->predicted_refration)?></span></td>
+			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?></td>
+			<td><span class="big"><?php echo CHtml::encode($element->predicted_refraction)?></span></td>
 		</tr>
 	</tbody>
 </table>

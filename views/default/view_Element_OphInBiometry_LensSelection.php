@@ -32,8 +32,8 @@
 			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->iol_power)?></div></div>
 		</div>
 		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refration'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->predicted_refration)?></div></div>
+			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?></div></div>
+			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->predicted_refraction)?></div></div>
 		</div>
 	</div>
 </section>

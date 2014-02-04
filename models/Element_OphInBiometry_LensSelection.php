@@ -25,7 +25,7 @@
  * @property integer $event_id
  * @property string $lens
  * @property string $iol_power
- * @property string $predicted_refration
+ * @property string $predicted_refraction
  *
  * The followings are the available model relations:
  *
@@ -65,11 +65,11 @@ class Element_OphInBiometry_LensSelection extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, lens, iol_power, predicted_refration, ', 'safe'),
-			array('lens, iol_power, predicted_refration, ', 'required'),
+			array('event_id, lens, iol_power, predicted_refraction, ', 'safe'),
+			array('lens, iol_power, predicted_refraction, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, lens, iol_power, predicted_refration, ', 'safe', 'on' => 'search'),
+			array('id, event_id, lens, iol_power, predicted_refraction, ', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -99,7 +99,7 @@ class Element_OphInBiometry_LensSelection extends BaseEventTypeElement
 			'event_id' => 'Event',
 			'lens' => 'Lens',
 			'iol_power' => 'IOL Power',
-			'predicted_refration' => 'Predicted Refration',
+			'predicted_refraction' => 'Predicted Refraction',
 		);
 	}
 
@@ -118,7 +118,7 @@ class Element_OphInBiometry_LensSelection extends BaseEventTypeElement
 		$criteria->compare('event_id', $this->event_id, true);
 		$criteria->compare('lens', $this->lens);
 		$criteria->compare('iol_power', $this->iol_power);
-		$criteria->compare('predicted_refration', $this->predicted_refration);
+		$criteria->compare('predicted_refraction', $this->predicted_refraction);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
