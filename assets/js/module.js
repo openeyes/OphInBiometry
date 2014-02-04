@@ -57,6 +57,7 @@ $(document).ready(function() {
 
 	function update()
 	{
+		clearChoice();
 		updateBiometryData();
 		updateSuggestedPowerTable();
 	}
@@ -78,6 +79,11 @@ $(document).ready(function() {
 	})
 
 	$('#Element_OphInBiometry_Calculation_formula_id').change(function() {
+		update();
+	})
+
+	$('#Element_OphInBiometry_LensType_lens_id').change(function() {
+		iolType($(this).val());
 		update();
 	})
 
@@ -116,10 +122,7 @@ $(document).ready(function() {
 		cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
 	}
 
-	$('#Element_OphInBiometry_LensType_lens_id').change(function() {
-		updateSuggestedPowerTable();
-		iolType($(this).val());
-	})
+
 });
 
 function EyeMeasurements()
@@ -170,7 +173,7 @@ function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
 	// IOL
 	var cell0 = newRow.insertCell(0);
 	var node = document.createElement('button');
-	node.setAttribute('onclick', 'iolSelected(this.innerHTML)');
+	node.setAttribute('onclick', 'iolSelected(' + _dioptresIOL + ',' + _dioptresRefraction +')');
 	node.innerHTML = _dioptresIOL;
 	cell0.appendChild(node);
 
@@ -237,6 +240,26 @@ function fillTableUsingFormula(formulaName)
 	else {
 		console.log('Unable to calculate power');
 	}
+}
+
+function iolSelected(power, refraction) {
+	event.preventDefault();
+	clearChoice();
+	var lens = document.getElementById('Element_OphInBiometry_LensSelection_lens');
+	lens.value =  document.getElementById('type').innerHTML;
+	var iolPower = document.getElementById('Element_OphInBiometry_LensSelection_iol_power');
+	iolPower.value = power;
+	var predictedRefraction = document.getElementById('Element_OphInBiometry_LensSelection_predicted_refraction');
+	predictedRefraction.value = refraction;
+}
+
+function clearChoice() {
+	var lens = document.getElementById('Element_OphInBiometry_LensSelection_lens');
+	lens.value = "";
+	var iolPower = document.getElementById('Element_OphInBiometry_LensSelection_iol_power');
+	iolPower.value = "";
+	var refraction = document.getElementById('Element_OphInBiometry_LensSelection_predicted_refraction');
+	refraction.value = "";
 }
 
 function Holladay1 (eyeMeasurements, iolConstants) {
