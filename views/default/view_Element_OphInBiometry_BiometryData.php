@@ -25,15 +25,54 @@
 	<div class="element-data">
 				<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('axial_length'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->axial_length)?></div></div>
+			<div class="large-10 column end"><div class="data-value" id="al"><?php echo CHtml::encode($element->axial_length)?></div></div>
 		</div>
 		<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r1'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->r1)?></div></div>
+			<div class="large-10 column end"><div class="data-value" id="r1"><?php echo CHtml::encode($element->r1)?></div></div>
 		</div>
 		<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r2'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->r2)?></div></div>
+			<div class="large-10 column end"><div class="data-value" id="r2"><?php echo CHtml::encode($element->r2)?></div></div>
+		</div>
+		<div class="row">
+			<div class="large-8 column">
+				<div class="row field-row">
+					<div class="large-2 column">
+						<span class="field-info">R/SE:</span>
+					</div>
+					<div class="large-2 column">
+						<span id="rse" class="field-info"></span>
+					</div>
+					<div class="large-8 column collapse end">
+						<span class="field-info">SD = 43.16 mm</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-8 column">
+				<div class="row field-row">
+					<div class="large-2 column">
+						<span class="field-info">Cyl:</span>
+					</div>
+					<div class="large-10 column">
+						<span id="cyl" class="field-info"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-8 column">
+				<div class="row field-row">
+					<div class="large-2 column">
+						<span class="field-info">Acd:</span>
+					</div>
+					<div class="large-10 column">
+						<span id="arc" class="field-info">2.28mm</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>

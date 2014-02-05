@@ -99,24 +99,30 @@ function clearChoice() {
 function renderCalculatedValues()
 {
 	updateBiometryData();
+
+	if(isCreate()) {
 	updateIolData($('#Element_OphInBiometry_LensType_lens_id').val());
 	updateSuggestedPowerTable();
+	}
 }
 
 function updateBiometryData()
 {
-	var r1 = parseFloat($('#Element_OphInBiometry_BiometryData_r1').val());
-	var k1Value = 337.5 / r1;
-	$('#div_Element_OphInBiometry_BiometryData_r1').find('.field-info').text(k1Value.toFixed(2) + " D @ 54°");
+	var eyeMeasurements = new EyeMeasurements()
+	var k1Value = 337.5 / eyeMeasurements.r1;
 
-	var r2 = parseFloat($('#Element_OphInBiometry_BiometryData_r2').val());
+	var r2 = eyeMeasurements.r2;	;
 	var k2Value = 337.5 / r2;
+
+	if(isCreate()) {
+	$('#div_Element_OphInBiometry_BiometryData_r1').find('.field-info').text(k1Value.toFixed(2) + " D @ 54°");
 	$('#div_Element_OphInBiometry_BiometryData_r2').find('.field-info').text(k2Value.toFixed(2) + " D @ 144°");
+	}
 
 	var se = document.getElementById('rse');
 	var cyl = document.getElementById('cyl');
 
-	var seValue = (r1 + r2) / 2;
+	var seValue = (eyeMeasurements.r1 + eyeMeasurements.r2) / 2;
 	se.innerHTML = seValue.toFixed(2) + " mm";
 
 	var cylValue = k1Value - k2Value;
@@ -252,16 +258,37 @@ function iolSelected(power, refraction) {
 
 function EyeMeasurements()
 {
-	this.al=parseFloat($('#Element_OphInBiometry_BiometryData_axial_length').val());
-	this.r1=parseFloat($('#Element_OphInBiometry_BiometryData_r1').val());
-	this.r2=parseFloat($('#Element_OphInBiometry_BiometryData_r2').val());
-	this.tr=parseFloat($('#Element_OphInBiometry_Calculation_target_refraction').val());
+	if(isView()) {
+		this.al=parseFloat($('#al').html());
+		this.r1=parseFloat($('#r1').html());
+		this.r2=parseFloat($('#r2').html());
+		this.tr=parseFloat($('#tr').html());
+	}
+
+	if(isCreate()){
+		this.al=parseFloat($('#Element_OphInBiometry_BiometryData_axial_length').val());
+		this.r1=parseFloat($('#Element_OphInBiometry_BiometryData_r1').val());
+		this.r2=parseFloat($('#Element_OphInBiometry_BiometryData_r2').val());
+		this.tr=parseFloat($('#Element_OphInBiometry_Calculation_target_refraction').val());
+	}
+}
+
+function isCreate()
+{
+	return $('#al').length==0;
+}
+
+function isView()
+{
+	return $('#al').length!=0;
 }
 
 function IolConstants()
 {
+	if(isCreate()) {
 	this.acon=parseFloat(document.getElementById('acon').innerHTML);
 	this.sf=parseFloat(document.getElementById('sf').innerHTML);
+	}
 }
 
 function Holladay1 (eyeMeasurements, iolConstants) {

@@ -33,7 +33,7 @@
 		</div>
 		<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->predicted_refraction)?></div></div>
+			<div class="large-10 column end"><div class="data-value" id="tr"><?php echo CHtml::encode($element->predicted_refraction)?></div></div>
 		</div>
 	</div>
 </section>
