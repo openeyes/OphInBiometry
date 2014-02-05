@@ -100,9 +100,13 @@ function renderCalculatedValues()
 {
 	updateBiometryData();
 
+	if(isView()){
+		updateIolData($('#lens').html());
+	}
+
 	if(isCreate()) {
-	updateIolData($('#Element_OphInBiometry_LensType_lens_id').val());
-	updateSuggestedPowerTable();
+		updateIolData($('#Element_OphInBiometry_LensType_lens_id option:selected').text());
+		updateSuggestedPowerTable();
 	}
 }
 
@@ -144,11 +148,11 @@ function updateIolData(_index) {
 	var position = document.getElementById('position');
 	var comments = document.getElementById('comments');
 
-	var lens = [
-		{model: "", description: "", position: "", comments: "", acon: 0},
-		{model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.9, sf: 1.90},
-		{model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0, sf: 1.85}
-	];
+	var lens = {
+		"": {model: "", description: "", position: "", comments: "", acon: 0},
+		"MA60AC": {model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.9, sf: 1.90},
+		"SN60WF": {model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0, sf: 1.85}
+	};
 
 	acon.innerHTML = lens[_index].acon.toFixed(1);
 	sf.innerHTML = lens[_index].sf.toFixed(2);

@@ -23,7 +23,7 @@
 		<h3 class="element-title"><?php echo $element->elementType->name?></h3>
 	</header>
 	<div class="element-data">
-				<div class="row data-row">
+			<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('lens'))?></div></div>
 			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->lens)?></div></div>
 		</div>

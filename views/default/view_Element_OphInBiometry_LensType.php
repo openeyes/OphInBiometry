@@ -23,9 +23,49 @@
 		<h3 class="element-title"><?php echo $element->elementType->name?></h3>
 	</header>
 	<div class="element-data">
-				<div class="row data-row">
+		<div class="row data-row">
 			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('lens_id'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo $element->lens ? $element->lens->name : 'None'?></div></div>
+			<div class="large-10 column end"><div class="data-value" id="lens"><?php echo $element->lens ? $element->lens->name : 'None'?></div></div>
+		</div>
+		<div class="row field-row">
+			<div class="large-2 column">
+				<div class="data-label">Description</div>
+			</div>
+			<div class="large-10 column">
+				<div class="data-value" id="type"></div>
+			</div>
+		</div>
+		<div class="row field-row">
+			<div class="large-2 column">
+				<div class="data-label">A constant</div>
+			</div>
+			<div class="large-10 column">
+				<div class="data-value" id="acon"></div>
+			</div>
+		</div>
+		<div class="row field-row">
+			<div class="large-2 column">
+				<div class="data-label">SF</div>
+			</div>
+			<div class="large-10 column">
+				<div class="data-value" id="sf"></div>
+			</div>
+		</div>
+		<div class="row field-row">
+			<div class="large-2 column">
+				<div class="data-label">Position</div>
+			</div>
+			<div class="large-10 column">
+				<div class="data-value" id="position"></div>
+			</div>
+		</div>
+		<div class="row field-row">
+			<div class="large-2 column">
+				<div class="data-label">Comments</div>
+			</div>
+			<div class="large-10 column">
+				<div class="data-value" id="comments"></div>
+			</div>
 		</div>
 	</div>
 </section>
