@@ -114,9 +114,17 @@ function updateBiometryData()
 	var r2 = eyeMeasurements.r2;	;
 	var k2Value = 337.5 / r2;
 
+	var k1Text = k1Value.toFixed(2) + " D @ 54°";
+	var k2Text = k2Value.toFixed(2) + " D @ 144°";
+
 	if(isCreate()) {
-	$('#div_Element_OphInBiometry_BiometryData_r1').find('.field-info').text(k1Value.toFixed(2) + " D @ 54°");
-	$('#div_Element_OphInBiometry_BiometryData_r2').find('.field-info').text(k2Value.toFixed(2) + " D @ 144°");
+	$('#div_Element_OphInBiometry_BiometryData_r1').find('.field-info').text(k1Text);
+	$('#div_Element_OphInBiometry_BiometryData_r2').find('.field-info').text(k2Text);
+	}
+
+	if(isView()) {
+		$('#r1info').html(k1Text);
+		$('#r2info').html(k2Text);
 	}
 
 	var se = document.getElementById('rse');
