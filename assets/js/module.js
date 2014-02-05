@@ -88,8 +88,6 @@ function update()
 }
 
 function clearChoice() {
-	var lens = document.getElementById('Element_OphInBiometry_Selection_lens');
-	lens.value = "";
 	var iolPower = document.getElementById('Element_OphInBiometry_Selection_iol_power');
 	iolPower.value = "";
 	var refraction = document.getElementById('Element_OphInBiometry_Selection_predicted_refraction');
@@ -260,8 +258,7 @@ function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
 function iolSelected(power, refraction) {
 	event.preventDefault();
 	clearChoice();
-	var lens = document.getElementById('Element_OphInBiometry_Selection_lens');
-	lens.value =  document.getElementById('type').innerHTML;
+
 	var iolPower = document.getElementById('Element_OphInBiometry_Selection_iol_power');
 	iolPower.value = power;
 	var predictedRefraction = document.getElementById('Element_OphInBiometry_Selection_predicted_refraction');

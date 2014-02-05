@@ -99,7 +99,7 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 			'id' => 'ID',
 			'event_id' => 'Event',
 			'target_refraction' => 'Target Refraction',
-			'formula_id' => 'formula',
+			'formula_id' => 'Formula',
 		);
 	}
 

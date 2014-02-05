@@ -65,7 +65,7 @@ class Element_OphInBiometry_Selection extends BaseEventTypeElement
 		// will receive user inputs.
 		return array(
 			array('event_id, iol_power, predicted_refraction, ', 'safe'),
-			array('lens, iol_power, predicted_refraction, ', 'required'),
+			array('iol_power, predicted_refraction, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id, iol_power, predicted_refraction, ', 'safe', 'on' => 'search'),
