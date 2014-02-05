@@ -25,7 +25,7 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Calculation'))->queryRow();
 		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Lens Selection',':eventTypeId'=>$event_type['id']))->queryRow()) {
-			$this->insert('element_type', array('name' => 'Lens Selection','class_name' => 'Element_OphInBiometry_LensSelection', 'event_type_id' => $event_type['id'], 'display_order' => 1));
+			$this->insert('element_type', array('name' => 'Selection','class_name' => 'Element_OphInBiometry_Selection', 'event_type_id' => $event_type['id'], 'display_order' => 1));
 		}
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Lens Selection'))->queryRow();
@@ -250,10 +250,9 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 
 
 
-		$this->createTable('et_ophinbiometry_lensselecti', array(
+		$this->createTable('et_ophinbiometry_selection', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'lens' => 'varchar(255) DEFAULT \'\'', // Lens
 				'iol_power' => 'varchar(255) DEFAULT \'\'', // IOL Power
 				'predicted_refraction' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -262,18 +261,17 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'deleted' => 'tinyint(1) unsigned not null',
 				'PRIMARY KEY (`id`)',
-				'KEY `et_ophinbiometry_lensselecti_lmui_fk` (`last_modified_user_id`)',
-				'KEY `et_ophinbiometry_lensselecti_cui_fk` (`created_user_id`)',
-				'KEY `et_ophinbiometry_lensselecti_ev_fk` (`event_id`)',
-				'CONSTRAINT `et_ophinbiometry_lensselecti_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
-				'CONSTRAINT `et_ophinbiometry_lensselecti_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
-				'CONSTRAINT `et_ophinbiometry_lensselecti_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
+				'KEY `et_ophinbiometry_selection_lmui_fk` (`last_modified_user_id`)',
+				'KEY `et_ophinbiometry_selection_cui_fk` (`created_user_id`)',
+				'KEY `et_ophinbiometry_selection_ev_fk` (`event_id`)',
+				'CONSTRAINT `et_ophinbiometry_selection_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `et_ophinbiometry_selection_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `et_ophinbiometry_selection_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
-		$this->createTable('et_ophinbiometry_lensselecti_version', array(
+		$this->createTable('et_ophinbiometry_selection_version', array(
 				'id' => 'int(10) unsigned NOT NULL',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'lens' => 'varchar(255) DEFAULT \'\'', // Lens
 				'iol_power' => 'varchar(255) DEFAULT \'\'', // IOL Power
 				'predicted_refraction' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -284,14 +282,14 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'version_date' => "datetime NOT NULL DEFAULT '1900-01-01 00:00:00'",
 				'version_id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'PRIMARY KEY (`version_id`)',
-				'KEY `acv_et_ophinbiometry_lensselecti_lmui_fk` (`last_modified_user_id`)',
-				'KEY `acv_et_ophinbiometry_lensselecti_cui_fk` (`created_user_id`)',
-				'KEY `acv_et_ophinbiometry_lensselecti_ev_fk` (`event_id`)',
-				'KEY `et_ophinbiometry_lensselecti_aid_fk` (`id`)',
-				'CONSTRAINT `acv_et_ophinbiometry_lensselecti_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
-				'CONSTRAINT `acv_et_ophinbiometry_lensselecti_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
-				'CONSTRAINT `acv_et_ophinbiometry_lensselecti_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-				'CONSTRAINT `et_ophinbiometry_lensselecti_aid_fk` FOREIGN KEY (`id`) REFERENCES `et_ophinbiometry_lensselecti` (`id`)',
+				'KEY `acv_et_ophinbiometry_selection_lmui_fk` (`last_modified_user_id`)',
+				'KEY `acv_et_ophinbiometry_selection_cui_fk` (`created_user_id`)',
+				'KEY `acv_et_ophinbiometry_selection_ev_fk` (`event_id`)',
+				'KEY `et_ophinbiometry_selection_aid_fk` (`id`)',
+				'CONSTRAINT `acv_et_ophinbiometry_selection_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `acv_et_ophinbiometry_selection_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `acv_et_ophinbiometry_selection_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
+				'CONSTRAINT `et_ophinbiometry_selection_aid_fk` FOREIGN KEY (`id`) REFERENCES `et_ophinbiometry_selection` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 	}
@@ -313,8 +311,8 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 		$this->dropTable('ophinbiometry_calculation_formula_version');
 		$this->dropTable('ophinbiometry_calculation_formula');
 
-		$this->dropTable('et_ophinbiometry_lensselecti_version');
-		$this->dropTable('et_ophinbiometry_lensselecti');
+		$this->dropTable('et_ophinbiometry_selection_version');
+		$this->dropTable('et_ophinbiometry_selection');
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('class_name=:class_name', array(':class_name'=>'OphInBiometry'))->queryRow();
 

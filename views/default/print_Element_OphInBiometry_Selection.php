@@ -22,10 +22,6 @@
 <table class="subtleWhite normalText">
 	<tbody>
 		<tr>
-			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('lens'))?></td>
-			<td><span class="big"><?php echo CHtml::encode($element->lens)?></span></td>
-		</tr>
-		<tr>
 			<td width="30%"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?></td>
 			<td><span class="big"><?php echo CHtml::encode($element->iol_power)?></span></td>
 		</tr>

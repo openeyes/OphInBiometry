@@ -18,17 +18,18 @@
  */
 ?>
 
-<section class="element <?php echo $element->elementType->class_name?>"
-	data-element-type-id="<?php echo $element->elementType->id?>"
-	data-element-type-class="<?php echo $element->elementType->class_name?>"
-	data-element-type-name="<?php echo $element->elementType->name?>"
-	data-element-display-order="<?php echo $element->elementType->display_order?>">
+<section class="element">
 	<header class="element-header">
-		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
+		<h3 class="element-title"><?php echo $element->elementType->name?></h3>
 	</header>
-	<div class="element-fields">
-	<?php echo $form->textField($element, 'lens', array('size' => '10'),null, array('label'=>2, 'field'=>3))?>
-	<?php echo $form->textField($element, 'iol_power', array('size' => '10'), null, array('label'=>2, 'field'=>3))?>
-	<?php echo $form->textField($element, 'predicted_refraction', array('size' => '10'), null, array('label'=>2, 'field'=>3))?>
+	<div class="element-data">
+		<div class="row data-row">
+			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?></div></div>
+			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->iol_power)?></div></div>
+		</div>
+		<div class="row data-row">
+			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?></div></div>
+			<div class="large-10 column end"><div class="data-value" id="tr"><?php echo CHtml::encode($element->predicted_refraction)?></div></div>
+		</div>
 	</div>
 </section>

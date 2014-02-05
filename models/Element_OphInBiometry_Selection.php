@@ -18,12 +18,11 @@
  */
 
 /**
- * This is the model class for table "et_ophinbiometry_lensselecti".
+ * This is the model class for table "et_ophinbiometry_selection".
  *
  * The followings are the available columns in table:
  * @property string $id
  * @property integer $event_id
- * @property string $lens
  * @property string $iol_power
  * @property string $predicted_refraction
  *
@@ -36,7 +35,7 @@
  * @property User $usermodified
  */
 
-class Element_OphInBiometry_LensSelection extends BaseEventTypeElement
+class Element_OphInBiometry_Selection extends BaseEventTypeElement
 {
 	public $service;
 
@@ -54,7 +53,7 @@ class Element_OphInBiometry_LensSelection extends BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophinbiometry_lensselecti';
+		return 'et_ophinbiometry_selection';
 	}
 
 	/**
@@ -65,11 +64,11 @@ class Element_OphInBiometry_LensSelection extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, lens, iol_power, predicted_refraction, ', 'safe'),
+			array('event_id, iol_power, predicted_refraction, ', 'safe'),
 			array('lens, iol_power, predicted_refraction, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, lens, iol_power, predicted_refraction, ', 'safe', 'on' => 'search'),
+			array('id, event_id, iol_power, predicted_refraction, ', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -97,7 +96,6 @@ class Element_OphInBiometry_LensSelection extends BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'lens' => 'Lens',
 			'iol_power' => 'IOL Power',
 			'predicted_refraction' => 'Predicted Refraction',
 		);
@@ -116,7 +114,6 @@ class Element_OphInBiometry_LensSelection extends BaseEventTypeElement
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('lens', $this->lens);
 		$criteria->compare('iol_power', $this->iol_power);
 		$criteria->compare('predicted_refraction', $this->predicted_refraction);
 
