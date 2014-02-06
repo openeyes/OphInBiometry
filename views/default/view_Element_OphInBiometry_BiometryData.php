@@ -54,7 +54,7 @@
 			<div class="large-8 column">
 				<div class="row data-row">
 					<div class="large-2 column">
-						<div class="data-label">R/SE:</div>
+						<div class="data-label">R/SE</div>
 					</div>
 					<div class="large-2 column">
 						<div class="data-value"  id="rse" class="field-info"></div>
@@ -69,7 +69,7 @@
 			<div class="large-8 column">
 				<div class="row data-row">
 					<div class="large-2 column">
-						<div class="data-label">Cyl:</div>
+						<div class="data-label">Cyl</div>
 					</div>
 					<div class="large-10 column">
 						<div class="data-value" id="cyl"></div>
@@ -81,7 +81,7 @@
 			<div class="large-8 column">
 				<div class="row data-row">
 					<div class="large-2 column">
-						<div class="data-label">Acd:</div>
+						<div class="data-label">Acd</div>
 					</div>
 					<div class="large-10 column">
 						<div class="data-value" id="arc">2.28mm</div>
