@@ -111,13 +111,18 @@ function renderCalculatedValues()
 function updateBiometryData()
 {
 	var eyeMeasurements = new EyeMeasurements()
-	var k1Value = 337.5 / eyeMeasurements.r1;
+	var k1Text;
+	var k2Text;
 
-	var r2 = eyeMeasurements.r2;	;
-	var k2Value = 337.5 / r2;
+	if(eyeMeasurements.r1){
+		var k1Value = 337.5 / eyeMeasurements.r1;
+		k1Text = k1Value.toFixed(2) + " D @ 54°";
+	}
 
-	var k1Text = k1Value.toFixed(2) + " D @ 54°";
-	var k2Text = k2Value.toFixed(2) + " D @ 144°";
+	if(eyeMeasurements.r2){
+		var k2Value = 337.5 / eyeMeasurements.r2;
+		k2Text = k2Value.toFixed(2) + " D @ 144°";
+	}
 
 	if(isCreate()) {
 	$('#div_Element_OphInBiometry_BiometryData_r1').find('.field-info').text(k1Text);
@@ -133,10 +138,10 @@ function updateBiometryData()
 	var cyl = document.getElementById('cyl');
 
 	var seValue = (eyeMeasurements.r1 + eyeMeasurements.r2) / 2;
-	se.innerHTML = seValue.toFixed(2) + " mm";
+	if(seValue) se.innerHTML = seValue.toFixed(2) + " mm";
 
 	var cylValue = k1Value - k2Value;
-	cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
+	if(cylValue) cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
 }
 
 function updateIolData(_index) {
@@ -229,7 +234,7 @@ function clearTable() {
 	}
 }
 
-function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
+function addRow(power, refraction, _bold) {
 
 	// Get reference to table
 	var table = document.getElementById('iol-table');
@@ -243,15 +248,15 @@ function addRow(_dioptresIOL, _dioptresRefraction, _bold) {
 	// IOL
 	var cell0 = newRow.insertCell(0);
 	var node = document.createElement('button');
-	node.setAttribute('onclick', 'iolSelected(' + _dioptresIOL + ',' + _dioptresRefraction +')');
-	node.innerHTML = _dioptresIOL;
+	node.setAttribute('onclick', 'iolSelected(' + power + ',' + refraction +')');
+	node.innerHTML = power;
 	cell0.appendChild(node);
 
 	// Refraction
 	var cell1 = newRow.insertCell(1);
 	node = document.createElement('p');
-	if (!_bold) node.innerHTML = _dioptresRefraction;
-	else node.innerHTML = '<b>' + _dioptresRefraction + '</b>';
+	if (!_bold) node.innerHTML = refraction;
+	else node.innerHTML = '<b>' + refraction + '</b>';
 	cell1.appendChild(node);
 }
 
