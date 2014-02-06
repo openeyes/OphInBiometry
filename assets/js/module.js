@@ -190,34 +190,26 @@ function fillTableUsingFormula(formulaName)
 	// Calculate lens power for target refraction
 	var powerIOL = formula.suggestedPower();
 	if (powerIOL) {
+
 		// Round to nearest 0.5
 		var roundIOL = Math.round(powerIOL * 2) / 2;
 
-		// Get power for that IOL
-		var refraction = formula.powerFor(roundIOL);
-
-		// Iterate towards myopia until value is less than target
-		while (refraction > e.tr) {
-			roundIOL = roundIOL + 0.5;
-			refraction = formula.powerFor(roundIOL);
-		}
-
 		// Produce results for range of refraction around this one
-		var startPower = roundIOL + 1.0;
-
+		var startPower = roundIOL + 1;
 		for (var i = 0; i < 5; i++) {
-			refraction = formula.powerFor(startPower);
-
-			// Enforce plus sign
-			var refString = refraction > 0 ? "+" + refraction.toFixed(2) : refraction.toFixed(2);
-
-			addRow(startPower.toFixed(1), refString, i == 2 ? true : false);
-			startPower = startPower - 0.5;
+			var power = startPower - (0.5 * i);
+			var refraction = formula.powerFor(power);
+			addRow(power.toFixed(1),enforceSign(refraction.toFixed(2)), i == 2);
 		}
 	}
 	else {
 		console.log('Unable to calculate power');
 	}
+}
+
+function enforceSign(value)
+{
+	return value > 0 ? "+" + value : value;
 }
 
 // Delete all rows
