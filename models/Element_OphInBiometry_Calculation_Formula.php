@@ -32,7 +32,7 @@
  * @property User $usermodified
  */
 
-class Element_OphInBiometry_Calculation_Formula extends BaseActiveRecordVersioned
+class Element_OphInBiometry_Calculation_Formula extends BaseActiveRecordVersionedSoftDelete
 {
 	/**
 	 * Returns the static model of the specified AR class.
