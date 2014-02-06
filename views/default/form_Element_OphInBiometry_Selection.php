@@ -27,7 +27,7 @@
 		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
 	</header>
 	<div class="element-fields">
-	<?php echo $form->textField($element, 'iol_power', array('size' => '10'), null, array('label'=>2, 'field'=>3))?>
-	<?php echo $form->textField($element, 'predicted_refraction', array('size' => '10'), null, array('label'=>2, 'field'=>3))?>
+	<?php echo $form->textField($element, 'iol_power', array('size' => '10','readonly'=>true), null, array('label'=>2, 'field'=>3))?>
+	<?php echo $form->textField($element, 'predicted_refraction', array('size' => '10','readonly'=>true), null, array('label'=>2, 'field'=>3))?>
 	</div>
 </section>

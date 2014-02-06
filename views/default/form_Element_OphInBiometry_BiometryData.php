@@ -38,7 +38,7 @@
 			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
-						<span class="field-info">R/SE:</span>
+						<span class="field-info">R/SE</span>
 					</div>
 					<div class="large-2 column">
 						<span id="rse" class="field-info"></span>
@@ -53,7 +53,7 @@
 			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
-						<span class="field-info">Cyl:</span>
+						<span class="field-info">Cyl</span>
 					</div>
 					<div class="large-10 column">
 						<span id="cyl" class="field-info"></span>
@@ -65,7 +65,7 @@
 			<div class="large-8 column">
 				<div class="row field-row">
 					<div class="large-2 column">
-						<span class="field-info">Acd:</span>
+						<span class="field-info">Acd</span>
 					</div>
 					<div class="large-10 column">
 						<span id="arc" class="field-info">2.28mm</span>
