@@ -54,7 +54,7 @@
 	
 	<?php echo $form->textField($element, 'target_refraction', array('size' => '10','maxlength' => '6'))?>
 	
-	<?php echo $form->dropDownList($element, 'formula_id', CHtml::listData(Element_OphInBiometry_Calculation_Formula::model()->findAll(array('order'=> 'display_order asc')),'id','name'), array('onchange' => 'refreshCalculation();'))?>
+	<?php echo $form->dropDownList($element, 'formula_id', CHtml::listData(Element_OphInBiometry_Calculation_Formula::model()->notDeletedOrPk($element->formula_id)->findAll(array('order'=> 'display_order asc')),'id','name'), array('onchange' => 'refreshCalculation();'))?>
 	
 	<div class="eventDetail">
 		<div style="float: right; margin-right: 5em;">
