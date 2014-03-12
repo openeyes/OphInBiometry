@@ -21,4 +21,11 @@ class DefaultController extends BaseEventTypeController
 	{
 		parent::actionPrint($id);
 	}
+
+	public function isRequired($element)
+	{
+		return true;
+	}
 }
+
+

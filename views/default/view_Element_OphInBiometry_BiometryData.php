@@ -19,9 +19,6 @@
 ?>
 
 <section class="element">
-	<header class="element-header">
-		<h3 class="element-title"><?php echo $element->elementType->name?></h3>
-	</header>
 	<div class="element-data">
 		<div class="row">
 			<div class="large-8 column">
