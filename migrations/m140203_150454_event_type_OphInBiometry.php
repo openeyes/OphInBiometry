@@ -38,6 +38,10 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'axial_length' => 'decimal (5, 2) NOT NULL', // Axial Length
 				'r1' => 'decimal (5, 2) NOT NULL', // R1
 				'r2' => 'decimal (5, 2) NOT NULL', // R2
+				'r1_axis' => 'int(10) unsigned',
+				'r2_axis' => 'int(10) unsigned',
+				'acd' => 'decimal (5, 2) NOT NULL',
+				'scleral_thickness' => 'decimal (5, 2) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -58,6 +62,10 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'axial_length' => 'decimal (5, 2) NOT NULL', // Axial Length
 				'r1' => 'decimal (5, 2) NOT NULL', // R1
 				'r2' => 'decimal (5, 2) NOT NULL', // R2
+				'r1_axis' => 'int(10) unsigned',
+				'r2_axis' => 'int(10) unsigned',
+				'acd' => 'decimal (5, 2) NOT NULL',
+				'scleral_thickness' => 'decimal (5, 2) NOT NULL',
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',

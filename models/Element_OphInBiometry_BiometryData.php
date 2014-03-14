@@ -65,7 +65,7 @@ class Element_OphInBiometry_BiometryData extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, axial_length, r1, r2, ', 'safe'),
+			array('event_id, axial_length, r1, r2,  r1_axis, r2_axis, acd, scleral_thickness', 'safe'),
 			array('axial_length, r1, r2, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -100,6 +100,10 @@ class Element_OphInBiometry_BiometryData extends BaseEventTypeElement
 			'axial_length' => 'Axial Length',
 			'r1' => 'R1',
 			'r2' => 'R2',
+			'r1_axis' => 'R1 Axis',
+			'r2_axis' => 'R2 Axis',
+			'acd' => 'ACD',
+			'scleral_thickness' => 'Scleral Thickness',
 		);
 	}
 
