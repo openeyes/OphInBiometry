@@ -35,13 +35,24 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 		$this->createTable('et_ophinbiometry_biometrydat', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'axial_length' => 'decimal (5, 2) NOT NULL', // Axial Length
-				'r1' => 'decimal (5, 2) NOT NULL', // R1
-				'r2' => 'decimal (5, 2) NOT NULL', // R2
-				'r1_axis' => 'int(10) unsigned',
-				'r2_axis' => 'int(10) unsigned',
-				'acd' => 'decimal (5, 2) NOT NULL',
-				'scleral_thickness' => 'decimal (5, 2) NOT NULL',
+				'eye_id' => 'int(10) unsigned NOT NULL DEFAULT \'3\'',
+			
+				'axial_length_left' => 'decimal (5, 2) NOT NULL', // Axial Length
+				'r1_left' => 'decimal (5, 2) NOT NULL', // R1
+				'r2_left' => 'decimal (5, 2) NOT NULL', // R2
+				'r1_axis_left' => 'int(10) unsigned',
+				'r2_axis_left' => 'int(10) unsigned',
+				'acd_left' => 'decimal (5, 2) NOT NULL',
+				'scleral_thickness_left' => 'decimal (5, 2) NOT NULL',
+
+				'axial_length_right' => 'decimal (5, 2) NOT NULL', // Axial Length
+				'r1_right' => 'decimal (5, 2) NOT NULL', // R1
+				'r2_right' => 'decimal (5, 2) NOT NULL', // R2
+				'r1_axis_right' => 'int(10) unsigned',
+				'r2_axis_right' => 'int(10) unsigned',
+				'acd_right' => 'decimal (5, 2) NOT NULL',
+				'scleral_thickness_right' => 'decimal (5, 2) NOT NULL',
+			
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -54,18 +65,30 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'CONSTRAINT `et_ophinbiometry_biometrydat_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophinbiometry_biometrydat_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophinbiometry_biometrydat_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
+				'CONSTRAINT `et_ophinbiometry_biometrydat_eye_id_fk` FOREIGN KEY (`eye_id`) REFERENCES `eye` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->createTable('et_ophinbiometry_biometrydat_version', array(
 				'id' => 'int(10) unsigned NOT NULL',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'axial_length' => 'decimal (5, 2) NOT NULL', // Axial Length
-				'r1' => 'decimal (5, 2) NOT NULL', // R1
-				'r2' => 'decimal (5, 2) NOT NULL', // R2
-				'r1_axis' => 'int(10) unsigned',
-				'r2_axis' => 'int(10) unsigned',
-				'acd' => 'decimal (5, 2) NOT NULL',
-				'scleral_thickness' => 'decimal (5, 2) NOT NULL',
+				'eye_id' => 'int(10) unsigned NOT NULL DEFAULT \'3\'',
+			
+				'axial_length_left' => 'decimal (5, 2) NOT NULL', // Axial Length
+				'r1_left' => 'decimal (5, 2) NOT NULL', // R1
+				'r2_left' => 'decimal (5, 2) NOT NULL', // R2
+				'r1_axis_left' => 'int(10) unsigned',
+				'r2_axis_left' => 'int(10) unsigned',
+				'acd_left' => 'decimal (5, 2) NOT NULL',
+				'scleral_thickness_left' => 'decimal (5, 2) NOT NULL',
+
+				'axial_length_right' => 'decimal (5, 2) NOT NULL', // Axial Length
+				'r1_right' => 'decimal (5, 2) NOT NULL', // R1
+				'r2_right' => 'decimal (5, 2) NOT NULL', // R2
+				'r1_axis_right' => 'int(10) unsigned',
+				'r2_axis_right' => 'int(10) unsigned',
+				'acd_right' => 'decimal (5, 2) NOT NULL',
+				'scleral_thickness_right' => 'decimal (5, 2) NOT NULL',
+			
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -81,6 +104,7 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'CONSTRAINT `acv_et_ophinbiometry_biometrydat_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `acv_et_ophinbiometry_biometrydat_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `acv_et_ophinbiometry_biometrydat_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
+				'CONSTRAINT `acv_ophinbiometry_biometrydat_eye_id_fk` FOREIGN KEY (`eye_id`) REFERENCES `eye` (`id`)',
 				'CONSTRAINT `et_ophinbiometry_biometrydat_aid_fk` FOREIGN KEY (`id`) REFERENCES `et_ophinbiometry_biometrydat` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
@@ -261,8 +285,13 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 		$this->createTable('et_ophinbiometry_selection', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'iol_power' => 'varchar(255) DEFAULT \'\'', // IOL Power
-				'predicted_refraction' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
+				'eye_id' => 'int(10) unsigned NOT NULL DEFAULT \'3\'',
+
+				'iol_power_left' => 'varchar(255) DEFAULT \'\'', // IOL Power
+				'predicted_refraction_left' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
+				'iol_power_right' => 'varchar(255) DEFAULT \'\'', // IOL Power
+				'predicted_refraction_right' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
+
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -275,13 +304,19 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'CONSTRAINT `et_ophinbiometry_selection_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophinbiometry_selection_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `et_ophinbiometry_selection_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
+				'CONSTRAINT `et_ophinbiometry_selection_eye_id_fk` FOREIGN KEY (`eye_id`) REFERENCES `eye` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 
 		$this->createTable('et_ophinbiometry_selection_version', array(
 				'id' => 'int(10) unsigned NOT NULL',
 				'event_id' => 'int(10) unsigned NOT NULL',
-				'iol_power' => 'varchar(255) DEFAULT \'\'', // IOL Power
-				'predicted_refraction' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
+				'eye_id' => 'int(10) unsigned NOT NULL DEFAULT \'3\'',
+
+				'iol_power_left' => 'varchar(255) DEFAULT \'\'', // IOL Power
+				'predicted_refraction_left' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
+				'iol_power_right' => 'varchar(255) DEFAULT \'\'', // IOL Power
+				'predicted_refraction_right' => 'varchar(255) DEFAULT \'\'', // Predicted Refraction
+
 				'last_modified_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'last_modified_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -297,6 +332,7 @@ class m140203_150454_event_type_OphInBiometry extends CDbMigration
 				'CONSTRAINT `acv_et_ophinbiometry_selection_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `acv_et_ophinbiometry_selection_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 				'CONSTRAINT `acv_et_ophinbiometry_selection_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
+				'CONSTRAINT `avc_et_ophinbiometry_selection_eye_id_fk` FOREIGN KEY (`eye_id`) REFERENCES `eye` (`id`)',
 				'CONSTRAINT `et_ophinbiometry_selection_aid_fk` FOREIGN KEY (`id`) REFERENCES `et_ophinbiometry_selection` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci');
 

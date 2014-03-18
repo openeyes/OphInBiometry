@@ -24,7 +24,7 @@
 	data-element-type-name="<?php echo $element->elementType->name?>"
 	data-element-display-order="<?php echo $element->elementType->display_order?>">
 	<div class="element-fields">
-	<?php echo $form->textField($element, 'iol_power', array('size' => '10','readonly'=>true), null, array('label'=>2, 'field'=>3))?>
-	<?php echo $form->textField($element, 'predicted_refraction', array('size' => '10','readonly'=>true), null, array('label'=>2, 'field'=>3))?>
+	<?php echo $form->textField($element, 'iol_power_left', array('size' => '10','readonly'=>true), null, array('label'=>2, 'field'=>3))?>
+	<?php echo $form->textField($element, 'predicted_refraction_left', array('size' => '10','readonly'=>true), null, array('label'=>2, 'field'=>3))?>
 	</div>
 </section>

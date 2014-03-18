@@ -23,105 +23,33 @@
 	data-element-type-class="<?php echo $element->elementType->class_name?>"
 	data-element-type-name="<?php echo $element->elementType->name?>"
 	data-element-display-order="<?php echo $element->elementType->display_order?>">
-	<div class="element-fields">
-		<div class="row">
-			<div class="large-8 column">
-				<?php echo $form->textField($element, 'axial_length', array('size' => '10','maxlength' => '5', 'append-text'=>'SNR = 193.0'), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
-				<?php echo $form->textField($element, 'r1', array('size' => '10','maxlength' => '5', 'append-text'=>'0 D @ 54°'), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
-				<?php echo $form->textField($element, 'r2', array('size' => '10','maxlength' => '5', 'append-text'=>'0 D @ 144° '), null, array('label'=>2, 'field'=>2, 'append-text'=>8))?>
-				<?php echo $form->textField($element, 'r1_axis', array('size' => '10','maxlength' => '5'), null, array('label'=>2, 'field'=>2))?>
-				<?php echo $form->textField($element, 'r2_axis', array('size' => '10','maxlength' => '5'), null, array('label'=>2, 'field'=>2))?>
+	<div class="element-fields element-eyes row">
+		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
+		<div class="element-eye right-eye left side column <?php if (!$element->hasRight()) { ?> inactive<?php } ?>"
+				 data-side="right">
+			<div class="active-form">
+				<a href="#" class="icon-remove-side remove-side">Remove side</a>
+				<?php $this->renderPartial($element->form_view . '_fields',
+						array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
 			</div>
-		</div>
-		<div class="row">
-			<div class="large-8 column">
-				<div class="row field-row">
-					<div class="large-2 column">
-						<span class="field-info">R/SE:</span>
-					</div>
-					<div class="large-2 column">
-						<span id="rse" class="field-info"></span>
-					</div>
-					<div class="large-8 column collapse end">
-						<span class="field-info">SD = 43.16 mm</span>
-					</div>
+			<div class="inactive-form">
+				<div class="add-side">
+					Set right side treatment drug
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="large-8 column">
-				<div class="row field-row">
-					<div class="large-2 column">
-						<span class="field-info">Cyl:</span>
-					</div>
-					<div class="large-10 column">
-						<span id="cyl" class="field-info"></span>
-					</div>
-				</div>
+
+		<div class="element-eye left-eye right side column <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>"
+				 data-side="left">
+			<div class="active-form">
+				<a href="#" class="icon-remove-side remove-side">Remove side</a>
+				<?php $this->renderPartial($element->form_view . '_fields',
+						array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
 			</div>
-		</div>
-		<div class="row">
-			<div class="large-8 column">
-				<?php echo $form->textField($element, 'acd', array('size' => '10','maxlength' => '5'), null, array('label'=>2, 'field'=>2))?>
-				<?php echo $form->textField($element, 'scleral_thickness', array('size' => '10','maxlength' => '5'), null, array('label'=>2, 'field'=>2))?>
-
-				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'onReadyCommandArray' => array(
-								array('addDoodle', array('AxialLengthGraph')),
-								array('deselectDoodles', array()),
-						),
-						'bindingArray' => array(
-								'AxialLengthGraph' => array(
-										'axialLength' => array('id' => 'Element_OphInBiometry_BiometryData_axial_length'),
-								),
-						),
-						'width' => 300,
-						'height' => 100,
-						'idSuffix'=>'slider',
-						'mode' => 'edit',
-						'toolbar'=>false,
-
-				));
-				?>
-				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'onReadyCommandArray' => array(
-								array('addDoodle', array('SteepAxis')),
-								array('deselectDoodles', array()),
-						),
-						'bindingArray' => array(
-								'SteepAxis' => array(
-										'axis' => array('id' => 'Element_OphInBiometry_BiometryData_r1_axis'),
-								),
-						),
-						'width' => 100,
-						'height' => 100,
-						'mode' => 'edit',
-						'idSuffix'=>'left-axis',
-						'toolbar'=>false,
-
-				));
-				?>
-				<?php
-				$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(
-						'onReadyCommandArray' => array(
-								array('addDoodle', array('SteepAxis')),
-								array('deselectDoodles', array()),
-						),
-						'bindingArray' => array(
-								'SteepAxis' => array(
-										'axis' => array('id' => 'Element_OphInBiometry_BiometryData_r2_axis'),
-								),
-						),
-						'width' => 100,
-						'height' => 100,
-						'mode' => 'edit',
-						'idSuffix'=>'right-axis',
-						'toolbar'=>false,
-
-				));
-				?>
+			<div class="inactive-form">
+				<div class="add-side">
+					Set left side treatment drug
+				</div>
 			</div>
 		</div>
 	</div>

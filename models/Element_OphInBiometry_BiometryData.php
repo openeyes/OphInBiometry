@@ -23,9 +23,16 @@
  * The followings are the available columns in table:
  * @property string $id
  * @property integer $event_id
- * @property string $axial_length
- * @property string $r1
- * @property string $r2
+ * @property string $axial_length_left
+ * @property string $r1_left
+ * @property string $r2_left
+ * @property string $acd_left
+ * @property string $scleral_thickness_left
+ * @property string $axial_length_right
+ * @property string $r1_right
+ * @property string $r2_right
+ * @property string $acd_right
+ * @property string $scleral_thickness_right
  *
  * The followings are the available model relations:
  *
@@ -36,7 +43,7 @@
  * @property User $usermodified
  */
 
-class Element_OphInBiometry_BiometryData extends BaseEventTypeElement
+class Element_OphInBiometry_BiometryData extends SplitEventTypeElement
 {
 	public $service;
 
@@ -65,11 +72,11 @@ class Element_OphInBiometry_BiometryData extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, axial_length, r1, r2,  r1_axis, r2_axis, acd, scleral_thickness', 'safe'),
-			array('axial_length, r1, r2, ', 'required'),
-			// The following rule is used by search().
+			array('event_id, eye_id, ' .
+			'axial_length_left, r1_left, r2_left,  r1_axis_left, r2_axis_left, acd_left, scleral_thickness_left,' .
+			'axial_length_right, r1_right, r2_right,  r1_axis_right, r2_axis_right, acd_right, scleral_thickness_right',  'safe'),
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, axial_length, r1, r2, ', 'safe', 'on' => 'search'),
+			array('id, event_id', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -86,6 +93,7 @@ class Element_OphInBiometry_BiometryData extends BaseEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 		);
 	}
 
@@ -97,13 +105,20 @@ class Element_OphInBiometry_BiometryData extends BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'axial_length' => 'Axial Length',
-			'r1' => 'R1',
-			'r2' => 'R2',
-			'r1_axis' => 'R1 Axis',
-			'r2_axis' => 'R2 Axis',
-			'acd' => 'ACD',
-			'scleral_thickness' => 'Scleral Thickness',
+			'axial_length_left' => 'Axial Length',
+			'r1_left' => 'R1',
+			'r2_left' => 'R2',
+			'r1_axis_left' => 'R1 Axis',
+			'r2_axis_left' => 'R2 Axis',
+			'acd_left' => 'ACD',
+			'scleral_thickness_left' => 'Scleral Thickness',
+			'axial_length_right' => 'Axial Length',
+			'r1_right' => 'R1',
+			'r2_right' => 'R2',
+			'r1_axis_right' => 'R1 Axis',
+			'r2_axis_right' => 'R2 Axis',
+			'acd_right' => 'ACD',
+			'scleral_thickness_right' => 'Scleral Thickness',
 		);
 	}
 
@@ -119,11 +134,6 @@ class Element_OphInBiometry_BiometryData extends BaseEventTypeElement
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('axial_length', $this->axial_length);
-		$criteria->compare('r1', $this->r1);
-		$criteria->compare('r2', $this->r2);
-
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
