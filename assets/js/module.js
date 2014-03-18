@@ -53,64 +53,87 @@ $(document).ready(function() {
 		}
 	}
 
-	$('#Element_OphInBiometry_BiometryData_axial_length').change(function() {
-		update();
+	$('#Element_OphInBiometry_BiometryData_axial_length_left').change(function() {
+		update('left');
 	})
 
-	$('#Element_OphInBiometry_BiometryData_r1').change(function() {
-		update();
+	$('#Element_OphInBiometry_BiometryData_axial_length_right').change(function() {
+		update('right');
 	})
 
-	$('#Element_OphInBiometry_BiometryData_r2').change(function() {
-		update();
+	$('#Element_OphInBiometry_BiometryData_r1_left').change(function() {
+		update('left');
 	})
 
-	$('#Element_OphInBiometry_Calculation_target_refraction').change(function() {
-		update();
+	$('#Element_OphInBiometry_BiometryData_r1_right').change(function() {
+		update('right');
 	})
 
-	$('#Element_OphInBiometry_Calculation_formula_id').change(function() {
-		update();
+
+	$('#Element_OphInBiometry_BiometryData_r2_left').change(function() {
+		update('left');
+	})
+
+	$('#Element_OphInBiometry_BiometryData_r2_right').change(function() {
+		update('right');
+	})
+
+
+	$('#Element_OphInBiometry_Calculation_target_refraction_left').change(function() {
+		update('left');
+	})
+
+	$('#Element_OphInBiometry_Calculation_target_refraction_right').change(function() {
+		update('right');
+	})
+
+	$('#Element_OphInBiometry_Calculation_formula_id_left').change(function() {
+		update('left');
+	})
+
+	$('#Element_OphInBiometry_Calculation_formula_id_right').change(function() {
+		update('right');
 	})
 
 	$('#Element_OphInBiometry_LensType_lens_id').change(function() {
-		update();
+		update('left');
 	})
 
-	renderCalculatedValues();
+	renderCalculatedValues('left');
+	renderCalculatedValues('right');
 
 });
 
-function update()
+function update(side)
 {
-	clearChoice();
-	renderCalculatedValues();
+	clearChoice(side);
+	renderCalculatedValues(side);
 }
 
-function clearChoice() {
-	var iolPower = document.getElementById('Element_OphInBiometry_Selection_iol_power');
+function clearChoice(side) {
+	var iolPower = document.getElementById('Element_OphInBiometry_Selection_iol_power_'+side);
 	iolPower.value = "";
-	var refraction = document.getElementById('Element_OphInBiometry_Selection_predicted_refraction');
+	var refraction = document.getElementById('Element_OphInBiometry_Selection_predicted_refraction_'+side);
 	refraction.value = "";
 }
 
-function renderCalculatedValues()
+function renderCalculatedValues(side)
 {
-	updateBiometryData();
+	updateBiometryData(side);
 
 	if(isView()){
-		updateIolData($('#lens').html());
+		updateIolData($('#lens_'+side).html(),side);
 	}
 
 	if(isCreate()) {
-		updateIolData($('#Element_OphInBiometry_LensType_lens_id option:selected').text());
-		updateSuggestedPowerTable();
+		updateIolData($('#Element_OphInBiometry_LensType_lens_id_' + side + ' option:selected').text(),side);
+		updateSuggestedPowerTable(side);
 	}
 }
 
-function updateBiometryData()
+function updateBiometryData(side)
 {
-	var eyeMeasurements = new EyeMeasurements()
+	var eyeMeasurements = new EyeMeasurements(side)
 	var k1Text;
 	var k2Text;
 
@@ -125,17 +148,17 @@ function updateBiometryData()
 	}
 
 	if(isCreate()) {
-	$('#div_Element_OphInBiometry_BiometryData_r1').find('.field-info').text(k1Text);
-	$('#div_Element_OphInBiometry_BiometryData_r2').find('.field-info').text(k2Text);
+	$('#div_Element_OphInBiometry_BiometryData_r1_'.side).find('.field-info').text(k1Text);
+	$('#div_Element_OphInBiometry_BiometryData_r2_'.side).find('.field-info').text(k2Text);
 	}
 
 	if(isView()) {
-		$('#r1info').html(k1Text);
-		$('#r2info').html(k2Text);
+		$('#r1info_'+side).html(k1Text);
+		$('#r2info_'+side).html(k2Text);
 	}
 
-	var se = document.getElementById('rse');
-	var cyl = document.getElementById('cyl');
+	var se = document.getElementById('rse_'+side);
+	var cyl = document.getElementById('cyl_'+side);
 
 	var seValue = (eyeMeasurements.r1 + eyeMeasurements.r2) / 2;
 	if(seValue) se.innerHTML = seValue.toFixed(2) + " mm";
@@ -144,12 +167,12 @@ function updateBiometryData()
 	if(cylValue) cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
 }
 
-function updateIolData(_index) {
-	var acon = document.getElementById('acon');
-	var sf = document.getElementById('sf');
-	var type = document.getElementById('type');
-	var position = document.getElementById('position');
-	var comments = document.getElementById('comments');
+function updateIolData(index,side) {
+	var acon = document.getElementById('acon_'+side);
+	var sf = document.getElementById('sf_'+side);
+	var type = document.getElementById('type_'+side);
+	var position = document.getElementById('position_'+side);
+	var comments = document.getElementById('comments_'+side);
 
 	var lens = {
 		"": {model: "", description: "", position: "", comments: "", acon: 0},
@@ -157,33 +180,35 @@ function updateIolData(_index) {
 		"SN60WF": {model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0, sf: 1.85}
 	};
 
-	acon.innerHTML = lens[_index].acon.toFixed(1);
-	sf.innerHTML = lens[_index].sf.toFixed(2);
-	type.innerHTML = lens[_index].model + " " + lens[_index].description;
-	position.innerHTML = lens[_index].position;
-	comments.innerHTML = lens[_index].comments;
+
+	acon.innerHTML = lens[index].acon.toFixed(1);
+	sf.innerHTML = lens[index].sf.toFixed(2);
+	type.innerHTML = lens[index].model + " " + lens[index].description;
+	position.innerHTML = lens[index].position;
+	comments.innerHTML = lens[index].comments;
 }
 
-function updateSuggestedPowerTable()
+function updateSuggestedPowerTable(side)
 {
-	executeFormula($('#Element_OphInBiometry_Calculation_formula_id option:selected').text());
+	executeFormula($('#Element_OphInBiometry_Calculation_formula_id_'+side+' option:selected').text(),side);
 }
 
-function executeFormula(formula)
+function executeFormula(formula,side)
 {
 	var formulae = [];
 	formulae['SRK/T'] = 'SRKT';
 	formulae['Holladay 1'] = 'Holladay1';
 	formulae['T2'] = 'T2';
-	fillTableUsingFormula(formulae[formula]);
+
+	fillTableUsingFormula(formulae[formula],side);
 }
 
-function fillTableUsingFormula(formulaName)
+function fillTableUsingFormula(formulaName, side)
 {
-	clearTable();
+	clearTable(side);
 	// Get values
-	var e = new EyeMeasurements();
-	var iol = new IolConstants();
+	var e = new EyeMeasurements(side);
+	var iol = new IolConstants(side);
 	var formulaClass = this[formulaName];
 	var formula = new formulaClass(e,iol);
 
@@ -213,9 +238,9 @@ function enforceSign(value)
 }
 
 // Delete all rows
-function clearTable() {
+function clearTable(side) {
 	// Get reference to table
-	var table = document.getElementById('iol-table');
+	var table = document.getElementById('iol-table_'+side);
 
 	// Get number of rows
 	var numberOfRows = table.tBodies[0].rows.length;
@@ -226,10 +251,10 @@ function clearTable() {
 	}
 }
 
-function addRow(power, refraction, _bold) {
+function addRow(power, refraction, _bold, side) {
 
 	// Get reference to table
-	var table = document.getElementById('iol-table');
+	var table = document.getElementById('iol-table_'+side);
 
 	// Index of next row is equal to number of rows
 	var nextRowIndex = table.tBodies[0].rows.length;
@@ -252,30 +277,30 @@ function addRow(power, refraction, _bold) {
 	cell1.appendChild(node);
 }
 
-function iolSelected(power, refraction) {
+function iolSelected(power, refraction, side) {
 	event.preventDefault();
-	clearChoice();
+	clearChoice(side);
 
-	var iolPower = document.getElementById('Element_OphInBiometry_Selection_iol_power');
+	var iolPower = document.getElementById('Element_OphInBiometry_Selection_iol_power_'+side);
 	iolPower.value = power;
-	var predictedRefraction = document.getElementById('Element_OphInBiometry_Selection_predicted_refraction');
+	var predictedRefraction = document.getElementById('Element_OphInBiometry_Selection_predicted_refraction_'+side);
 	predictedRefraction.value = refraction;
 }
 
-function EyeMeasurements()
+function EyeMeasurements(side)
 {
 	if(isView()) {
-		this.al=parseFloat($('#al').html());
-		this.r1=parseFloat($('#r1').html());
-		this.r2=parseFloat($('#r2').html());
-		this.tr=parseFloat($('#tr').html());
+		this.al=parseFloat($('#al_'+side).html());
+		this.r1=parseFloat($('#r1_'+side).html());
+		this.r2=parseFloat($('#r2_'+side).html());
+		this.tr=parseFloat($('#tr_'+side).html());
 	}
 
 	if(isCreate()){
-		this.al=parseFloat($('#Element_OphInBiometry_BiometryData_axial_length').val());
-		this.r1=parseFloat($('#Element_OphInBiometry_BiometryData_r1').val());
-		this.r2=parseFloat($('#Element_OphInBiometry_BiometryData_r2').val());
-		this.tr=parseFloat($('#Element_OphInBiometry_Calculation_target_refraction').val());
+		this.al=parseFloat($('#Element_OphInBiometry_BiometryData_axial_length_'+side).val());
+		this.r1=parseFloat($('#Element_OphInBiometry_BiometryData_r1_'+side).val());
+		this.r2=parseFloat($('#Element_OphInBiometry_BiometryData_r2_left_'+side).val());
+		this.tr=parseFloat($('#Element_OphInBiometry_Calculation_target_refraction_left_'+side).val());
 	}
 }
 
@@ -289,11 +314,11 @@ function isView()
 	return $('#al').length!=0;
 }
 
-function IolConstants()
+function IolConstants(side)
 {
 	if(isCreate()) {
-	this.acon=parseFloat(document.getElementById('acon').innerHTML);
-	this.sf=parseFloat(document.getElementById('sf').innerHTML);
+	this.acon=parseFloat(document.getElementById('acon_'+side).innerHTML);
+	this.sf=parseFloat(document.getElementById('sf_'+side).innerHTML);
 	}
 }
 

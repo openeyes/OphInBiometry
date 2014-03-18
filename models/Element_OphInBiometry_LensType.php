@@ -23,7 +23,8 @@
  * The followings are the available columns in table:
  * @property string $id
  * @property integer $event_id
- * @property integer $lens_id
+ * @property integer $lens_id_left
+ * @property integer $lens_id_right
  *
  * The followings are the available model relations:
  *
@@ -35,7 +36,7 @@
  * @property OphInBiometry_LensType_Lens $lens
  */
 
-class Element_OphInBiometry_LensType extends BaseEventTypeElement
+class Element_OphInBiometry_LensType extends SplitEventTypeElement
 {
 	public $service;
 
@@ -64,11 +65,11 @@ class Element_OphInBiometry_LensType extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, lens_id, ', 'safe'),
+			array('event_id, eye_id, lens_id_left, lens_id_right, ', 'safe'),
 			array('lens_id, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, lens_id, ', 'safe', 'on' => 'search'),
+			array('id, event_id', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -86,6 +87,7 @@ class Element_OphInBiometry_LensType extends BaseEventTypeElement
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 			'lens' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id'),
+			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 		);
 	}
 
@@ -113,8 +115,6 @@ class Element_OphInBiometry_LensType extends BaseEventTypeElement
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('lens_id', $this->lens_id);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,

@@ -16,7 +16,7 @@
 					<span class="field-info">R/SE:</span>
 				</div>
 				<div class="large-3 column">
-					<span id="rse" class="field-info"></span>
+					<span id="rse_<?php echo $side?>" class="field-info"></span>
 				</div>
 				<div class="large-6 column collapse end">
 					<span class="field-info">SD = 43.16 mm</span>
@@ -31,7 +31,7 @@
 					<span class="field-info">Cyl:</span>
 				</div>
 				<div class="large-9 column">
-					<span id="cyl" class="field-info"></span>
+					<span id="cyl_<?php echo $side?>" class="field-info"></span>
 				</div>
 			</div>
 		</div>

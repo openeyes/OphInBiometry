@@ -35,7 +35,7 @@
  * @property User $usermodified
  */
 
-class Element_OphInBiometry_Selection extends BaseEventTypeElement
+class Element_OphInBiometry_Selection extends SplitEventTypeElement
 {
 	public $service;
 
@@ -64,11 +64,10 @@ class Element_OphInBiometry_Selection extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, iol_power, predicted_refraction, ', 'safe'),
-			array('iol_power, predicted_refraction, ', 'required'),
+			array('event_id, iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, iol_power, predicted_refraction, ', 'safe', 'on' => 'search'),
+			array('id, event_id ', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -85,6 +84,7 @@ class Element_OphInBiometry_Selection extends BaseEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 		);
 	}
 
@@ -96,8 +96,11 @@ class Element_OphInBiometry_Selection extends BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'iol_power' => 'IOL Power',
-			'predicted_refraction' => 'Predicted Refraction',
+			'iol_power_left' => 'IOL Power',
+			'predicted_refraction_left' => 'Predicted Refraction',
+			'iol_power_right' => 'IOL Power',
+			'predicted_refraction_right' => 'Predicted Refraction',
+
 		);
 	}
 
@@ -114,8 +117,6 @@ class Element_OphInBiometry_Selection extends BaseEventTypeElement
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('iol_power', $this->iol_power);
-		$criteria->compare('predicted_refraction', $this->predicted_refraction);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,

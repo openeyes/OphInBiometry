@@ -23,25 +23,35 @@
 		 data-element-type-class="<?php echo $element->elementType->class_name?>"
 		 data-element-type-name="<?php echo $element->elementType->name?>"
 		 data-element-display-order="<?php echo $element->elementType->display_order?>">
-	<div class="element-fields">
-		<div class="row">
-			<div class="large-8 column">
-				<?php echo $form->textField($element, 'target_refraction', null, null, array('label'=>2, 'field'=>2))?>
-				<?php echo $form->dropDownList($element, 'formula_id', CHtml::listData(OphInBiometry_Calculation_Formula::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),null,array('label'=>2, 'field'=>6))?>
+	<div class="element-fields element-eyes row">
+		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
+		<div class="element-eye right-eye left side column <?php if (!$element->hasRight()) { ?> inactive<?php } ?>"
+				 data-side="right">
+			<div class="active-form">
+				<a href="#" class="icon-remove-side remove-side">Remove side</a>
+				<?php $this->renderPartial($element->form_view . '_fields',
+						array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+			</div>
+			<div class="inactive-form">
+				<div class="add-side">
+					Set right side treatment drug
+				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="large-4 column">
-				<table name="table" id="iol-table" align="center" cellspacing="0" width="200" style="margin-top: 10px">
-					<thead>
-					<tr>
-						<td align="left" width="60%"><h4 style="margin-left: 4px">IOL power</h4></td>
-						<td align="right" width="40%"><h4>Refraction</h4></td>
-					</tr>
-					</thead>
-					<tbody id="tableBody">
-					</tbody>
-				</table>
+
+		<div class="element-eye left-eye right side column <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>"
+				 data-side="left">
+			<div class="active-form">
+				<a href="#" class="icon-remove-side remove-side">Remove side</a>
+				<?php $this->renderPartial($element->form_view . '_fields',
+						array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+			</div>
+			<div class="inactive-form">
+				<div class="add-side">
+					Set left side treatment drug
+				</div>
 			</div>
 		</div>
+	</div>
+
 </section>

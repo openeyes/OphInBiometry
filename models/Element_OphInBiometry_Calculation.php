@@ -36,7 +36,7 @@
  * @property OphInBiometry_Calculation_Formula $formula
  */
 
-class Element_OphInBiometry_Calculation extends BaseEventTypeElement
+class Element_OphInBiometry_Calculation extends SplitEventTypeElement
 {
 	public $service;
 
@@ -65,11 +65,10 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, target_refraction, formula_id, ', 'safe'),
-			array('target_refraction, formula_id, ', 'required'),
+			array('event_id, target_refraction_left, eye_id, formula_id_left,target_refraction_right, formula_id_right, ', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, event_id, target_refraction, formula_id, ', 'safe', 'on' => 'search'),
+			array('id, event_id, ', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -87,6 +86,7 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 			'formula' => array(self::BELONGS_TO, 'OphInBiometry_Calculation_Formula', 'formula_id'),
+			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 		);
 	}
 
@@ -98,8 +98,10 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'target_refraction' => 'Target Refraction',
-			'formula_id' => 'Formula',
+			'target_refraction_left' => 'Target Refraction',
+			'formula_id_left' => 'Formula',
+			'target_refraction_right' => 'Target Refraction',
+			'formula_id_right' => 'Formula',
 		);
 	}
 
@@ -116,8 +118,6 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 
 		$criteria->compare('id', $this->id, true);
 		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('target_refraction', $this->target_refraction);
-		$criteria->compare('formula_id', $this->formula_id);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,

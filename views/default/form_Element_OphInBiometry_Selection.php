@@ -22,9 +22,34 @@
 	data-element-type-id="<?php echo $element->elementType->id?>"
 	data-element-type-class="<?php echo $element->elementType->class_name?>"
 	data-element-type-name="<?php echo $element->elementType->name?>"
-	data-element-display-order="<?php echo $element->elementType->display_order?>">
-	<div class="element-fields">
-	<?php echo $form->textField($element, 'iol_power_left', array('size' => '10','readonly'=>true), null, array('label'=>2, 'field'=>3))?>
-	<?php echo $form->textField($element, 'predicted_refraction_left', array('size' => '10','readonly'=>true), null, array('label'=>2, 'field'=>3))?>
+	data-element-display-order="<?php echo $element->elementType->display_order?>">	<div class="element-fields element-eyes row">
+		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
+		<div class="element-eye right-eye left side column <?php if (!$element->hasRight()) { ?> inactive<?php } ?>"
+				 data-side="right">
+			<div class="active-form">
+				<a href="#" class="icon-remove-side remove-side">Remove side</a>
+				<?php $this->renderPartial($element->form_view . '_fields',
+						array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+			</div>
+			<div class="inactive-form">
+				<div class="add-side">
+					Set right side treatment drug
+				</div>
+			</div>
+		</div>
+
+		<div class="element-eye left-eye right side column <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>"
+				 data-side="left">
+			<div class="active-form">
+				<a href="#" class="icon-remove-side remove-side">Remove side</a>
+				<?php $this->renderPartial($element->form_view . '_fields',
+						array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+			</div>
+			<div class="inactive-form">
+				<div class="add-side">
+					Set left side treatment drug
+				</div>
+			</div>
+		</div>
 	</div>
 </section>
