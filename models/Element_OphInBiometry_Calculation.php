@@ -85,7 +85,8 @@ class Element_OphInBiometry_Calculation extends SplitEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'formula' => array(self::BELONGS_TO, 'OphInBiometry_Calculation_Formula', 'formula_id'),
+			'formula_left' => array(self::BELONGS_TO, 'OphInBiometry_Calculation_Formula', 'formula_id_left'),
+			'formula_right' => array(self::BELONGS_TO, 'OphInBiometry_Calculation_Formula', 'formula_id_right'),
 			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 		);
 	}

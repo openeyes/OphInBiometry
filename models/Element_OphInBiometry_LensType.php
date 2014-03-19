@@ -66,7 +66,6 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 		// will receive user inputs.
 		return array(
 			array('event_id, eye_id, lens_id_left, lens_id_right, ', 'safe'),
-			array('lens_id, ', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id', 'safe', 'on' => 'search'),
@@ -86,7 +85,8 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'lens' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id'),
+			'lens_left' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id_left'),
+			'lens_right' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id_right'),
 			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 		);
 	}

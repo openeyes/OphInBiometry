@@ -19,50 +19,22 @@
 ?>
 
 <section class="element">
-	<div class="element-data">
-		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('lens_id_'.$side))?></div></div>
-			<div class="large-10 column end"><div class="data-value" id="lens_<?php echo $side?>"><?php echo $element->lens ? $element->lens->name : 'None'?></div></div>
+	<div class="element-data element-eyes row">
+		<div class="element-eye right-eye column">
+			<?php if ($element->hasRight()) {
+				$this->renderPartial($element->view_view . '_fields',
+						array('side' => 'right', 'element' => $element));
+			} else { ?>
+				<div class="data-value">Not recorded</div>
+			<?php } ?>
 		</div>
-		<div class="row field-row">
-			<div class="large-2 column">
-				<div class="data-label">Description</div>
-			</div>
-			<div class="large-10 column">
-				<div class="data-value" id="type_<?php echo $side?>"></div>
-			</div>
-		</div>
-		<div class="row field-row">
-			<div class="large-2 column">
-				<div class="data-label">A constant</div>
-			</div>
-			<div class="large-10 column">
-				<div class="data-value" id="acon_<?php echo $side?>"></div>
-			</div>
-		</div>
-		<div class="row field-row">
-			<div class="large-2 column">
-				<div class="data-label">SF</div>
-			</div>
-			<div class="large-10 column">
-				<div class="data-value" id="sf_<?php echo $side?>"></div>
-			</div>
-		</div>
-		<div class="row field-row">
-			<div class="large-2 column">
-				<div class="data-label">Position</div>
-			</div>
-			<div class="large-10 column">
-				<div class="data-value" id="position_<?php echo $side?>"></div>
-			</div>
-		</div>
-		<div class="row field-row">
-			<div class="large-2 column">
-				<div class="data-label">Comments</div>
-			</div>
-			<div class="large-10 column">
-				<div class="data-value" id="comments_<?php echo $side?>"></div>
-			</div>
+		<div class="element-eye left-eye column">
+			<?php if ($element->hasLeft()) {
+				$this->renderPartial($element->view_view . '_fields',
+						array('side' => 'left', 'element' => $element));
+			} else { ?>
+				<div class="data-value">Not recorded</div>
+			<?php } ?>
 		</div>
 	</div>
 </section>

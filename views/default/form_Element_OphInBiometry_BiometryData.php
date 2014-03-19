@@ -34,7 +34,9 @@
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
-					Set right side treatment drug
+					<a href="#">
+						Add Right side <span class="icon-add-side"></span>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -48,7 +50,9 @@
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
-					Set left side treatment drug
+					<a href="#">
+						Add left side <span class="icon-add-side"></span>
+					</a>
 				</div>
 			</div>
 		</div>

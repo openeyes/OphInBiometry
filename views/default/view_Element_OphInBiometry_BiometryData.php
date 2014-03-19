@@ -19,72 +19,22 @@
 ?>
 
 <section class="element">
-	<div class="element-data">
-		<div class="row">
-			<div class="large-8 column">
-				<div class="row data-row">
-					<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('axial_length'))?></div></div>
-					<div class="large-2 column"><div class="data-value" id="al"><?php echo CHtml::encode($element->axial_length)?></div></div>
-					<div class="large-8 column"><div class="data-value">SNR = 193.0</div></div>
-				</div>
-			</div>
+	<div class="element-data element-eyes row">
+		<div class="element-eye right-eye column">
+			<?php if ($element->hasRight()) {
+				$this->renderPartial($element->view_view . '_fields',
+						array('side' => 'right', 'element' => $element));
+			} else { ?>
+				<div class="data-value">Not recorded</div>
+			<?php } ?>
 		</div>
-		<div class="row">
-			<div class="large-8 column">
-				<div class="row data-row">
-					<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r1'))?></div></div>
-					<div class="large-2 column"><div class="data-value" id="r1"><?php echo CHtml::encode($element->r1)?></div></div>
-					<div class="large-8 column"><div class="data-value" id="r1info"></div></div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-8 column">
-				<div class="row data-row">
-					<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r2'))?></div></div>
-					<div class="large-2 column"><div class="data-value" id="r2"><?php echo CHtml::encode($element->r2)?></div></div>
-					<div class="large-8 column"><div class="data-value" id="r2info"></div></div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-8 column">
-				<div class="row data-row">
-					<div class="large-2 column">
-						<div class="data-label">R/SE</div>
-					</div>
-					<div class="large-2 column">
-						<div class="data-value"  id="rse" class="field-info"></div>
-					</div>
-					<div class="large-8 column">
-						<div class="data-value">SD = 43.16 mm</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-8 column">
-				<div class="row data-row">
-					<div class="large-2 column">
-						<div class="data-label">Cyl</div>
-					</div>
-					<div class="large-10 column">
-						<div class="data-value" id="cyl"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-8 column">
-				<div class="row data-row">
-					<div class="large-2 column">
-						<div class="data-label">Acd</div>
-					</div>
-					<div class="large-10 column">
-						<div class="data-value" id="arc">2.28mm</div>
-					</div>
-				</div>
-			</div>
+		<div class="element-eye left-eye column">
+			<?php if ($element->hasLeft()) {
+				$this->renderPartial($element->view_view . '_fields',
+						array('side' => 'left', 'element' => $element));
+			} else { ?>
+				<div class="data-value">Not recorded</div>
+			<?php } ?>
 		</div>
 	</div>
 </section>

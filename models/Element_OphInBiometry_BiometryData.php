@@ -75,6 +75,8 @@ class Element_OphInBiometry_BiometryData extends SplitEventTypeElement
 			array('event_id, eye_id, ' .
 			'axial_length_left, r1_left, r2_left,  r1_axis_left, r2_axis_left, acd_left, scleral_thickness_left,' .
 			'axial_length_right, r1_right, r2_right,  r1_axis_right, r2_axis_right, acd_right, scleral_thickness_right',  'safe'),
+			array('r1_left,r1_left, r2_left,  r1_axis_left, r2_axis_left','requiredIfSide', 'side' => 'left'),
+			array('r1_right,r1_right, r2_right,  r1_axis_right, r2_axis_right','requiredIfSide', 'side' => 'right'),
 			// Please remove those attributes that should not be searched.
 			array('id, event_id', 'safe', 'on' => 'search'),
 		);

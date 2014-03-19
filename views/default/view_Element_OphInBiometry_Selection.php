@@ -19,14 +19,22 @@
 ?>
 
 <section class="element">
-	<div class="element-data">
-		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_power'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->iol_power)?></div></div>
+	<div class="element-data element-eyes row">
+		<div class="element-eye right-eye column">
+			<?php if ($element->hasRight()) {
+				$this->renderPartial($element->view_view . '_fields',
+						array('side' => 'right', 'element' => $element));
+			} else { ?>
+				<div class="data-value">Not recorded</div>
+			<?php } ?>
 		</div>
-		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction'))?></div></div>
-			<div class="large-10 column end"><div class="data-value" id="tr"><?php echo CHtml::encode($element->predicted_refraction)?></div></div>
+		<div class="element-eye left-eye column">
+			<?php if ($element->hasLeft()) {
+				$this->renderPartial($element->view_view . '_fields',
+						array('side' => 'left', 'element' => $element));
+			} else { ?>
+				<div class="data-value">Not recorded</div>
+			<?php } ?>
 		</div>
 	</div>
 </section>
