@@ -75,8 +75,8 @@ class Element_OphInBiometry_BiometryData extends SplitEventTypeElement
 			array('event_id, eye_id, ' .
 			'axial_length_left, r1_left, r2_left,  r1_axis_left, acd_left, scleral_thickness_left,' .
 			'axial_length_right, r1_right, r2_right,  r1_axis_right, acd_right, scleral_thickness_right',  'safe'),
-			array('r1_left,r1_left, r2_left,  r1_axis_left, r2_axis_left','requiredIfSide', 'side' => 'left'),
-			array('r1_right,r1_right, r2_right,  r1_axis_right, r2_axis_right','requiredIfSide', 'side' => 'right'),
+			array('r1_left,r1_left, r2_left','requiredIfSide', 'side' => 'left'),
+			array('r1_right,r1_right, r2_right','requiredIfSide', 'side' => 'right'),
 			// Please remove those attributes that should not be searched.
 			array('id, event_id', 'safe', 'on' => 'search'),
 		);
@@ -110,14 +110,13 @@ class Element_OphInBiometry_BiometryData extends SplitEventTypeElement
 			'axial_length_left' => 'Axial Length',
 			'r1_left' => 'R1',
 			'r2_left' => 'R2',
-			'r1_axis_left' => 'R1 Axis',
+			'r1_axis_left' => 'CYL',
 			'acd_left' => 'ACD',
 			'scleral_thickness_left' => 'Scleral Thickness',
 			'axial_length_right' => 'Axial Length',
 			'r1_right' => 'R1',
 			'r2_right' => 'R2',
-			'r1_axis_right' => 'R1 Axis',
-			'r2_axis_right' => 'R2 Axis',
+			'r1_axis_right' => 'CYL',
 			'acd_right' => 'ACD',
 			'scleral_thickness_right' => 'Scleral Thickness',
 		);

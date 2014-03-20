@@ -55,18 +55,6 @@
 		<div class="large-12 column">
 			<div class="row data-row">
 				<div class="large-3 column">
-					<div class="data-label">Cyl</div>
-				</div>
-				<div class="large-9 column">
-					<div class="data-value" id="cyl_<?php echo $side?>"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="large-12 column">
-			<div class="row data-row">
-				<div class="large-3 column">
 					<div class="data-label">Acd</div>
 				</div>
 				<div class="large-9 column">
@@ -75,7 +63,10 @@
 			</div>
 		</div>
 	</div>
-	<?php $this->widget('application.modules.eyedraw.OEEyeDrawWidget',
+	<?php
+		if(isset($element->{'r1_axis_'.$side}) && $element->{'r1_axis_'.$side}!=0)
+		{
+			$this->widget('application.modules.eyedraw.OEEyeDrawWidget',
 			array(
 					'onReadyCommandArray' => array(
 							array('addDoodle', array('SteepAxis', array('axis'=>$element->{'r1_axis_'.$side}))),
@@ -88,5 +79,6 @@
 			'mode' => 'view',
 			'width' => 200,
 			'height' => 200,
-	))?>
+	));
+		}?>
 </div>
