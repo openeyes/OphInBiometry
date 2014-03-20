@@ -192,15 +192,15 @@ function updateBiometryData(side)
 	}
 
 	var se = document.getElementById('rse_'+side);
-	var cyl = document.getElementById('Element_OphInBiometry_BiometryData_r1_axis_'+side);
+	var cyl = document.getElementById('cyl_'+side);
 
 	var seValue = (eyeMeasurements.r1 + eyeMeasurements.r2) / 2;
 	if(seValue) se.innerHTML = seValue.toFixed(2) + " mm";
-
+debugger;
 	if(cyl){
 		cyl.value ='';
 		var cylValue = k1Value - k2Value;
-		if(cylValue) cyl.value = cylValue.toFixed(2);
+		if(cylValue) cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
 	}
 
 }

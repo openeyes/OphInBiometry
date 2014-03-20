@@ -30,7 +30,7 @@
 	<div class="row">
 	<div class="large-12 column">
 		<div class="row data-row">
-			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r1_axis'))?></div></div>
+			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r1_axis'.$side))?></div></div>
 			<div class="large-3 column end"><div class="data-value" id="r1_axis_<?php echo $side?>"><?php echo CHtml::encode($element->{'r1_axis_'.$side})?></div></div>
 		</div>
 	</div>
@@ -47,6 +47,18 @@
 				</div>
 				<div class="large-6 column">
 					<div class="data-value">SD = 43.16 mm</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="large-12 column">
+			<div class="row data-row">
+				<div class="large-3 column">
+					<div class="data-label">Cyl</div>
+				</div>
+				<div class="large-9 column">
+					<div class="data-value" id="cyl_<?php echo $side?>"></div>
 				</div>
 			</div>
 		</div>
