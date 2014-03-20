@@ -220,7 +220,7 @@ function updateIolData(index,side) {
 	};
 
 
-	acon.innerHTML = lens[index].acon.toFixed(1);
+	if(acon) acon.innerHTML = lens[index].acon.toFixed(1);
 	if(sf) sf.innerHTML = lens[index].sf.toFixed(2);
 	if(type) type.innerHTML = lens[index].model + " " + lens[index].description;
 	if(position) position.innerHTML = lens[index].position;
