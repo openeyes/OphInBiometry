@@ -28,6 +28,15 @@
 		</div>
 	</div>
 	<div class="row">
+	<div class="large-12 column">
+		<div class="row data-row">
+			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('r1_axis'))?></div></div>
+			<div class="large-3 column end"><div class="data-value" id="r1_axis_<?php echo $side?>"><?php echo CHtml::encode($element->{'r1_axis_'.$side})?></div></div>
+		</div>
+	</div>
+		</div>
+
+	<div class="row">
 		<div class="large-12 column">
 			<div class="row data-row">
 				<div class="large-3 column">
@@ -66,4 +75,18 @@
 			</div>
 		</div>
 	</div>
+	<?php $this->widget('application.modules.eyedraw.OEEyeDrawWidget',
+			array(
+					'onReadyCommandArray' => array(
+							array('addDoodle', array('SteepAxis', array('axis'=>$element->{'r1_axis_'.$side}))),
+							array('deselectDoodles', array()),
+					),
+
+
+			'idSuffix' => $side.'_'.$element->elementType->id.'_'.$element->id,
+			'side' => ($side == 'right') ? 'R' : 'L',
+			'mode' => 'view',
+			'width' => 200,
+			'height' => 200,
+	))?>
 </div>
