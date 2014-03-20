@@ -6,7 +6,6 @@
 			<?php echo $form->textField($element, 'r1_'.$side, array('size' => '10','maxlength' => '5', 'append-text'=>'0 D @ 54°'), null, array('label'=>3, 'field'=>3, 'append-text'=>6))?>
 			<?php echo $form->textField($element, 'r2_'.$side, array('size' => '10','maxlength' => '5', 'append-text'=>'0 D @ 144° '), null, array('label'=>3, 'field'=>3, 'append-text'=>6))?>
 			<?php echo $form->textField($element, 'r1_axis_'.$side, array('size' => '10','maxlength' => '5'), null, array('label'=>3, 'field'=>3))?>
-			<?php echo $form->textField($element, 'r2_axis_'.$side, array('size' => '10','maxlength' => '5'), null, array('label'=>3, 'field'=>3))?>
 		</div>
 	</div>
 	<div class="row">
