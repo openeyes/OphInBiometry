@@ -22,7 +22,7 @@ class DefaultController extends BaseEventTypeController
 		parent::actionPrint($id);
 	}
 
-	public function isRequired($element)
+	public function isRequiredInUI(BaseEventTypeElement $element)
 	{
 		return true;
 	}
