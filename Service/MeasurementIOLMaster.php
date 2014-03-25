@@ -36,32 +36,6 @@ class MeasurementIOLMaster extends \Service\Resource {
 	static public function fromFhir($fhirObject) {
 		$report = parent::fromFhir($fhirObject);
 
-		$patient = \Patient::model()->find("id=?", array($report->patient_id));
-		$report->patient_id = $patient->id;
-		$eye = 'Right';
-		if ($report->eye == 'L') {
-			$eye = 'Left';
-		}
-		$report->eye_id = \Eye::model()->find("name=:name", array(":name" => $eye))->id;
-		$report->source = base64_decode($fhirObject->xml_file_data);
-
-		$title = $report->file_reference;
-		$protected_file = \ProtectedFile::createForWriting($title);
-		$protected_file->name = $title;
-		file_put_contents($protected_file->getPath(), base64_decode($report->image_scan_data));
-		$protected_file->mimetype = $protected_file->getPath();
-		$protected_file->save();
-
-		// now write the contents to files:
-		$cropped_file = \ProtectedFile::createForWriting($title);
-		// all content is base64 encoded, so decode it:
-		file_put_contents($cropped_file->getPath(), base64_decode($report->image_scan_crop_data));
-		$cropped_file->mimetype = $cropped_file->getPath();
-		$cropped_file->name = $title;
-		$cropped_file->save();
-
-		$report->scanned_field_id = $protected_file->id;
-		$report->scanned_field_crop_id = $cropped_file->id;
 
 		return $report;
 	}
