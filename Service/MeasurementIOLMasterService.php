@@ -41,8 +41,12 @@ class MeasurementIOLMasterService extends \Service\ModelService {
 	public function resourceToModel($res, $measurement) {
 
 		//$measurement->patient_id = $res->patient_id;
-		$measurement->blob = 'test';
+		foreach($res as $key => $value) {
+			if($key=='resourceType') continue;
+			$measurement->{$key} = $value;
+		}
 		$saved = $measurement->save();
+		var_dump($saved);
 		return $measurement;
 	}
 
