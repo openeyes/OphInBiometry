@@ -45,8 +45,9 @@ class MeasurementIOLMasterService extends \Service\ModelService {
 			if($key=='resourceType') continue;
 			$measurement->{$key} = $value;
 		}
+
 		$saved = $measurement->save();
-		var_dump($saved);
+		if(!$saved)print_r($measurement->getErrors());
 		return $measurement;
 	}
 

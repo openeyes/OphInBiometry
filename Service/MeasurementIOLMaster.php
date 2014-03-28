@@ -83,12 +83,14 @@ class MeasurementIOLMaster extends \Service\Resource {
 	 * @return type
 	 */
 	static public function fromFhir($fhirObject) {
+
 		$report = parent::fromFhir($fhirObject);
 
 		foreach($fhirObject as $key => $value) {
 			if($key=='resourceType') continue;
 			$report->{$key} = $value;
 		}
+
 		return $report;
 	}
 }

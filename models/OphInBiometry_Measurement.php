@@ -61,7 +61,7 @@ class OphInBiometry_Measurement extends BaseActiveRecordVersioned
 		return array(
 
 				array('last_name,	first_name,	middle_name,	name_prefix,	name_suffix,	patient_id,	patients_birth_date,	patients_comment,	patients_priv_id,	measurement_date,	r_sphere,	r_cylinder,	r_axis,	r_visual_acuity,	r_eye_state,	r_axial_length_mean,	r_axial_length_cnt,	r_axial_length_std,	r_axial_length_changed,	r_radius_se_mean,	r_radius_se_cnt,	r_radius_se_std,	r_radius_r1,	r_radius_r2,	r_radius_r1_axis,	r_radius_r2_axis,	r_acd_mean,	r_acd_cnt,	r_acd_std,	r_wtw_mean,	r_wtw_cnt,	r_wtw_std,	l_sphere,	l_cylinder,	l_axis,	l_visual_acuity,	l_eye_state,	l_axial_length_mean,	l_axial_length_cnt,	l_axial_length_std,	l_axial_length_changed,	l_radius_se_mean,	l_radius_se_cnt,	l_radius_se_std,	l_radius_r1,	l_radius_r2,	l_radius_r1_axis,	l_radius_r2_axis,	l_acd_mean,	l_acd_cnt,	l_acd_std,	l_wtw_mean,	l_wtw_cnt,	l_wtw_std,	refractive_index,	iol_machine_id,	iol_poll_id', 'safe'),
-				array('patient_id', 'required'),
+				//array('patient_id', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 				array('id', 'safe', 'on' => 'search'),
