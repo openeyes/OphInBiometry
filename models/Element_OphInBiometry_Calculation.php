@@ -138,9 +138,9 @@ class Element_OphInBiometry_Calculation extends BaseEventTypeElement
 		if ($patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
 			if ($episode = $patient->getEpisodeForCurrentSubspecialty()) {
 				if ($api = Yii::app()->moduleAPI->get('OphCiExamination')) {
-					if ($predicted_refraction = $api->getMostRecentPredictedRefractionInEpisode($episode)) {
+					/*if ($predicted_refraction = $api->getMostRecentPredictedRefractionInEpisode($episode)) {
 						$this->target_refraction = $predicted_refraction;
-					}
+					}*/
 				}
 			}
 		}

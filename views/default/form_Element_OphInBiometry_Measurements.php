@@ -18,42 +18,44 @@
  */
 ?>
 
-<div class="element <?php echo $element->elementType->class_name?>"
+<section class="element <?php echo $element->elementType->class_name?>"
 	data-element-type-id="<?php echo $element->elementType->id?>"
 	data-element-type-class="<?php echo $element->elementType->class_name?>"
 	data-element-type-name="<?php echo $element->elementType->name?>"
 	data-element-display-order="<?php echo $element->elementType->display_order?>">
-	<h4 class="elementTypeName"><?php echo $element->elementType->name; ?></h4>
+	<header class="element-header">
+		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
+	</header>
 
-	<?php if (Yii::app()->params['OphInBiometry_enable_iol_import']) {?>
-		<div class="eventDetail">
-			<div class="label">
+	<div class="element-fields">
+		<?php if (Yii::app()->params['OphInBiometry_enable_iol_import']) {?>
+			<div class="eventDetail">
+				<div class="label">
+				</div>
+				<div>
+					<button type="button" class="classy blue mini" title="Import data from IOL Master" id="clear_prescription" name="clear_prescription" onclick="importBiometry();">
+						<span class="button-span button-span-blue">Import</span>
+					</button>
+				</div>
 			</div>
-			<div>
-				<button type="button" class="classy blue mini" title="Import data from IOL Master" id="clear_prescription" name="clear_prescription" onclick="importBiometry();">
-					<span class="button-span button-span-blue">Import</span>
-				</button>
-			</div>
-		</div>
-	<?php }?>
+		<?php }?>
 
-	<!-- Split into two columns -->
-	<div style="width:1032; height:130px;" align="left">
-	
-		<!-- Right eye -->
-		<div style="width:514px; float:left;">
-			<?php echo $form->textField($element, 'right_axial_length', array('size' => '10','maxlength' => '4'))?>
-			<?php echo $form->textField($element, 'right_k1', array('size' => '10','maxlength' => '4'))?>
-			<?php echo $form->textField($element, 'right_k2', array('size' => '10','maxlength' => '4'))?>
-		</div>
+		<!-- Split into two columns -->
+		<div style="width:1032; height:130px;" align="left">
 		
-		<!-- Left eye -->
-		<div style="width:514px; float:left;">
-			<?php echo $form->textField($element, 'left_axial_length', array('size' => '10','maxlength' => '4'))?>
-			<?php echo $form->textField($element, 'left_k1', array('size' => '10','maxlength' => '4'))?>
-			<?php echo $form->textField($element, 'left_k2', array('size' => '10','maxlength' => '4'))?>
-		</div>
-		
-	</div>		
-	
-</div>
+			<!-- Right eye -->
+			<div style="width:514px; float:left;">
+				<?php echo $form->textField($element, 'right_axial_length', array('size' => '10','maxlength' => '4'))?>
+				<?php echo $form->textField($element, 'right_k1', array('size' => '10','maxlength' => '4'))?>
+				<?php echo $form->textField($element, 'right_k2', array('size' => '10','maxlength' => '4'))?>
+			</div>
+			
+			<!-- Left eye -->
+			<div style="width:514px; float:left;">
+				<?php echo $form->textField($element, 'left_axial_length', array('size' => '10','maxlength' => '4'))?>
+				<?php echo $form->textField($element, 'left_k1', array('size' => '10','maxlength' => '4'))?>
+				<?php echo $form->textField($element, 'left_k2', array('size' => '10','maxlength' => '4'))?>
+			</div>
+		</div>		
+	</div>
+</section>

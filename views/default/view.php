@@ -19,17 +19,19 @@
 ?>
 
 <?php
-	$this->breadcrumbs=array($this->module->id);
-	$this->header();
+if ($this->canPrint()) {
+	//$this->event_actions[] = EventAction::button('Print', 'print',null,array('class'=>'small button'));
+}
+$this->beginContent('//patient/event_container');
 ?>
 
-<h3 class="withEventIcon"><?php echo $this->event_type->name?></h3>
+<?php if ($this->event->delete_pending) {?>
+	<div class="alert-box alert with-icon">
+		This event is pending deletion and has been locked.
+	</div>
+<?php }?>
 
-<div>
-	<?php $this->renderDefaultElements($this->action->id)?>
-	<?php $this->renderOptionalElements($this->action->id)?>
-	<div class="cleartall"></div>
-</div>
+<?php $this->renderDefaultElements($this->action->id)?>
+<?php $this->renderOptionalElements($this->action->id)?>
 
-
-<?php $this->footer()?>
+<?php $this->endContent()?>
