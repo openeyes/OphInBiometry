@@ -1,6 +1,8 @@
 
 $(document).ready(function() {
 
+	alert ('This module is for demonstration purposes and should not be used for real IOL calculations.')
+
 	handleButton($('#et_save'),function() {
 	});
 
