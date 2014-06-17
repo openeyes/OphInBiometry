@@ -19,14 +19,15 @@
 ?>
 
 <?php
-if ($this->canPrint()) {
-	$this->event_actions[] = EventAction::button('Print', 'print',null,array('class'=>'small button'));
+if ($this->checkPrintAccess()) {
+	$this->event_actions[] = EventAction::button('Print', 'print', null, array('id' => 'et_print', 'class'=>'button small'));
 }
+
 $this->beginContent('//patient/event_container');
 $this->moduleNameCssClass.=" highlight-fields";
 ?>
 
-<?php $this->renderDefaultElements($this->action->id)?>
-<?php $this->renderOptionalElements($this->action->id)?>
+<?php $this->renderOpenElements($this->action->id); ?>
+<?php $this->renderOptionalElements($this->action->id); ?>
 
 <?php $this->endContent()?>
