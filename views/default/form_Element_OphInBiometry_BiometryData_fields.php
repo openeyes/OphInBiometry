@@ -51,6 +51,8 @@
 									'axialLength' => array('id' => 'Element_OphInBiometry_BiometryData_axial_length_'.$side),
 							),
 					),
+					'showDrawingControls'=>false,
+					'showDoodlePopup'=>false,
 					'width' => 300,
 					'height' => 100,
 					'idSuffix'=>'slider_'.$side,
