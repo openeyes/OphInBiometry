@@ -32,7 +32,7 @@
  * @property User $usermodified
  */
 
-class OphInBiometry_Measurement extends BaseActiveRecordVersioned
+class OphInBiometry_Measurement extends BaseActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.

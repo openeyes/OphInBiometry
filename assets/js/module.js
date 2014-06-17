@@ -198,7 +198,7 @@ function updateBiometryData(side)
 
 	var seValue = (eyeMeasurements.r1 + eyeMeasurements.r2) / 2;
 	if(seValue) se.innerHTML = seValue.toFixed(2) + " mm";
-debugger;
+
 	if(cyl){
 		cyl.value ='';
 		var cylValue = k1Value - k2Value;

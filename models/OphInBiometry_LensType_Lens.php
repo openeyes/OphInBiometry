@@ -32,7 +32,7 @@
  * @property User $usermodified
  */
 
-class OphInBiometry_LensType_Lens extends BaseActiveRecordVersioned
+class OphInBiometry_LensType_Lens extends BaseActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
