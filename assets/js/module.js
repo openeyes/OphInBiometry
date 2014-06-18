@@ -216,12 +216,21 @@ function updateIolData(index,side) {
 	var lens = {
 		"": {model: "", description: "", position: "", comments: "", acon: 0},
 		"MA60AC": {model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.9, sf: 1.90},
-		"SN60WF": {model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0, sf: 1.85}
+		"SN60WF": {model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0, sf: 1.85},
+		"SA60AT": {model: "SA60AT", description: "Acrysof® Intraocular lens", position: "Posterior chamber", comments: "+6.0 to +30.0 in 0.5D steps, +31.0 to +40.0 in 1D steps", acon:118.7, pACD:5.41, a0:-0.091, a1:0.231, a2:0.179},
+		"MTA3UO":	{model: "MTA3UO", description: "Acrysof® Intraocular lens", position: "Anterior chamber", comments: "+6.0 to +30.0 in 0.5D steps, +31.0 to +40.0 in 1D steps", acon:115.54, pACD:3.53, a0:-0.705, a1:0.4, a2:0.1}
 	};
 
 
 	if(acon) acon.innerHTML = lens[index].acon.toFixed(1);
-	if(sf) sf.innerHTML = lens[index].sf.toFixed(2);
+
+	if(sf) {
+		if(lens[index].sf) {
+			sf.innerHTML = lens[index].sf.toFixed(2);
+		} else {
+			sf.innerHTML = 'Unknown';
+		}
+	}
 	if(type) type.innerHTML = lens[index].model + " " + lens[index].description;
 	if(position) position.innerHTML = lens[index].position;
 	if(comments) comments.innerHTML = lens[index].comments;
