@@ -145,10 +145,10 @@ function update(side)
 }
 
 function clearChoice(side) {
-	var iolPower = document.getElementById('Element_OphInBiometry_Selection_iol_power_'+side);
-	iolPower.value = "";
-	var refraction = document.getElementById('Element_OphInBiometry_Selection_predicted_refraction_'+side);
-	refraction.value = "";
+	$('span.iol_power_'+side).text('');
+	$('Element_OphInBiometry_Selection[iol_power_'+side+']').val('');
+	$('span.predicted_refraction_'+side).text('');
+	$('Element_OphInBiometry_Selection[predicted_refraction_'+side+']').val('');
 }
 
 function renderCalculatedValues(side)
@@ -213,27 +213,18 @@ function updateIolData(index,side) {
 	var position = document.getElementById('position_'+side);
 	var comments = document.getElementById('comments_'+side);
 
-	var lens = {
-		"": {model: "", description: "", position: "", comments: "", acon: 0},
-		"MA60AC": {model: "MA60AC", description: "Acrysof® Multi-Piece Intraocular Lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.9, sf: 1.90},
-		"SN60WF": {model: "SN60WF", description: "Acrysof® IQ Intraocular lens", position: "Posterior chamber", comments: "Available from 5 to 35D", acon: 118.0, sf: 1.85},
-		"SA60AT": {model: "SA60AT", description: "Acrysof® Intraocular lens", position: "Posterior chamber", comments: "+6.0 to +30.0 in 0.5D steps, +31.0 to +40.0 in 1D steps", acon:118.7, pACD:5.41, a0:-0.091, a1:0.231, a2:0.179},
-		"MTA3UO":	{model: "MTA3UO", description: "Acrysof® Intraocular lens", position: "Anterior chamber", comments: "+6.0 to +30.0 in 0.5D steps, +31.0 to +40.0 in 1D steps", acon:115.54, pACD:3.53, a0:-0.705, a1:0.4, a2:0.1}
-	};
-
-
-	if(acon) acon.innerHTML = lens[index].acon.toFixed(1);
+	if(acon) acon.innerHTML = OphInBioemtry_lens_types[index].acon.toFixed(1);
 
 	if(sf) {
-		if(lens[index].sf) {
-			sf.innerHTML = lens[index].sf.toFixed(2);
+		if(OphInBioemtry_lens_types[index].sf) {
+			sf.innerHTML = OphInBioemtry_lens_types[index].sf.toFixed(2);
 		} else {
 			sf.innerHTML = 'Unknown';
 		}
 	}
-	if(type) type.innerHTML = lens[index].model + " " + lens[index].description;
-	if(position) position.innerHTML = lens[index].position;
-	if(comments) comments.innerHTML = lens[index].comments;
+	if(type) type.innerHTML = OphInBioemtry_lens_types[index].model + " " + OphInBioemtry_lens_types[index].description;
+	if(position) position.innerHTML = OphInBioemtry_lens_types[index].position;
+	if(comments) comments.innerHTML = OphInBioemtry_lens_types[index].comments;
 }
 
 function updateSuggestedPowerTable(side)
@@ -329,10 +320,10 @@ function iolSelected(power, refraction, side) {
 	event.preventDefault();
 	clearChoice(side);
 
-	var iolPower = document.getElementById('Element_OphInBiometry_Selection_iol_power_'+side);
-	iolPower.value = power;
-	var predictedRefraction = document.getElementById('Element_OphInBiometry_Selection_predicted_refraction_'+side);
-	predictedRefraction.value = refraction;
+	$('span.iol_power_'+side).text(power);
+	$('Element_OphInBiometry_Selection[iol_power_'+side).val(power);
+	$('span.predicted_refraction_'+side).text(refraction);
+	$('Element_OphInBiometry_Selection[predicted_refraction_'+side).val(refraction);
 }
 
 function EyeMeasurements(side)

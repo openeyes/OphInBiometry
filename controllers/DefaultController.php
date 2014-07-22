@@ -27,6 +27,31 @@ class DefaultController extends BaseEventTypeController
 		return true;
 	}
 
+	public function processJsVars()
+	{
+		$lens_types = array();
+
+		foreach (OphInBiometry_LensType_Lens::model()->findAll() as $lens) {
+			$lens_types[$lens->name] = array(
+				'model' => $lens->name,
+				'description' => $lens->description,
+				'position' => $lens->position->name,
+				'comments' => $lens->comments,
+				'acon' => (float)$lens->acon,
+			);
+
+			foreach (array('sf','pACD','a0','a1','a2') as $field) {
+				if ($lens->$field) {
+					$lens_types[$lens->name][$field] = (float)$lens->$field;
+				}
+			}
+		}
+
+		$this->jsVars['OphInBioemtry_lens_types'] = $lens_types;
+
+		parent::processJsVars();
+	}
+
 	/**
 	 * use the split event type javascript and styling
 	 *

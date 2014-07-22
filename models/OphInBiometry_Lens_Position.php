@@ -17,7 +17,7 @@
  */
 
 /**
- * This is the model class for table "ophinbiometry_lenstype_lens".
+ * This is the model class for table "ophinbiometry_lens_position".
  *
  * The followings are the available columns in table:
  * @property string $id
@@ -32,7 +32,7 @@
  * @property User $usermodified
  */
 
-class OphInBiometry_LensType_Lens extends BaseActiveRecord
+class OphInBiometry_Lens_Position extends BaseActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -48,7 +48,7 @@ class OphInBiometry_LensType_Lens extends BaseActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ophinbiometry_lenstype_lens';
+		return 'ophinbiometry_lens_position';
 	}
 
 	/**
@@ -80,7 +80,6 @@ class OphInBiometry_LensType_Lens extends BaseActiveRecord
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'position' => array(self::BELONGS_TO, 'OphInBiometry_Lens_Position', 'position_id'),
 		);
 	}
 
