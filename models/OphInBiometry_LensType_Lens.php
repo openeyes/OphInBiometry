@@ -59,7 +59,7 @@ class OphInBiometry_LensType_Lens extends BaseActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'safe'),
+			array('name, description, comments, position_id, acon, sf, pACD, a0, a1, a2', 'safe'),
 			array('name', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -92,6 +92,13 @@ class OphInBiometry_LensType_Lens extends BaseActiveRecord
 		return array(
 			'id' => 'ID',
 			'name' => 'Name',
+			'position_id' => 'Position',
+			'acon' => 'A constant',
+			'sf' => 'SF',
+			'pACD' => 'pACD',
+			'a0' => 'a0',
+			'a1' => 'a1',
+			'a2' => 'a2',
 		);
 	}
 
