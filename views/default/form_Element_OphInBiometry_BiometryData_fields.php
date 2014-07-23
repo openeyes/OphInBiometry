@@ -39,6 +39,12 @@
 		<div class="large-12 column">
 			<?php echo $form->textField($element, 'acd_'.$side, array('size' => '10','maxlength' => '5'), null, array('label'=>3, 'field'=>3))?>
 			<?php echo $form->textField($element, 'scleral_thickness_'.$side, array('size' => '10','maxlength' => '5'), null, array('label'=>3, 'field'=>3))?>
+			<div class="row field-row">
+				<div class="large-3 column"><label></label></div>
+				<div class="large-9 column end">
+					Please select an IOL from the list below.
+				</div>
+			</div>
 
 			<?php
 			$this->widget('application.modules.eyedraw.OEEyeDrawWidget', array(

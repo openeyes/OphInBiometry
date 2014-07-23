@@ -100,6 +100,8 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 			'id' => 'ID',
 			'event_id' => 'Event',
 			'lens_id' => 'Lens',
+			'lens_id_right' => 'Lens',
+			'lens_id_left' => 'Lens',
 		);
 	}
 

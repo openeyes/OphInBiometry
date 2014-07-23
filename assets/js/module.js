@@ -206,7 +206,7 @@ function updateBiometryData(side)
 }
 
 function updateIolData(index,side) {
-
+	if (index == '- Please select -') return;
 	var acon = document.getElementById('acon_'+side);
 	var sf = document.getElementById('sf_'+side);
 	var type = document.getElementById('type_'+side);
@@ -267,7 +267,7 @@ function fillTableUsingFormula(formulaName, side)
 		}
 	}
 	else {
-		console.log('Unable to calculate power');
+		//console.log('Unable to calculate power');
 	}
 }
 
@@ -311,8 +311,7 @@ function addRow(power, refraction, _bold, side) {
 	// Refraction
 	var cell1 = newRow.insertCell(1);
 	node = document.createElement('p');
-	if (!_bold) node.innerHTML = refraction;
-	else node.innerHTML = '<b>' + refraction + '</b>';
+	node.innerHTML = refraction;
 	cell1.appendChild(node);
 }
 

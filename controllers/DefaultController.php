@@ -4,16 +4,19 @@ class DefaultController extends BaseEventTypeController
 {
 	public function actionCreate()
 	{
+		Yii::app()->user->setFlash('warning.formula', 'WARNING: the formula used in this module is not finalised and should not be relied on for calculations.');
 		parent::actionCreate();
 	}
 
 	public function actionUpdate($id)
 	{
+		Yii::app()->user->setFlash('warning.formula', 'WARNING: the formula used in this module is not finalised and should not be relied on for calculations.');
 		parent::actionUpdate($id);
 	}
 
 	public function actionView($id)
 	{
+		Yii::app()->user->setFlash('warning.formula', 'WARNING: the formula used in this module is not finalised and should not be relied on for calculations.');
 		parent::actionView($id);
 	}
 
