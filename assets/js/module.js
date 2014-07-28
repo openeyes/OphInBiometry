@@ -320,9 +320,9 @@ function iolSelected(power, refraction, side) {
 	clearChoice(side);
 
 	$('span.iol_power_'+side).text(power);
-	$('Element_OphInBiometry_Selection[iol_power_'+side).val(power);
+	$('input[name="Element_OphInBiometry_Selection[iol_power_'+side+']"]').val(power);
 	$('span.predicted_refraction_'+side).text(refraction);
-	$('Element_OphInBiometry_Selection[predicted_refraction_'+side).val(refraction);
+	$('input[name="Element_OphInBiometry_Selection[predicted_refraction_'+side+']"]').val(refraction);
 }
 
 function EyeMeasurements(side)
