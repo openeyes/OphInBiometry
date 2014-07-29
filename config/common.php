@@ -20,7 +20,7 @@
 return array(
 	'components' => array(
 		'service' => array(
-			'class' => '\\Service\ServiceManager',
+			'class' => 'services\ServiceManager',
 			'internal_services' => array(
 				'OphInBiometry\\Service\\MeasurementIOLMasterService',
 			),
