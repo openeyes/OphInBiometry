@@ -122,6 +122,12 @@ class Element_OphInBiometry_BiometryData extends SplitEventTypeElement
 		);
 	}
 
+	public function setDefaultOptions() {
+		$this->axial_length_left = 0;
+		$this->axial_length_right = 0;
+		parent::setDefaultOptions();
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
