@@ -123,6 +123,8 @@ class Element_OphInBiometry_BiometryData extends SplitEventTypeElement
 	}
 
 	public function setDefaultOptions() {
+		// It is necessary to set these values to be an integer to prevent eyedraw
+		// bound fields from breaking. See [ORB-340]
 		$this->axial_length_left = 0;
 		$this->axial_length_right = 0;
 		parent::setDefaultOptions();
