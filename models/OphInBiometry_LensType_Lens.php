@@ -32,8 +32,10 @@
  * @property User $usermodified
  */
 
-class OphInBiometry_LensType_Lens extends BaseActiveRecordVersioned
+class OphInBiometry_LensType_Lens extends BaseActiveRecordVersionedSoftDelete
 {
+	public $notDeletedField = 'active';
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -64,6 +66,15 @@ class OphInBiometry_LensType_Lens extends BaseActiveRecordVersioned
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, name', 'safe', 'on' => 'search'),
+		);
+	}
+
+	public function scopes()
+	{
+		return array(
+			'active' => array(
+				'condition' => 'active=1',
+			),
 		);
 	}
 

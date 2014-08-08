@@ -27,7 +27,7 @@ $(document).ready(function() {
 		window.location.href = baseUrl+'/OphInBiometry/admin/addLensType';
 	});
 
-	$('#et_delete_lens_type').click(function(e) {
+	$('#et_delete_lens_type').unbind('click').click(function(e) {
 		e.preventDefault();
 
 		if ($('input[name="lens_types[]"]:checked').length == 0) {
