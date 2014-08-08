@@ -62,7 +62,7 @@
 					'idSuffix'=>'slider_'.$side,
 					'mode' => 'edit',
 					'toolbar'=>false,
-
+					'showDrawingControls' => false
 			));
 			?>
 		</div>
