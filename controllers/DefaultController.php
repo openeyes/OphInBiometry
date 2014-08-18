@@ -2,21 +2,23 @@
 
 class DefaultController extends BaseEventTypeController
 {
+	public $flash_message = 'Refer to the IOL Master Sheet as the Source of Truth';
+
 	public function actionCreate()
 	{
-		Yii::app()->user->setFlash('warning.formula', 'WARNING: the formula used in this module is not finalised and should not be relied on for calculations.');
+		Yii::app()->user->setFlash('warning.formula', $this->flash_message);
 		parent::actionCreate();
 	}
 
 	public function actionUpdate($id)
 	{
-		Yii::app()->user->setFlash('warning.formula', 'WARNING: the formula used in this module is not finalised and should not be relied on for calculations.');
+		Yii::app()->user->setFlash('warning.formula', $this->flash_message);
 		parent::actionUpdate($id);
 	}
 
 	public function actionView($id)
 	{
-		Yii::app()->user->setFlash('warning.formula', 'WARNING: the formula used in this module is not finalised and should not be relied on for calculations.');
+		Yii::app()->user->setFlash('warning.formula', $this->flash_message);
 		parent::actionView($id);
 	}
 

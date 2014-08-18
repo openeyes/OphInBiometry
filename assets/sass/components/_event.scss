@@ -23,3 +23,22 @@
 		background-image: image-url("medium.png");
 	}
 }
+
+.element-side-header {
+	width: 6em;
+	margin-left: auto;
+	margin-right: auto;
+	background: #fff;
+}
+
+.element-side-header.right-side {
+	h4 {
+		margin-left: 0.7em;
+	}
+}
+
+.element-side-header.left-side {
+	h4 {
+		margin-left: 1.1em;
+	}
+}

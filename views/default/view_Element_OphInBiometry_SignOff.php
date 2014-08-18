@@ -1,4 +1,4 @@
-/** OphInBiometry module styles */
+<?php
 /**
  * OpenEyes
  *
@@ -16,44 +16,14 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
-/* line 1, ../sass/components/_selection.scss */
-.iolDisplay {
-  font-size: 18px;
-  background-color: #ffff66;
-  border-color: gray;
-  border-width: 1px;
-  border-style: solid;
-  width: 60px;
-  padding-left: 10px;
-}
-
-/* line 17, ../sass/components/_event.scss */
-.event {
-  border-color: #aaaaaa;
-}
-/* line 19, ../sass/components/_event.scss */
-.event .event-content {
-  background-image: url('../img/watermark.png?1406619609');
-}
-/* line 22, ../sass/components/_event.scss */
-.event .event-title {
-  background-image: url('../img/medium.png?1406619609');
-}
-
-/* line 27, ../sass/components/_event.scss */
-.element-side-header {
-  width: 6em;
-  margin-left: auto;
-  margin-right: auto;
-  background: #fff;
-}
-
-/* line 35, ../sass/components/_event.scss */
-.element-side-header.right-side h4 {
-  margin-left: 0.7em;
-}
-
-/* line 41, ../sass/components/_event.scss */
-.element-side-header.left-side h4 {
-  margin-left: 1.1em;
-}
+?>
+	<div class="element-data">
+		<div class="row data-row">
+			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('user1_id'))?></div></div>
+			<div class="large-9 column end"><div class="data-value"><?php echo $element->user1 ? $element->user1->fullName : 'Not recorded'?></div></div>
+		</div>
+		<div class="row data-row">
+			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('user2_id'))?></div></div>
+			<div class="large-9 column end"><div class="data-value"><?php echo $element->user2 ? $element->user2->fullName : 'Not recorded'?></div></div>
+		</div>
+	</div>
