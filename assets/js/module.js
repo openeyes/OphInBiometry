@@ -249,25 +249,27 @@ function fillTableUsingFormula(formulaName, side)
 	var e = new EyeMeasurements(side);
 	var iol = new IolConstants(side);
 	var formulaClass = this[formulaName];
-	var formula = new formulaClass(e,iol);
+	if (formulaClass) {
+		var formula = new formulaClass(e,iol);
 
-	// Calculate lens power for target refraction
-	var powerIOL = formula.suggestedPower();
-	if (powerIOL) {
+		// Calculate lens power for target refraction
+		var powerIOL = formula.suggestedPower();
+		if (powerIOL) {
 
-		// Round to nearest 0.5
-		var roundIOL = Math.round(powerIOL * 2) / 2;
+			// Round to nearest 0.5
+			var roundIOL = Math.round(powerIOL * 2) / 2;
 
-		// Produce results for range of refraction around this one
-		var startPower = roundIOL + 1;
-		for (var i = 0; i < 5; i++) {
-			var power = startPower - (0.5 * i);
-			var refraction = formula.powerFor(power);
-			addRow(power.toFixed(1),enforceSign(refraction.toFixed(2)), i == 2,side);
+			// Produce results for range of refraction around this one
+			var startPower = roundIOL + 1;
+			for (var i = 0; i < 5; i++) {
+				var power = startPower - (0.5 * i);
+				var refraction = formula.powerFor(power);
+				addRow(power.toFixed(1),enforceSign(refraction.toFixed(2)), i == 2,side);
+			}
 		}
-	}
-	else {
-		//console.log('Unable to calculate power');
+		else {
+			//console.log('Unable to calculate power');
+		}
 	}
 }
 
@@ -281,12 +283,14 @@ function clearTable(side) {
 	// Get reference to table
 	var table = document.getElementById('iol-table_'+side);
 
-	// Get number of rows
-	var numberOfRows = table.tBodies[0].rows.length;
+	if (table) {
+		// Get number of rows
+		var numberOfRows = table.tBodies[0].rows.length;
 
-	// Delete them
-	for (var i = 0; i < numberOfRows; i++) {
-		table.deleteRow(1);
+		// Delete them
+		for (var i = 0; i < numberOfRows; i++) {
+			table.deleteRow(1);
+		}
 	}
 }
 
