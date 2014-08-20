@@ -30,5 +30,6 @@ return array(
 		'admin_menu' => array(
 			'Lens types' => '/OphInBiometry/admin/lensTypes',
 		),
+		'OphInBiometry_allow_manual_changes' => false,
 	),
 );
