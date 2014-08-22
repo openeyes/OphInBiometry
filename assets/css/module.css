@@ -57,3 +57,31 @@
 .element-side-header.left-side h4 {
   margin-left: 1.1em;
 }
+
+/* line 46, ../sass/components/_event.scss */
+input[type="text"] {
+  display: inline-block;
+  width: 4em;
+}
+
+/* line 51, ../sass/components/_event.scss */
+#Event_event_date_0 {
+  width: 6.8em;
+}
+
+/* line 55, ../sass/components/_event.scss */
+label {
+  display: inline-block;
+}
+
+/* line 59, ../sass/components/_event.scss */
+.field-info.prepend {
+  width: 6em;
+  text-align: right;
+}
+
+/* line 64, ../sass/components/_event.scss */
+label.rse_d_left, label.rse_d_right {
+  text-align: right;
+  width: 4.7em;
+}

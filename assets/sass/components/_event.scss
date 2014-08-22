@@ -42,3 +42,26 @@
 		margin-left: 1.1em;
 	}
 }
+
+input[type="text"] {
+	display: inline-block;
+	width: 4em;
+}
+
+#Event_event_date_0 {
+	width: 6.8em;
+}
+
+label {
+	display: inline-block;
+}
+
+.field-info.prepend {
+	width: 6em;
+	text-align: right;
+}
+
+label.rse_d_left, label.rse_d_right {
+	text-align: right;
+	width: 4.7em;
+}

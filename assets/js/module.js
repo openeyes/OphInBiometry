@@ -38,7 +38,7 @@ $(document).ready(function() {
 		if (side == 'left') {
 			other_side = 'right';
 		}
-		OphInBiometry_hide(side,  this);
+		OphInBiometry_hide(side,	this);
 		OphInBiometry_show(other_side);
 	});
 
@@ -108,7 +108,6 @@ $(document).ready(function() {
 		update('right');
 	})
 
-
 	$('#Element_OphInBiometry_Calculation_target_refraction_left').change(function() {
 		update('left');
 	})
@@ -167,42 +166,44 @@ function renderCalculatedValues(side)
 
 function updateBiometryData(side)
 {
-	var eyeMeasurements = new EyeMeasurements(side)
-	var k1Text;
-	var k2Text;
+	var n = 1.3375;
 
-	if(eyeMeasurements.r1){
-		var k1Value = 337.5 / eyeMeasurements.r1;
-		k1Text = k1Value.toFixed(2) + " D @ 54°";
+	var em = new EyeMeasurements(side);
+
+	var k1Value = (n-1) * 1000 / em.r1;
+	var k2Value = (n-1) * 1000 / em.r2;
+
+	if (k1Value) {
+		$('#Element_OphInBiometry_BiometryData_r1_axis_' + side).prev('span').text(k1Value.toFixed(2) + " D @");
 	}
 
-	if(eyeMeasurements.r2){
-		var k2Value = 337.5 / eyeMeasurements.r2;
-		k2Text = k2Value.toFixed(2) + " D @ 144°";
+	if (k2Value) {
+		$('#Element_OphInBiometry_BiometryData_r2_axis_' + side).prev('span').text(k2Value.toFixed(2) + " D @");
 	}
 
-	if(isCreate()) {
-	$('#div_Element_OphInBiometry_BiometryData_r1_'+side).find('.field-info').text(k1Text);
-	$('#div_Element_OphInBiometry_BiometryData_r2_'+side).find('.field-info').text(k2Text);
+	if (em.r1 && em.r2) {
+		var rse_mm = (em.r1 + em.r2) / 2;
+		$('.rse_mm_' + side).text(rse_mm.toFixed(2) + ' mm');
+		$('.rse_d_' + side).text(((n-1) * 1000/rse_mm).toFixed(2) + ' D');
+	} else {
+		$('.rse_mm_' + side).text('');
+		$('.rse_d_' + side).text('');
 	}
 
-	if(isView()) {
-		$('#r1info_'+side).html(k1Text);
-		$('#r2info_'+side).html(k2Text);
+	if (k1Value && k2Value) {
+		var cyl = k1Value - k2Value;
+		var axis = 0;
+
+		if (cyl > 0) {
+			axis = em.ra2;
+		} else if (cyl <0) {
+			axis = em.ra1;
+		}
+
+		$('.cyl_' + side).text(cyl.toFixed(2) + ' mm @' + axis + '°');
+	} else {
+		$('.cyl_' + side).text('');
 	}
-
-	var se = document.getElementById('rse_'+side);
-	var cyl = document.getElementById('cyl_'+side);
-
-	var seValue = (eyeMeasurements.r1 + eyeMeasurements.r2) / 2;
-	if(seValue) se.innerHTML = seValue.toFixed(2) + " mm";
-
-	if(cyl){
-		cyl.value ='';
-		var cylValue = k1Value - k2Value;
-		if(cylValue) cyl.innerHTML = cylValue.toFixed(2) + " @ 54°";
-	}
-
 }
 
 function updateIolData(index,side) {
@@ -327,6 +328,19 @@ function iolSelected(power, refraction, side) {
 	$('input[name="Element_OphInBiometry_Selection[iol_power_'+side+']"]').val(power);
 	$('span.predicted_refraction_'+side).text(refraction);
 	$('input[name="Element_OphInBiometry_Selection[predicted_refraction_'+side+']"]').val(refraction);
+
+	setTimeout(function() {
+		var inserted = $('section.Element_OphInBiometry_Selection');
+		var offTop = inserted.offset().top - 90;
+		var speed = (Math.abs($(window).scrollTop() - offTop)) * 1.5;
+		$('body').animate({
+			scrollTop : offTop
+		}, speed, null, function() {
+			$('.element-title', inserted).effect('pulsate', {
+				times : 2
+			}, 600);
+		});
+	}, 100);
 }
 
 function EyeMeasurements(side)
@@ -341,7 +355,9 @@ function EyeMeasurements(side)
 	if(isCreate()){
 		this.al=parseFloat($('#Element_OphInBiometry_BiometryData_axial_length_'+side).val());
 		this.r1=parseFloat($('#Element_OphInBiometry_BiometryData_r1_'+side).val());
+		this.ra1=parseFloat($('#Element_OphInBiometry_BiometryData_r1_axis_'+side).val());
 		this.r2=parseFloat($('#Element_OphInBiometry_BiometryData_r2_'+side).val());
+		this.ra2=parseFloat($('#Element_OphInBiometry_BiometryData_r2_axis_'+side).val());
 		this.tr=parseFloat($('#Element_OphInBiometry_Calculation_target_refraction_'+side).val());
 	}
 }
@@ -394,8 +410,82 @@ function Holladay1 (eyeMeasurements, iolConstants) {
 	};
 }
 
-function SRKT (eyeMeasurements, iolConstants) {
+function SRKT (eyeMeasurements, iolConstants)
+{
+	// Refractive index of cornea with fudge factor for converting radius of curvature to dioptric power
+	var n = 1.3375;
+	// Refractive index of the cornea
+	var nc = 1.333;
+	// Refractive index of aqueous and vitreous
+	var na = 1.336;
+	// Vertex distance
+	var vd = 12.0;
 
+	var averageRadius = (eyeMeasurements.r1 + eyeMeasurements.r2) / 2;
+	var dioptresCornea = (n - 1) * 1000 / averageRadius;
+
+	var diffRI = nc - 1;
+
+	var retinalThickness = 0.65696 - 0.02029 * eyeMeasurements.al;
+	var opticalAxialLength = eyeMeasurements.al + retinalThickness;
+
+	var aconstant;
+	if (iolConstants.acon > 100) {
+		aconstant = iolConstants.acon * 0.62467 - 68 - 0.74709;
+		//calculationComments += "A-constant correction applied</br>";
+	} else {
+		aconstant = iolConstants.acon;
+	}
+
+	// Difference between natural lens and IOL to cornea
+	var diff = aconstant - 3.3357;
+	
+	// Axial length correction for high myopes
+	var axialLength;
+	if (eyeMeasurements.al > 24.2) {
+		// Value of 1.716 (as in original SRK/T paper) gives identical results to IOLMaster. Using 1.715 as in erratum gives slightly different results
+		axialLength = -3.446 + 1.716 * eyeMeasurements.al - 0.0237 * eyeMeasurements.al * eyeMeasurements.al;
+		//axialLength = -3.446 + 1.715 * eyeMeasurements.al - 0.0237 * eyeMeasurements.al * eyeMeasurements.al;
+		//calculationComments += "Axial length correction applied</br>";
+	} else {
+		axialLength = eyeMeasurements.al;
+	}
+
+	// Corneal width
+	var cornealWidth = -5.40948 + 0.58412 * axialLength + 0.098 * dioptresCornea;
+	
+	// Corneal dome height (check for negative result here before taking square root)
+	if (averageRadius * averageRadius - cornealWidth * cornealWidth / 4 > 0) {
+		var cornealDomeHeight = averageRadius - Math.sqrt(averageRadius * averageRadius - cornealWidth * cornealWidth / 4);
+	} else {
+		//calculationComments += "Negative square root for corneal dome height</br>";
+		var cornealDomeHeight = averageRadius;
+	}
+	if (cornealDomeHeight > 5.5) {
+		cornealDomeHeight = 5.5;
+		//calculationComments += "Corneal dome height capped at 5.5</br>";
+	}
+	
+	// Post-op anterior chamber depth
+	var postopACDepth = cornealDomeHeight + diff;
+	
+	this.suggestedPower = function() {
+		var numerator = 1000 * na * (na * averageRadius - diffRI * opticalAxialLength - 0.001 * eyeMeasurements.tr * (vd * (na * averageRadius - diffRI * opticalAxialLength) + opticalAxialLength * averageRadius));
+		var denominator = (opticalAxialLength - postopACDepth) * (na * averageRadius - diffRI * postopACDepth - 0.001 * eyeMeasurements.tr * (vd * (na * averageRadius - diffRI * postopACDepth) + postopACDepth * averageRadius));
+
+		return numerator/denominator;
+	}
+
+	this.powerFor = function(lensPower) {
+		var numerator = 1000 * na * (na * averageRadius - diffRI * opticalAxialLength) - lensPower * (opticalAxialLength - postopACDepth) * (na * averageRadius - diffRI * postopACDepth);
+		var denominator = (na * (vd * (na * averageRadius - diffRI * opticalAxialLength) + opticalAxialLength * averageRadius) - 0.001 * lensPower * (opticalAxialLength - postopACDepth) * (vd * (na * averageRadius - diffRI * postopACDepth) + postopACDepth * averageRadius));
+
+		return numerator/denominator;				
+	}
+}
+
+function SRKT2 (eyeMeasurements, iolConstants)
+{
 	var e = eyeMeasurements;
 	var _axialLength = eyeMeasurements.al;
 	var _radius1 = eyeMeasurements.r1;
