@@ -21,17 +21,21 @@
 <section class="element">
 	<div class="element-data element-eyes row">
 		<div class="element-eye right-eye column">
+			<div class="element-header right-side">
+				<h4>Right side</h4>
+			</div>
 			<?php if ($element->hasRight()) {
-				$this->renderPartial('view_Element_OphInBiometry_LensType_fields',
-						array('side' => 'right', 'element' => $element));
+				$this->renderPartial('view_Element_OphInBiometry_LensType_fields', array('side' => 'right', 'element' => $element));
 			} else { ?>
 				<div class="data-value">Not recorded</div>
 			<?php } ?>
 		</div>
 		<div class="element-eye left-eye column">
+			<div class="element-header left-side">
+				<h4>Left side</h4>
+			</div>
 			<?php if ($element->hasLeft()) {
-				$this->renderPartial('view_Element_OphInBiometry_LensType_fields',
-						array('side' => 'left', 'element' => $element));
+				$this->renderPartial('view_Element_OphInBiometry_LensType_fields', array('side' => 'left', 'element' => $element));
 			} else { ?>
 				<div class="data-value">Not recorded</div>
 			<?php } ?>

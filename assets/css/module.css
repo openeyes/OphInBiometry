@@ -85,3 +85,13 @@ label.rse_d_left, label.rse_d_right {
   text-align: right;
   width: 4.7em;
 }
+
+/* line 69, ../sass/components/_event.scss */
+.element-header.right-side {
+  margin-left: 14.5em;
+}
+
+/* line 73, ../sass/components/_event.scss */
+.element-header.left-side {
+  margin-left: 14.5em;
+}
