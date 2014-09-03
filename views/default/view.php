@@ -28,6 +28,5 @@ $this->moduleNameCssClass.=" highlight-fields";
 ?>
 
 <?php $this->renderOpenElements($this->action->id); ?>
-<?php $this->renderOptionalElements($this->action->id); ?>
 
 <?php $this->endContent()?>
