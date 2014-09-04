@@ -17,17 +17,10 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
-<section class="element <?php echo $element->elementType->class_name?>"
-	data-element-type-id="<?php echo $element->elementType->id?>"
-	data-element-type-class="<?php echo $element->elementType->class_name?>"
-	data-element-type-name="<?php echo $element->elementType->name?>"
-	data-element-display-order="<?php echo $element->elementType->display_order?>">
 	<div class="element-fields element-eyes row">
 		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
 		<div class="element-eye right-eye left side column <?php if (!$element->hasRight()) { ?> inactive<?php } ?>" data-side="right">
 			<div class="active-form">
-				<a href="#" class="icon-remove-side remove-side">Remove side</a>
 				<?php $this->renderPartial('form_Element_OphInBiometry_BiometryData_fields',array(
 					'side' => 'right',
 					'element' => $element,
@@ -37,15 +30,12 @@
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
-					<a href="#">
-						Add Right side <span class="icon-add-side"></span>
-					</a>
+					Set right side lens type
 				</div>
 			</div>
 		</div>
 		<div class="element-eye left-eye right side column <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>" data-side="left">
 			<div class="active-form">
-				<a href="#" class="icon-remove-side remove-side">Remove side</a>
 				<?php $this->renderPartial('form_Element_OphInBiometry_BiometryData_fields', array(
 					'side' => 'left',
 					'element' => $element,
@@ -55,11 +45,20 @@
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
-					<a href="#">
-						Add left side <span class="icon-add-side"></span>
-					</a>
+					Set left side lens type
 				</div>
 			</div>
 		</div>
 	</div>
-</section>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('section.Element_OphInBiometry_LensType').find('.element-eye.right-eye').hasClass('inactive')) {
+			$('section.Element_OphInBiometry_BiometryData').find('.element-eye.right-eye').find('.active-form').hide();
+			$('section.Element_OphInBiometry_BiometryData').find('.element-eye.right-eye').find('.inactive-form').show();
+		}
+		if ($('section.Element_OphInBiometry_LensType').find('.element-eye.left-eye').hasClass('inactive')) {
+			$('section.Element_OphInBiometry_BiometryData').find('.element-eye.left-eye').find('.active-form').hide();
+			$('section.Element_OphInBiometry_BiometryData').find('.element-eye.left-eye').find('.inactive-form').show();
+		}
+	});
+</script>

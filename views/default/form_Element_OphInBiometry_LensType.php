@@ -30,11 +30,14 @@
 				<h4>Right side</h4>
 			</div>
 			<div class="active-form">
+				<a href="#" class="icon-remove-side remove-side">Remove side</a>
 				<?php $this->renderPartial('form_Element_OphInBiometry_LensType_fields', array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
-					Set right side biometry data
+					<a href="#">
+						Add Right side <span class="icon-add-side"></span>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -43,11 +46,14 @@
 				<h4>Left side</h4>
 			</div>
 			<div class="active-form">
+				<a href="#" class="icon-remove-side remove-side">Remove side</a>
 				<?php $this->renderPartial('form_Element_OphInBiometry_LensType_fields', array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
-					Set left side biometry data
+					<a href="#">
+						Add left side <span class="icon-add-side"></span>
+					</a>
 				</div>
 			</div>
 		</div>

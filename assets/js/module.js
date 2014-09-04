@@ -49,15 +49,21 @@ $(document).ready(function() {
 	});
 
 	function OphInBiometry_hide(side, el) {
-		hideSplitElementSide('Element_OphInBiometry_LensType', side);
+		hideSplitElementSide('Element_OphInBiometry_BiometryData', side);
 		hideSplitElementSide('Element_OphInBiometry_Calculation', side);
 		hideSplitElementSide('Element_OphInBiometry_Selection', side);
 	}
 
 	function OphInBiometry_show(side) {
-		showSplitElementSide('Element_OphInBiometry_LensType', side);
+		showSplitElementSide('Element_OphInBiometry_BiometryData', side);
 		showSplitElementSide('Element_OphInBiometry_Calculation', side);
 		showSplitElementSide('Element_OphInBiometry_Selection', side);
+
+		$('section.Element_OphInBiometry_BiometryData').find('div[data-side="' + side + '"]').find('.active-form').show();
+		$('section.Element_OphInBiometry_BiometryData').find('div[data-side="' + side + '"]').find('.inactive-form').hide();
+
+		$('section.Element_OphInBiometry_Calculation').find('div[data-side="' + side + '"]').find('.active-form').show();
+		$('section.Element_OphInBiometry_Calculation').find('div[data-side="' + side + '"]').find('.inactive-form').hide();
 	}
 
 	$('select.populate_textarea').unbind('change').change(function() {
@@ -207,25 +213,34 @@ function updateBiometryData(side)
 }
 
 function updateIolData(index,side) {
-	if (index == '- Please select -') return;
 	var acon = document.getElementById('acon_'+side);
 	var sf = document.getElementById('sf_'+side);
 	var type = document.getElementById('type_'+side);
 	var position = document.getElementById('position_'+side);
 	var comments = document.getElementById('comments_'+side);
 
-	if(acon) acon.innerHTML = OphInBioemtry_lens_types[index].acon.toFixed(1);
-
-	if(sf) {
-		if(OphInBioemtry_lens_types[index].sf) {
-			sf.innerHTML = OphInBioemtry_lens_types[index].sf.toFixed(2);
-		} else {
-			sf.innerHTML = 'Unknown';
+	if (typeof(OphInBioemtry_lens_types[index]) != 'undefined') {
+		if (acon) {
+			acon.innerHTML = OphInBioemtry_lens_types[index].acon.toFixed(1);
 		}
+
+		if(sf) {
+			if(OphInBioemtry_lens_types[index].sf) {
+				sf.innerHTML = OphInBioemtry_lens_types[index].sf.toFixed(2);
+			} else {
+				sf.innerHTML = 'Unknown';
+			}
+		}
+		if(type) type.innerHTML = OphInBioemtry_lens_types[index].model + " " + OphInBioemtry_lens_types[index].description;
+		if(position) position.innerHTML = OphInBioemtry_lens_types[index].position;
+		if(comments) comments.innerHTML = OphInBioemtry_lens_types[index].comments;
+	} else {
+		acon.innerHTML = '';
+		sf.innerHTML = '';
+		type.innerHTML = '';
+		position.innerHTML = '';
+		comments.innerHTML = '';
 	}
-	if(type) type.innerHTML = OphInBioemtry_lens_types[index].model + " " + OphInBioemtry_lens_types[index].description;
-	if(position) position.innerHTML = OphInBioemtry_lens_types[index].position;
-	if(comments) comments.innerHTML = OphInBioemtry_lens_types[index].comments;
 }
 
 function updateSuggestedPowerTable(side)

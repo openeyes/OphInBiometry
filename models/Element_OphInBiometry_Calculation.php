@@ -124,23 +124,9 @@ class Element_OphInBiometry_Calculation extends SplitEventTypeElement
 			'criteria' => $criteria,
 		));
 	}
-
-
-
-	protected function beforeSave()
+	
+	public function isRequiredInUI()
 	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
-	}
-
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
+		return false;
 	}
 }
-?>

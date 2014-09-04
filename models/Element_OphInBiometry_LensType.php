@@ -123,22 +123,9 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 		));
 	}
 
-
-
-	protected function beforeSave()
+	public function isRequiredInUI()
 	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
-	}
-
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
+		return true;
 	}
 }
 ?>

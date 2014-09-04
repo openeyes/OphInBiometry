@@ -33,7 +33,7 @@
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
-					Set right side biometry data
+					Set right side lens type
 				</div>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
-					Set left side biometry data
+					Set left side lens type
 				</div>
 			</div>
 		</div>

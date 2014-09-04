@@ -27,11 +27,6 @@ class DefaultController extends BaseEventTypeController
 		parent::actionPrint($id);
 	}
 
-	public function isRequiredInUI(BaseEventTypeElement $element)
-	{
-		return true;
-	}
-
 	public function processJsVars()
 	{
 		$lens_types = array();

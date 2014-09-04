@@ -147,22 +147,8 @@ class Element_OphInBiometry_BiometryData extends SplitEventTypeElement
 		));
 	}
 
-
-
-	protected function beforeSave()
+	public function isRequiredInUI()
 	{
-		return parent::beforeSave();
-	}
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
-	}
-
-	protected function beforeValidate()
-	{
-		return parent::beforeValidate();
+		return false;
 	}
 }
-?>
