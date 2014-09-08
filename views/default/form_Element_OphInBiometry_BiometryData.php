@@ -52,13 +52,17 @@
 	</div>
 <script type="text/javascript">
 	$(document).ready(function() {
+		// Needs refactoring after R2
 		if ($('section.Element_OphInBiometry_LensType').find('.element-eye.right-eye').hasClass('inactive')) {
 			$('section.Element_OphInBiometry_BiometryData').find('.element-eye.right-eye').find('.active-form').hide();
 			$('section.Element_OphInBiometry_BiometryData').find('.element-eye.right-eye').find('.inactive-form').show();
-		}
-		if ($('section.Element_OphInBiometry_LensType').find('.element-eye.left-eye').hasClass('inactive')) {
+			$('section.Element_OphInBiometry_BiometryData').find('.sideField').val(1);
+		} else if ($('section.Element_OphInBiometry_LensType').find('.element-eye.left-eye').hasClass('inactive')) {
 			$('section.Element_OphInBiometry_BiometryData').find('.element-eye.left-eye').find('.active-form').hide();
 			$('section.Element_OphInBiometry_BiometryData').find('.element-eye.left-eye').find('.inactive-form').show();
+			$('section.Element_OphInBiometry_BiometryData').find('.sideField').val(2);
+		} else {
+			$('section.Element_OphInBiometry_BiometryData').find('.sideField').val(3);
 		}
 	});
 </script>
