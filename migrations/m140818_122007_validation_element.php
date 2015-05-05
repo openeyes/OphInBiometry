@@ -11,8 +11,7 @@ class m140818_122007_validation_element extends OEMigration
 			'name' => 'Sign off',
 			'class_name' => 'Element_OphInBiometry_SignOff',
 			'display_order' => 5,
-			'default' => 1,
-			'active' => 0,
+			'default' => 1
 		));
 
 		$this->createTable('et_ophinbioemtry_signoff', array(

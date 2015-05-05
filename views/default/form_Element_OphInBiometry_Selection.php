@@ -24,8 +24,8 @@
 	data-element-type-name="<?php echo $element->elementType->name?>"
 	data-element-display-order="<?php echo $element->elementType->display_order?>">	<div class="element-fields element-eyes row">
 		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
-		<div class="element-eye right-eye left side column <?php if (!$element->hasRight()) { ?> inactive<?php } ?>"
-				 data-side="right">
+		<div id="right-eye-selection" class="element-eye right-eye left side column highlighted-selection <?php if (!$element->hasRight()) { ?> inactive<?php } ?>"
+				 data-side="right" onClick="switchSides($(this));">
 			<div class="active-form">
 				<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
 				<?php $this->renderPartial('form_Element_OphInBiometry_Selection_fields',
@@ -38,8 +38,8 @@
 			</div>
 		</div>
 
-		<div class="element-eye left-eye right side column <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>"
-				 data-side="left">
+		<div id="left-eye-selection" class="element-eye left-eye right side column disabled <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>"
+				 data-side="left" onClick="switchSides($(this));">
 			<div class="active-form">
 
 				<?php $this->renderPartial('form_Element_OphInBiometry_Selection_fields',

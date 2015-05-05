@@ -73,3 +73,24 @@ label.rse_d_left, label.rse_d_right {
 .element-header.left-side {
 	margin-left: 14.5em;
 }
+
+.highlighted-lens {
+  border-top: 3px solid red;
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+}
+
+.highlighted-selection{
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+}
+
+.highlighted-calculation{
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+  border-bottom: 3px solid red;
+}
+
+.disabled{
+  opacity: 0.2;
+}
