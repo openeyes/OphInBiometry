@@ -28,8 +28,8 @@ class m150505_124200_changeFieldsBiometryDat extends CDbMigration
 		$this->addColumn('et_ophinbiometry_lenstype','axis_k1_right','decimal(4,1) not null default 0');
 		$this->addColumn('et_ophinbiometry_lenstype','axial_length_left','decimal(4,2) not null default 0');
 		$this->addColumn('et_ophinbiometry_lenstype','axial_length_right','decimal(4,2) not null default 0');
-		$this->addColumn('et_ophinbiometry_lenstype','snr_left','decimal(4,1) not null default 0');
-		$this->addColumn('et_ophinbiometry_lenstype','snr_right','decimal(4,1) not null default 0');
+		$this->addColumn('et_ophinbiometry_lenstype','snr_left','int(10) not null default 0');
+		$this->addColumn('et_ophinbiometry_lenstype','snr_right','int(10) not null default 0');
 		$this->addColumn('et_ophinbiometry_lenstype_version','k1_left','decimal(4,2) not null default 0');
 		$this->addColumn('et_ophinbiometry_lenstype_version','k1_right','decimal(4,2) not null default 0');
 		$this->addColumn('et_ophinbiometry_lenstype_version','k2_left','decimal(4,2) not null default 0');
@@ -47,7 +47,7 @@ class m150505_124200_changeFieldsBiometryDat extends CDbMigration
 		$this->alterColumn('et_ophinbiometry_calculation','target_refraction_left', 'decimal(4,2) not null default 0');
 		$this->alterColumn('et_ophinbiometry_calculation','target_refraction_right', 'decimal(4,2) not null default 0');
 
-
+		$this->update('element_type',array('name'=>'[-Calculation-]'),"class_name = 'Element_OphInBiometry_Calculation'");
 	}
 
 	public function down()
