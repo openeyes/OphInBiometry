@@ -40,6 +40,13 @@ class m150505_124200_changeFieldsBiometryDat extends CDbMigration
 		$this->addColumn('et_ophinbiometry_lenstype_version','axial_length_right','decimal(4,2) not null default 0');
 		$this->addColumn('et_ophinbiometry_lenstype_version','snr_left','decimal(4,1) not null default 0');
 		$this->addColumn('et_ophinbiometry_lenstype_version','snr_right','decimal(4,1) not null default 0');
+		$this->alterColumn('et_ophinbiometry_selection','iol_power_left', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_selection','iol_power_right', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_selection','predicted_refraction_left', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_selection','predicted_refraction_right', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_calculation','target_refraction_left', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_calculation','target_refraction_right', 'decimal(4,2) not null default 0');
+
 
 	}
 

@@ -66,6 +66,8 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 		// will receive user inputs.
 		return array(
 			array('event_id, eye_id, lens_id_left, lens_id_right, k1_left, k1_right, k2_left, k2_right, axis_k1_left, axis_k1_right, axial_length_left, axial_length_right, snr_left, snr_right', 'safe'),
+			array('k1_left, k1_right, k2_left, k2_right, axial_length_left, axial_length_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,2})?/'),
+			array('axis_k1_left, axis_k1_right, snr_left, snr_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,1})?/'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id', 'safe', 'on' => 'search'),
