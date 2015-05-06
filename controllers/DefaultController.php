@@ -35,16 +35,9 @@ class DefaultController extends BaseEventTypeController
 			$lens_types[$lens->name] = array(
 				'model' => $lens->name,
 				'description' => $lens->description,
-				'position' => $lens->position->name,
-				'comments' => $lens->comments,
 				'acon' => (float)$lens->acon,
 			);
 
-			foreach (array('sf','pACD','a0','a1','a2') as $field) {
-				if ($lens->$field) {
-					$lens_types[$lens->name][$field] = (float)$lens->$field;
-				}
-			}
 		}
 
 		$this->jsVars['OphInBioemtry_lens_types'] = $lens_types;
