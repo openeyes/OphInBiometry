@@ -2,7 +2,7 @@
 
 class DefaultController extends BaseEventTypeController
 {
-	public $flash_message = 'Refer to the IOL Master Sheet as the Source of Truth';
+	public $flash_message = 'This data was entered manually .Please refer to the IOL Master printout for all patient safety applications';
 
 	public function actionCreate()
 	{
