@@ -2,7 +2,7 @@
 
 class DefaultController extends BaseEventTypeController
 {
-	public $flash_message = 'Refer to the IOL Master Sheet as the Source of Truth';
+	public $flash_message = 'This data was entered manually .Please refer to the IOL Master printout for all patient safety applications';
 
 	public function actionCreate()
 	{
@@ -35,16 +35,9 @@ class DefaultController extends BaseEventTypeController
 			$lens_types[$lens->name] = array(
 				'model' => $lens->name,
 				'description' => $lens->description,
-				'position' => $lens->position->name,
-				'comments' => $lens->comments,
 				'acon' => (float)$lens->acon,
 			);
 
-			foreach (array('sf','pACD','a0','a1','a2') as $field) {
-				if ($lens->$field) {
-					$lens_types[$lens->name][$field] = (float)$lens->$field;
-				}
-			}
 		}
 
 		$this->jsVars['OphInBioemtry_lens_types'] = $lens_types;

@@ -53,6 +53,27 @@
   margin-left: 0.7em;
 }
 
+.highlighted-lens {
+  border-top: 3px solid red;
+  border-left: 3px solid red;
+  border-right: 3px solid red;
+}
+
+.highlighted-selection{
+    border-left: 3px solid red;
+    border-right: 3px solid red;
+}
+
+.highlighted-calculation{
+    border-left: 3px solid red;
+    border-right: 3px solid red;
+    border-bottom: 3px solid red;
+}
+
+.disabled{
+    opacity: 0.2;
+}
+
 /* line 41, ../sass/components/_event.scss */
 .element-side-header.left-side h4 {
   margin-left: 1.1em;

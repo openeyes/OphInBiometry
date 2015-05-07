@@ -66,6 +66,7 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 		return array(
 			array('event_id, eye_id, iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right', 'safe'),
 			// The following rule is used by search().
+			array('iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,2})?/'),
 			array('iol_power_left, predicted_refraction_left','requiredIfSide', 'side' => 'left'),
 			array('iol_power_right, predicted_refraction_right','requiredIfSide', 'side' => 'right'),
 			// Please remove those attributes that should not be searched.

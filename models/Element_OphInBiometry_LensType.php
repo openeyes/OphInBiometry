@@ -65,7 +65,9 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, eye_id, lens_id_left, lens_id_right, ', 'safe'),
+			array('event_id, eye_id, lens_id_left, lens_id_right, k1_left, k1_right, k2_left, k2_right, axis_k1_left, axis_k1_right, axial_length_left, axial_length_right, snr_left, snr_right', 'safe'),
+			array('k1_left, k1_right, k2_left, k2_right, axial_length_left, axial_length_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,2})?/'),
+			array('axis_k1_left, axis_k1_right, snr_left, snr_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,1})?/'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id', 'safe', 'on' => 'search'),
@@ -102,6 +104,16 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 			'lens_id' => 'Lens',
 			'lens_id_right' => 'Lens',
 			'lens_id_left' => 'Lens',
+			'k1_left' => 'K1 (D)',
+			'k1_right' => 'K1 (D)',
+			'k2_left' => 'K2 (D)',
+			'k2_right' => 'K2 (D)',
+			'axis_k1_left' => 'Axis K1 (D)',
+			'axis_k1_right' => 'Axis K1 (D)',
+			'axial_length_left' => 'Axial length (mm)',
+			'axial_length_right' => 'Axial length (mm)',
+			'snr_left' => 'SNR',
+			'snr_right' => 'SNR',
 		);
 	}
 
