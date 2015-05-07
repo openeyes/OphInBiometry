@@ -18,17 +18,17 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 return array(
-	'components' => array(
+	/*'components' => array(
 		'service' => array(
 			'class' => 'services\ServiceManager',
 			'internal_services' => array(
 				'OphInBiometry\\Service\\MeasurementIOLMasterService',
 			),
 		),
-	),
+	),*/
 	'params' => array(
 		'admin_menu' => array(
-			'Lens types' => '/OphInBiometry/admin/lensTypes',
+			'Lens types' => '/OphInBiometry/lensTypeAdmin/list',
 		),
 		'OphInBiometry_allow_manual_changes' => false,
 	),
