@@ -44,8 +44,14 @@ class m150505_124200_changeFieldsBiometryDat extends CDbMigration
 		$this->alterColumn('et_ophinbiometry_selection','iol_power_right', 'decimal(4,2) not null default 0');
 		$this->alterColumn('et_ophinbiometry_selection','predicted_refraction_left', 'decimal(4,2) not null default 0');
 		$this->alterColumn('et_ophinbiometry_selection','predicted_refraction_right', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_selection_version','iol_power_left', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_selection_version','iol_power_right', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_selection_version','predicted_refraction_left', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_selection_version','predicted_refraction_right', 'decimal(4,2) not null default 0');
 		$this->alterColumn('et_ophinbiometry_calculation','target_refraction_left', 'decimal(4,2) not null default 0');
 		$this->alterColumn('et_ophinbiometry_calculation','target_refraction_right', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_calculation_version','target_refraction_left', 'decimal(4,2) not null default 0');
+		$this->alterColumn('et_ophinbiometry_calculation_version','target_refraction_right', 'decimal(4,2) not null default 0');
 
 		$this->update('element_type',array('name'=>'[-Calculation-]'),"class_name = 'Element_OphInBiometry_Calculation'");
 	}
