@@ -20,7 +20,7 @@
 
 	<div class="element-fields element-eyes row">
 		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
-		<div id="right-eye-calculation" class="element-eye right-eye left side column highlighted-calculation<?php if (!$element->hasRight()) { ?> inactive<?php } ?>"
+		<div id="right-eye-calculation" class="element-eye right-eye left side column <?php if (!$element->hasRight()) { ?> inactive<?php } ?>"
 				 data-side="right" onClick="switchSides($(this));">
 			<div class="active-form">
 
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 
-		<div id="left-eye-calculation" class="element-eye left-eye right side column disabled <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>"
+		<div id="left-eye-calculation" class="element-eye left-eye right side column  <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>"
 				 data-side="left" onClick="switchSides($(this));">
 			<div class="active-form">
 

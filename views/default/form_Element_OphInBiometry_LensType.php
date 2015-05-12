@@ -25,7 +25,7 @@
 	data-element-display-order="<?php echo $element->elementType->display_order?>">
 	<div class="element-fields element-eyes row">
 		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
-		<div id="right-eye-lens" class="element-eye right-eye left side column highlighted-lens <?php if (!$element->hasRight()) { ?> inactive<?php } ?>" onClick="switchSides($(this));" data-side="right">
+		<div id="right-eye-lens" class="element-eye right-eye left side column  <?php if (!$element->hasRight()) { ?> inactive<?php } ?>" onClick="switchSides($(this));" data-side="right">
 			<div class="element-header right-side">
 				<h4>Right side</h4>
 			</div>
@@ -41,7 +41,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="left-eye-lens" class="element-eye left-eye right side column disabled <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>" onClick="switchSides($(this));" data-side="left">
+		<div id="left-eye-lens" class="element-eye left-eye right side column <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>" onClick="switchSides($(this));" data-side="left">
 			<div class="element-header left-side">
 				<h4>Left side</h4>
 			</div>
@@ -62,7 +62,7 @@
 <script type="text/javascript">
 	function switchSides( element ){
 		// swith from right active to left
-		if( $(element).hasClass('left-eye') && $(element).hasClass('disabled')){
+		if( $(element).hasClass('left-eye') ){
 			$('#right-eye-lens').addClass('disabled').removeClass('highlighted-lens');
 			$('#right-eye-selection').addClass('disabled').removeClass('highlighted-selection');
 			$('#right-eye-calculation').addClass('disabled').removeClass('highlighted-calculation');
@@ -71,7 +71,7 @@
 			$('#left-eye-selection').removeClass('disabled').addClass('highlighted-selection');
 			$('#left-eye-calculation').removeClass('disabled').addClass('highlighted-calculation');
 
-		}else if( $(element).hasClass('right-eye') && $(element).hasClass('disabled')){
+		}else if( $(element).hasClass('right-eye') ){
 			$('#left-eye-lens').addClass('disabled').removeClass('highlighted-lens');
 			$('#left-eye-selection').addClass('disabled').removeClass('highlighted-selection');
 			$('#left-eye-calculation').addClass('disabled').removeClass('highlighted-calculation');
