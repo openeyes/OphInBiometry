@@ -213,6 +213,7 @@ function updateBiometryData(side)
 }
 
 function updateIolData(index,side) {
+
 	var acon = document.getElementById('acon_'+side);
 	var sf = document.getElementById('sf_'+side);
 	var type = document.getElementById('type_'+side);
@@ -234,13 +235,17 @@ function updateIolData(index,side) {
 		if(type) type.innerHTML = OphInBioemtry_lens_types[index].model + " " + OphInBioemtry_lens_types[index].description;
 		if(position) position.innerHTML = OphInBioemtry_lens_types[index].position;
 		if(comments) comments.innerHTML = OphInBioemtry_lens_types[index].comments;
-	} else {
+	}
+    /*
+    else {
 		acon.innerHTML = '';
 		sf.innerHTML = '';
 		type.innerHTML = '';
 		position.innerHTML = '';
 		comments.innerHTML = '';
 	}
+     */
+
 }
 
 function updateSuggestedPowerTable(side)
@@ -392,7 +397,7 @@ function IolConstants(side)
 {
 	if(isCreate()) {
 	this.acon=parseFloat(document.getElementById('acon_'+side).innerHTML);
-	this.sf=parseFloat(document.getElementById('sf_'+side).innerHTML);
+	//this.sf=parseFloat(document.getElementById('sf_'+side).innerHTML);
 	}
 }
 

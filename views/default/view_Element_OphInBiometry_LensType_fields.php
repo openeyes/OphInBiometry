@@ -17,7 +17,7 @@
 			<div class="data-label">A constant</div>
 		</div>
 		<div class="large-9 column">
-			<div class="data-value" id="acon_<?php echo $side?>"><?php echo $element->{'lens_'.$side} ? $element->{'lens_'.$side}->acon : 'None'?></div>
+			<div class="data-value" id="acon_<?php echo $side?>"><?php echo (($element->{'lens_'.$side}) ? number_format($element->{'lens_'.$side}->acon,1) : 'None') ?></div>
 		</div>
 	</div>
 	<div class="row field-row">
