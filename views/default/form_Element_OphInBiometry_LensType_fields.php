@@ -24,7 +24,7 @@
 					<span class="field-info">A constant:</span>
 				</div>
 				<div class="large-9 column">
-					<span id="acon_<?php echo $side?>" class="field-info"><?php echo $element->{'lens_'.$side} ? $element->{'lens_'.$side}->acon : ''?></span>
+					<span id="acon_<?php echo $side?>" class="field-info"><?php echo $element->{'lens_'.$side} ? number_format($element->{'lens_'.$side}->acon,1) : ''?></span>
 				</div>
 			</div>
 		</div>
