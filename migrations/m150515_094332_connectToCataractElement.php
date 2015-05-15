@@ -70,14 +70,14 @@ class m150515_094332_connectToCataractElement extends CDbMigration
 						array(":cataract_element_type_id" => $cataractElementType['id'])
 					)->queryAll();
 				// we check if there are any new procedures
-				if( is_array($cataractElementProcedures) && is_array($proceduresData) ) {
-					$difference = array_diff_assoc($cataractElementProcedures, $proceduresData);
-				}
+				//if( is_array($cataractElementProcedures) && is_array($proceduresData) ) {
+				//	$difference = array_diff_assoc($cataractElementProcedures, $proceduresData);
+				//}
 
 				// if we found any new we add them to the base array
-				if (is_array($difference) && count($difference) > 0) {
-					$proceduresData = array_merge($proceduresData, $difference);
-				}
+				//if (is_array($difference) && count($difference) > 0) {
+				//	$proceduresData = array_merge($proceduresData, $difference);
+				//}
 			}
 			// we search for current biometry element procedure relations
 			$biometryElementProcedures = $this->dbConnection->createCommand()->select('procedure_id AS id')
