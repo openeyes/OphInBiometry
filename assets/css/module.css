@@ -54,20 +54,20 @@
 }
 
 .highlighted-lens {
-  border-top: 3px solid red;
-  border-left: 3px solid red;
-  border-right: 3px solid red;
+  border-top: 3px solid #FF9900;
+  border-left: 3px solid #FF9900;
+  border-right: 3px solid #FF9900;
 }
 
 .highlighted-selection{
-    border-left: 3px solid red;
-    border-right: 3px solid red;
+    border-left: 3px solid #FF9900;
+    border-right: 3px solid #FF9900;
 }
 
 .highlighted-calculation{
-    border-left: 3px solid red;
-    border-right: 3px solid red;
-    border-bottom: 3px solid red;
+    border-left: 3px solid #FF9900;
+    border-right: 3px solid #FF9900;
+    border-bottom: 3px solid #FF9900;
 }
 
 .disabled{
