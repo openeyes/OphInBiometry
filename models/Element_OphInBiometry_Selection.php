@@ -69,6 +69,9 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 			array('iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,2})?/'),
 			array('iol_power_left, predicted_refraction_left','requiredIfSide', 'side' => 'left'),
 			array('iol_power_right, predicted_refraction_right','requiredIfSide', 'side' => 'right'),
+			array('iol_power_left, iol_power_right', 'numerical', 'max' => 40, 'min' => -10),
+			array('predicted_refraction_left, predicted_refraction_right', 'numerical', 'max' => 10, 'min' => -10),
+
 			// Please remove those attributes that should not be searched.
 			array('id, event_id ', 'safe', 'on' => 'search'),
 		);
