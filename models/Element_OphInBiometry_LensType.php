@@ -65,9 +65,38 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, eye_id, lens_id_left, lens_id_right, k1_left, k1_right, k2_left, k2_right, axis_k1_left, axis_k1_right, axial_length_left, axial_length_right, snr_left, snr_right', 'safe'),
-			array('k1_left, k1_right, k2_left, k2_right, axial_length_left, axial_length_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,2})?/'),
-			array('axis_k1_left, axis_k1_right, snr_left, snr_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,1})?/'),
+			array(
+				'event_id, eye_id, lens_id_left, lens_id_right, k1_left, k1_right, k2_left, k2_right, axis_k1_left, axis_k1_right, axial_length_left, axial_length_right, snr_left, snr_right',
+				'safe'
+			),
+			array(
+				'k1_left, k1_right, k2_left, k2_right, axial_length_left, axial_length_right',
+				'match',
+				'pattern' => '/([0-9]*?)(\.[0-9]{0,2})?/'
+			),
+			array(
+				'axis_k1_left, axis_k1_right, snr_left, snr_right',
+				'match',
+				'pattern' => '/([0-9]*?)(\.[0-9]{0,1})?/'
+			),
+			array(
+				'snr_left, k1_left, k2_left, axis_k1_left, axial_length_left, lens_id_left',
+				'requiredIfSide',
+				'side' => 'left'
+			),
+			array(
+				'snr_right, k1_right, k2_right, axis_k1_right, axial_length_right, lens_id_right',
+				'requiredIfSide',
+				'side' => 'right'
+			),
+			array('snr_left', 'checkNumericRangeIfSide', 'side'=>'left','integerOnly' => true, 'max' => 200, 'min' => 0),
+			array('snr_right', 'checkNumericRangeIfSide', 'side'=>'right','integerOnly' => true, 'max' => 200, 'min' => 0),
+			array('k1_left, k2_left', 'checkNumericRangeIfSide', 'side'=>'left', 'max' => 60, 'min' => 30),
+			array('k1_right, k2_right', 'checkNumericRangeIfSide', 'side'=>'right', 'max' => 60, 'min' => 30),
+			array('axis_k1_left', 'checkNumericRangeIfSide', 'side'=>'left','max' => 180, 'min' => 0),
+			array('axis_k1_right', 'checkNumericRangeIfSide', 'side'=>'right', 'max' => 180, 'min' => 0),
+			array('axial_length_left', 'checkNumericRangeIfSide', 'side'=>'left', 'max' => 40, 'min' => 15),
+			array('axial_length_right', 'checkNumericRangeIfSide', 'side'=>'right', 'max' => 40, 'min' => 15),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, event_id', 'safe', 'on' => 'search'),
@@ -82,7 +111,12 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
+			'element_type' => array(
+				self::HAS_ONE,
+				'ElementType',
+				'id',
+				'on' => "element_type.class_name='" . get_class($this) . "'"
+			),
 			'eventType' => array(self::BELONGS_TO, 'EventType', 'event_type_id'),
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
@@ -139,5 +173,6 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 	{
 		return true;
 	}
+
 }
 ?>
