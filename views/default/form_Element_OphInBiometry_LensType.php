@@ -25,7 +25,9 @@
 	data-element-display-order="<?php echo $element->elementType->display_order?>">
 	<div class="element-fields element-eyes row">
 		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
-		<div id="right-eye-lens" class="element-eye right-eye left side column  <?php if (!$element->hasRight()) { ?> inactive<?php } ?>" onClick="switchSides($(this));" data-side="right">
+		<div id="right-eye-lens" class="element-eye right-eye left side column  <?php if (!$element->hasRight()) {
+    ?> inactive<?php 
+} ?>" onClick="switchSides($(this));" data-side="right">
 			<div class="element-header right-side">
 				<h4>Right side</h4>
 			</div>
@@ -41,7 +43,9 @@
 				</div>
 			</div>
 		</div>
-		<div id="left-eye-lens" class="element-eye left-eye right side column <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>" onClick="switchSides($(this));" data-side="left">
+		<div id="left-eye-lens" class="element-eye left-eye right side column <?php if (!$element->hasLeft()) {
+    ?> inactive<?php 
+} ?>" onClick="switchSides($(this));" data-side="left">
 			<div class="element-header left-side">
 				<h4>Left side</h4>
 			</div>

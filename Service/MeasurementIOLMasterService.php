@@ -16,39 +16,45 @@
 
 namespace OphInBiometry\Service;
 
-class MeasurementIOLMasterService extends \Service\ModelService {
+class MeasurementIOLMasterService extends \Service\ModelService
+{
+    protected static $operations = array(self::OP_READ, self::OP_UPDATE, self::OP_CREATE, self::OP_SEARCH);
+    protected static $primary_model = 'OphInBiometry_Measurement';
 
-	static protected $operations = array(self::OP_READ, self::OP_UPDATE, self::OP_CREATE, self::OP_SEARCH);
-	static protected $primary_model = 'OphInBiometry_Measurement';
+    public function search(array &$params)
+    {
+        $this->setUsedParams($params, 'id');
 
-	public function search(array &$params) {
-		$this->setUsedParams($params, 'id');
+        $model = $this->getSearchModel();
+        if (isset($params['id'])) {
+            $model->id = $params['id'];
+        }
 
-		$model = $this->getSearchModel();
-		if (isset($params['id']))
-			$model->id = $params['id'];
+        $searchParams = array('pageSize' => null);
 
-		$searchParams = array('pageSize' => null);
+        return $this->getResourcesFromDataProvider($model->search($searchParams));
+    }
 
-		return $this->getResourcesFromDataProvider($model->search($searchParams));
-	}
+    /**
+     * @param type $res
+     * @param type $measurement
+     * @return type
+     */
+    public function resourceToModel($res, $measurement)
+    {
 
-	/**
-	 * @param type $res
-	 * @param type $measurement
-	 * @return type
-	 */
-	public function resourceToModel($res, $measurement) {
+        //$measurement->patient_id = $res->patient_id;
+        foreach ($res as $key => $value) {
+            if ($key=='resourceType') {
+                continue;
+            }
+            $measurement->{$key} = $value;
+        }
 
-		//$measurement->patient_id = $res->patient_id;
-		foreach($res as $key => $value) {
-			if($key=='resourceType') continue;
-			$measurement->{$key} = $value;
-		}
-
-		$saved = $measurement->save();
-		if(!$saved)print_r($measurement->getErrors());
-		return $measurement;
-	}
-
+        $saved = $measurement->save();
+        if (!$saved) {
+            print_r($measurement->getErrors());
+        }
+        return $measurement;
+    }
 }

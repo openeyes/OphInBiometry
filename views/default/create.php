@@ -17,20 +17,20 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 $this->beginContent('//patient/event_container');
-	$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-		'id'=>'create-form',
-		'enableAjaxValidation'=>false,
-		'layoutColumns' => array(
-			'label' => 2,
-			'field' => 10
-		)
-	));
-		$this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form'=>'create-form'));
-		$this->displayErrors($errors);
-		$this->renderPartial('//patient/event_elements', array(
-			'form' => $form,
-			'disableOptionalElementActions' => true
-		));
-		$this->displayErrors($errors, true);
-	$this->endWidget();
+    $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
+        'id'=>'create-form',
+        'enableAjaxValidation'=>false,
+        'layoutColumns' => array(
+            'label' => 2,
+            'field' => 10
+        )
+    ));
+        $this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form'=>'create-form'));
+        $this->displayErrors($errors);
+        $this->renderPartial('//patient/event_elements', array(
+            'form' => $form,
+            'disableOptionalElementActions' => true
+        ));
+        $this->displayErrors($errors, true);
+    $this->endWidget();
 $this->endContent();

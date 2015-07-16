@@ -30,9 +30,9 @@ $this->beginContent('//patient/event_container');?>
 		<strong>Are you sure you want to proceed?</strong>
 	</p>
 	<?php
-		echo CHtml::form(array('Default/delete/'.$this->event->id), 'post', array('id' => 'deleteForm'));
-		echo CHtml::hiddenField('event_id', $this->event->id);
-	?>
+        echo CHtml::form(array('Default/delete/'.$this->event->id), 'post', array('id' => 'deleteForm'));
+        echo CHtml::hiddenField('event_id', $this->event->id);
+    ?>
 	<button type="submit" class="warning" id="et_deleteevent" name="et_deleteevent">
 		Delete event
 	</button>

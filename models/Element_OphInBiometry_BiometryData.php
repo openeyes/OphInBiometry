@@ -45,110 +45,111 @@
 
 class Element_OphInBiometry_BiometryData extends SplitEventTypeElement
 {
-	public $service;
+    public $service;
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @return the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'et_ophinbiometry_biometrydat';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'et_ophinbiometry_biometrydat';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('event_id, eye_id, ' .
-			'axial_length_left, r1_left, r2_left,  r1_axis_left, acd_left, scleral_thickness_left,' .
-			'axial_length_right, r1_right, r2_right,  r1_axis_right, acd_right, scleral_thickness_right',  'safe'),
-			array('r1_left,r1_left, r2_left','requiredIfSide', 'side' => 'left'),
-			array('r1_right,r1_right, r2_right','requiredIfSide', 'side' => 'right'),
-			// Please remove those attributes that should not be searched.
-			array('id, event_id', 'safe', 'on' => 'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('event_id, eye_id, ' .
+            'axial_length_left, r1_left, r2_left,  r1_axis_left, acd_left, scleral_thickness_left,' .
+            'axial_length_right, r1_right, r2_right,  r1_axis_right, acd_right, scleral_thickness_right',  'safe'),
+            array('r1_left,r1_left, r2_left','requiredIfSide', 'side' => 'left'),
+            array('r1_right,r1_right, r2_right','requiredIfSide', 'side' => 'right'),
+            // Please remove those attributes that should not be searched.
+            array('id, event_id', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
-			'eventType' => array(self::BELONGS_TO, 'EventType', 'event_type_id'),
-			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
-			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
+            'eventType' => array(self::BELONGS_TO, 'EventType', 'event_type_id'),
+            'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
+            'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+            'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'event_id' => 'Event',
-			'axial_length_left' => 'Axial Length',
-			'r1_left' => 'R1',
-			'r2_left' => 'R2',
-			'r1_axis_left' => 'Axis',
-			'acd_left' => 'ACD',
-			'scleral_thickness_left' => 'Scleral Thickness',
-			'axial_length_right' => 'Axial Length',
-			'r1_right' => 'R1',
-			'r2_right' => 'R2',
-			'r1_axis_right' => 'Axis',
-			'acd_right' => 'ACD',
-			'scleral_thickness_right' => 'Scleral Thickness',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'event_id' => 'Event',
+            'axial_length_left' => 'Axial Length',
+            'r1_left' => 'R1',
+            'r2_left' => 'R2',
+            'r1_axis_left' => 'Axis',
+            'acd_left' => 'ACD',
+            'scleral_thickness_left' => 'Scleral Thickness',
+            'axial_length_right' => 'Axial Length',
+            'r1_right' => 'R1',
+            'r2_right' => 'R2',
+            'r1_axis_right' => 'Axis',
+            'acd_right' => 'ACD',
+            'scleral_thickness_right' => 'Scleral Thickness',
+        );
+    }
 
-	public function setDefaultOptions() {
-		// It is necessary to set these values to be an integer to prevent eyedraw
-		// bound fields from breaking. See [ORB-340]
-		$this->axial_length_left = 0;
-		$this->axial_length_right = 0;
-		parent::setDefaultOptions();
-	}
+    public function setDefaultOptions()
+    {
+        // It is necessary to set these values to be an integer to prevent eyedraw
+        // bound fields from breaking. See [ORB-340]
+        $this->axial_length_left = 0;
+        $this->axial_length_right = 0;
+        parent::setDefaultOptions();
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		$criteria = new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id, true);
-		return new CActiveDataProvider(get_class($this), array(
-			'criteria' => $criteria,
-		));
-	}
+        $criteria->compare('id', $this->id, true);
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria' => $criteria,
+        ));
+    }
 
-	public function isRequiredInUI()
-	{
-		return false;
-	}
+    public function isRequiredInUI()
+    {
+        return false;
+    }
 }

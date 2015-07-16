@@ -19,66 +19,66 @@
 
 class AdminController extends ModuleAdminController
 {
-	public function actionLensTypes($id=false)
-	{
-		$this->render('lens_types',array(
-			'lens_types' => OphInBiometry_LensType_Lens::model()->active()->findAll(array('order' => 'display_order asc')),
-		));
-	}
+    public function actionLensTypes($id=false)
+    {
+        $this->render('lens_types', array(
+            'lens_types' => OphInBiometry_LensType_Lens::model()->active()->findAll(array('order' => 'display_order asc')),
+        ));
+    }
 
-	public function actionEditLensType($id)
-	{
-		if (!$lens_type = OphInBiometry_LensType_Lens::model()->findByPk($id)) {
-			throw new Exception("Lens type not found: $id");
-		}
+    public function actionEditLensType($id)
+    {
+        if (!$lens_type = OphInBiometry_LensType_Lens::model()->findByPk($id)) {
+            throw new Exception("Lens type not found: $id");
+        }
 
-		if (!empty($_POST)) {
-			$lens_type->attributes = $_POST['OphInBiometry_LensType_Lens'];
+        if (!empty($_POST)) {
+            $lens_type->attributes = $_POST['OphInBiometry_LensType_Lens'];
 
-			if (!$lens_type->validate()) {
-				$errors = $lens_type->getErrors();
-			} else {
-				if (!$lens_type->save()) {
-					throw new Exception("Unable to save lens type: ".print_r($lens_type->getErrors(),true));
-				}
-				$this->redirect('/OphInBiometry/admin/lensTypes');
-			}
-		}
+            if (!$lens_type->validate()) {
+                $errors = $lens_type->getErrors();
+            } else {
+                if (!$lens_type->save()) {
+                    throw new Exception("Unable to save lens type: ".print_r($lens_type->getErrors(), true));
+                }
+                $this->redirect('/OphInBiometry/admin/lensTypes');
+            }
+        }
 
-		$this->render('edit_lens_type',array(
-			'lens_type' => $lens_type,
-			'errors' => @$errors,
-		));
-	}
+        $this->render('edit_lens_type', array(
+            'lens_type' => $lens_type,
+            'errors' => @$errors,
+        ));
+    }
 
-	public function actionAddLensType()
-	{
-		$lens_type = new OphInBiometry_LensType_Lens;
+    public function actionAddLensType()
+    {
+        $lens_type = new OphInBiometry_LensType_Lens;
 
-		if (!empty($_POST)) {
-			$lens_type->attributes = $_POST['OphInBiometry_LensType_Lens'];
+        if (!empty($_POST)) {
+            $lens_type->attributes = $_POST['OphInBiometry_LensType_Lens'];
 
-			if (!$lens_type->validate()) {
-				$errors = $lens_type->getErrors();
-			} else {
-				if (!$lens_type->save()) {
-					throw new Exception("Unable to save lens type: ".print_r($lens_type->getErrors(),true));
-				}
-				$this->redirect('/OphInBiometry/admin/lensTypes');
-			}
-		}
+            if (!$lens_type->validate()) {
+                $errors = $lens_type->getErrors();
+            } else {
+                if (!$lens_type->save()) {
+                    throw new Exception("Unable to save lens type: ".print_r($lens_type->getErrors(), true));
+                }
+                $this->redirect('/OphInBiometry/admin/lensTypes');
+            }
+        }
 
-		$this->render('edit_lens_type',array(
-			'lens_type' => $lens_type,
-			'errors' => @$errors,
-		));
-	}
+        $this->render('edit_lens_type', array(
+            'lens_type' => $lens_type,
+            'errors' => @$errors,
+        ));
+    }
 
-	public function actionDeleteLensTypes()
-	{
-		$criteria = new CDbCriteria;
-		$criteria->addInCondition('id',@$_POST['lens_type_id']);
+    public function actionDeleteLensTypes()
+    {
+        $criteria = new CDbCriteria;
+        $criteria->addInCondition('id', @$_POST['lens_type_id']);
 
-		OphInBiometry_LensType_Lens::model()->deleteAll($criteria);
-	}
+        OphInBiometry_LensType_Lens::model()->deleteAll($criteria);
+    }
 }

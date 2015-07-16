@@ -36,7 +36,8 @@
 			</thead>
 			<tbody>
 				<?php
-				foreach ($lens_types as $i => $lens_type) {?>
+                foreach ($lens_types as $i => $lens_type) {
+                    ?>
 					<tr class="clickable" data-id="<?php echo $lens_type->id?>" data-uri="OphInBiometry/admin/editLensType/<?php echo $lens_type->id?>">
 						<td><input type="checkbox" name="lens_types[]" value="<?php echo $lens_type->id?>" /></td>
 						<td><?php echo $lens_type->id?></td>
@@ -46,7 +47,8 @@
 						<td><?php echo $lens_type->acon?></td>
 						<td><?php echo $lens_type->sf ? $lens_type->sf : $lens_type->pACD?></td>
 					</tr>
-				<?php }?>
+				<?php 
+                }?>
 			</tbody>
 			<tfoot>
 				<tr>
