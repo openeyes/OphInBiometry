@@ -64,7 +64,7 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, eye_id, iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right', 'safe'),
+			array('event_id, eye_id, iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right, lens_id_left, lens_id_right', 'safe'),
 			// The following rule is used by search().
 			array('iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,2})?/'),
 			array('iol_power_left, predicted_refraction_left','requiredIfSide', 'side' => 'left'),
@@ -93,6 +93,8 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
+			'lens_left' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id_left'),
+			'lens_right' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id_right'),
 		);
 	}
 
@@ -108,6 +110,9 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 			'predicted_refraction_left' => 'Predicted Refraction',
 			'iol_power_right' => 'IOL Power',
 			'predicted_refraction_right' => 'Predicted Refraction',
+			'lens_id' => 'Lens',
+			'lens_id_right' => 'Lens',
+			'lens_id_left' => 'Lens',
 
 		);
 	}

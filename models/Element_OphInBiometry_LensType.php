@@ -66,7 +66,7 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 		// will receive user inputs.
 		return array(
 			array(
-				'event_id, eye_id, lens_id_left, lens_id_right, k1_left, k1_right, k2_left, k2_right, axis_k1_left, axis_k1_right, axial_length_left, axial_length_right, snr_left, snr_right',
+				'event_id, eye_id k1_left, k1_right, k2_left, k2_right, axis_k1_left, axis_k1_right, axial_length_left, axial_length_right, snr_left, snr_right',
 				'safe'
 			),
 			array(
@@ -80,12 +80,12 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 				'pattern' => '/([0-9]*?)(\.[0-9]{0,1})?/'
 			),
 			array(
-				'snr_left, k1_left, k2_left, axis_k1_left, axial_length_left, lens_id_left',
+				'snr_left, k1_left, k2_left, axis_k1_left, axial_length_left',
 				'requiredIfSide',
 				'side' => 'left'
 			),
 			array(
-				'snr_right, k1_right, k2_right, axis_k1_right, axial_length_right, lens_id_right',
+				'snr_right, k1_right, k2_right, axis_k1_right, axial_length_right',
 				'requiredIfSide',
 				'side' => 'right'
 			),
@@ -121,8 +121,6 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'lens_left' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id_left'),
-			'lens_right' => array(self::BELONGS_TO, 'OphInBiometry_LensType_Lens', 'lens_id_right'),
 			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
 		);
 	}
@@ -135,9 +133,6 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'lens_id' => 'Lens',
-			'lens_id_right' => 'Lens',
-			'lens_id_left' => 'Lens',
 			'k1_left' => 'K1 (D)',
 			'k1_right' => 'K1 (D)',
 			'k2_left' => 'K2 (D)',

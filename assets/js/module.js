@@ -130,11 +130,11 @@ $(document).ready(function() {
 		update('right');
 	})
 
-	$('#Element_OphInBiometry_LensType_lens_id_left').die('change').live('change',function() {
+	$('#Element_OphInBiometry_Selection_lens_id_left').die('change').live('change',function() {
 		update('left');
 	})
 
-	$('#Element_OphInBiometry_LensType_lens_id_right').die('change').live('change',function() {
+	$('#Element_OphInBiometry_Selection_lens_id_right').die('change').live('change',function() {
 		update('right');
 	})
 
@@ -165,7 +165,7 @@ function renderCalculatedValues(side)
 	}
 
 	if(isCreate()) {
-		updateIolData($('#Element_OphInBiometry_LensType_lens_id_' + side + ' option:selected').text(),side);
+		updateIolData($('#Element_OphInBiometry_Selection_lens_id_' + side + ' option:selected').text(),side);
 		updateSuggestedPowerTable(side);
 	}
 }
