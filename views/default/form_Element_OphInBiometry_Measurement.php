@@ -31,7 +31,7 @@
 			</div>
 			<div class="active-form">
 				<a href="#" class="icon-remove-side remove-side">Remove side</a>
-				<?php $this->renderPartial('form_Element_OphInBiometry_LensType_fields', array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
@@ -47,7 +47,7 @@
 			</div>
 			<div class="active-form">
 				<a href="#" class="icon-remove-side remove-side">Remove side</a>
-				<?php $this->renderPartial('form_Element_OphInBiometry_LensType_fields', array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">

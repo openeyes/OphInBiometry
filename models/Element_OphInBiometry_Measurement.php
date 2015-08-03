@@ -36,7 +36,7 @@
  * @property OphInBiometry_LensType_Lens $lens
  */
 
-class Element_OphInBiometry_LensType extends SplitEventTypeElement
+class Element_OphInBiometry_Measurement extends SplitEventTypeElement
 {
 	public $service;
 
@@ -54,7 +54,7 @@ class Element_OphInBiometry_LensType extends SplitEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophinbiometry_lenstype';
+		return 'et_ophinbiometry_measurement';
 	}
 
 	/**
