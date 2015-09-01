@@ -70,7 +70,7 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 			array('iol_power_left, predicted_refraction_left','requiredIfSide', 'side' => 'left'),
 			array('iol_power_right, predicted_refraction_right','requiredIfSide', 'side' => 'right'),
 			array('iol_power_left', 'checkNumericRangeIfSide', 'side' => 'left', 'max' => 40, 'min' => -10),
-			array(' iol_power_right', 'checkNumericRangeIfSide', 'side' => 'right', 'max' => 40, 'min' => -10),
+			array('iol_power_right', 'checkNumericRangeIfSide', 'side' => 'right', 'max' => 40, 'min' => -10),
 			array('predicted_refraction_left', 'checkNumericRangeIfSide', 'side' => 'left', 'max' => 10, 'min' => -10),
 			array('predicted_refraction_right', 'checkNumericRangeIfSide', 'side' => 'right', 'max' => 10, 'min' => -10),
 
