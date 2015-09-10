@@ -18,6 +18,13 @@
  */
 ?>
 
+<?php
+	$iolRefValues = Element_OphInBiometry_IolRefValues::Model()->findAllByAttributes(
+		array(
+			'event_id' => $element->event->id
+		));
+?>
+
 <section class="element <?php echo $element->elementType->class_name?>"
 	data-element-type-id="<?php echo $element->elementType->id?>"
 	data-element-type-class="<?php echo $element->elementType->class_name?>"
@@ -33,7 +40,7 @@
 			</div>
 			<div class="active-form">
 				<a href="#" class="icon-remove-side remove-side">Remove side</a>
-				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data, 'measurementInput' => $iolRefValues)); ?>
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
@@ -51,7 +58,7 @@
 			</div>
 			<div class="active-form">
 				<a href="#" class="icon-remove-side remove-side">Remove side</a>
-				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data, 'measurementInput' => $iolRefValues)); ?>
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
