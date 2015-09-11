@@ -20,6 +20,23 @@ class m150907_105613_iol_master_import extends OEMigration
 			),
 			true
 		);
+
+		$this->createTable('audit_dicom_import', array(
+			'id' => 'pk',
+			'import_datetime' => 'datetime',
+			'study_datetime' => 'datetime',
+			'study_instance_id' => 'varchar(255)',
+			'station_id' => 'varchar(32)',
+			'study_location' => 'varchar(64)',
+			'machine_manufacturer' => 'varchar(32)',
+			'machine_model' => 'varchar(64)',
+			'machine_software_version' => 'varchar(255)',
+			'report_type' => 'varchar(32)',
+			'patient_number' => 'varchar(40)',
+			'status' => 'varchar(8)',
+			'comment' => 'varchar(255)'
+		));
+
 		$this->addForeignKey('et_ophinbiometry_iol_ref_values_eye_fk', 'et_ophinbiometry_iol_ref_values', 'eye_id', 'eye', 'id');
 		$this->addForeignKey('et_ophinbiometry_iol_ref_values_event_fk', 'et_ophinbiometry_iol_ref_values', 'event_id', 'event', 'id');
 		$this->addForeignKey('et_ophinbiometry_iol_ref_values_lens_id_fk', 'et_ophinbiometry_iol_ref_values', 'lens_id', 'ophinbiometry_lenstype_lens', 'id');
@@ -41,6 +58,7 @@ class m150907_105613_iol_master_import extends OEMigration
 	{
 		$this->dropTable('et_ophinbiometry_iol_ref_values');
 		$this->dropTable('et_ophinbiometry_iol_ref_values_version');
+		$this->dropTable('audit_dicom_import');
 		$this->dropColumn('et_ophinbiometry_measurement', 'study_id');
 		$this->dropColumn('et_ophinbiometry_measurement', 'device_id');
 //		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('class_name=:class_name', array(':class_name'=>'OphInBiometry'))->queryRow();
