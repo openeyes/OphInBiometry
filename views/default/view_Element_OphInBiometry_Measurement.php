@@ -17,6 +17,16 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
+<?php
+	if($element->event != null && $element->event->id > 0) {
+		$iolRefValues = Element_OphInBiometry_IolRefValues::Model()->findAllByAttributes(
+			array(
+				'event_id' => $element->event->id
+			));
+	}else{
+		$iolRefValues = array();
+	}
+?>
 
 <section class="element">
 	<div class="element-data element-eyes row">
@@ -25,7 +35,7 @@
 				<h4>Right side</h4>
 			</div>
 			<?php if ($element->hasRight()) {
-				$this->renderPartial('view_Element_OphInBiometry_Measurement_fields', array('side' => 'right', 'element' => $element));
+				$this->renderPartial('view_Element_OphInBiometry_Measurement_fields', array('side' => 'right', 'element' => $element,  'measurementInput' => $iolRefValues));
 			} else { ?>
 				<div class="data-value">Not recorded</div>
 			<?php } ?>
@@ -35,7 +45,7 @@
 				<h4>Left side</h4>
 			</div>
 			<?php if ($element->hasLeft()) {
-				$this->renderPartial('view_Element_OphInBiometry_Measurement_fields', array('side' => 'left', 'element' => $element));
+				$this->renderPartial('view_Element_OphInBiometry_Measurement_fields', array('side' => 'left', 'element' => $element,  'measurementInput' => $iolRefValues));
 			} else { ?>
 				<div class="data-value">Not recorded</div>
 			<?php } ?>
