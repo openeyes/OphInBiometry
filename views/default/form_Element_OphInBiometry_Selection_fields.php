@@ -1,10 +1,28 @@
-
 <div class="element-fields">
 	<div class="row">
 		<div class="large-12 column">
-			<?php echo $form->dropDownList($element, 'lens_id_'.$side, CHtml::listData(OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_'.$side})->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),null,array('label'=>3, 'field'=>6))?>
+
+			<div id="div_Element_OphInBiometry_Selection_lens_id_right" class="row field-row">
+				<?php
+				$list = array_merge(array('0'=>'- Please select -'),CHtml::listData(OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_'.$side})->findAll(array('order'=> 'display_order asc')),'id','name'));
+				?>
+				<div class="large-3 column">
+					<label for="Element_OphInBiometry_Selection[lens_id_<?php echo $side;?>]">Lens:</label>
+				</div>
+				<div class="large-6 column end">
+					<select name="Element_OphInBiometry_Selection[lens_id_<?php echo $side;?>]" id="Element_OphInBiometry_Selection_lens_id_<?php echo $side;?>">
+						<?php
+						foreach( $list as $key => $value ){
+							echo "<option value='{$key}'>{$value}</option>";
+						}
+						?>
+					</select>
+
+				</div>
+			</div>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="large-12 column">
 			<div class="row field-row">
