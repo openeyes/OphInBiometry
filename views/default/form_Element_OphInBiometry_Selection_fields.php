@@ -1,7 +1,6 @@
 <div class="element-fields">
 	<div class="row">
 		<div class="large-12 column">
-
 			<div id="div_Element_OphInBiometry_Selection_lens_id_right" class="row field-row">
 				<?php
 				$list = array_merge(array('0'=>'- Please select -'),CHtml::listData(OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_'.$side})->findAll(array('order'=> 'display_order asc')),'id','name'));
@@ -17,7 +16,6 @@
 						}
 						?>
 					</select>
-
 				</div>
 			</div>
 		</div>
