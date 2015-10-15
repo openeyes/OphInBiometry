@@ -3,7 +3,6 @@
 	<div class="row">
 		<div class="large-12 column">
 			<?php
-
 			$post = Yii::app()->request->getPost('Element_OphInBiometry_Selection');
 
 			if($element->isNewRecord && empty($post) ){
