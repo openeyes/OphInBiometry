@@ -2,7 +2,14 @@
 <div class="element-fields">
 	<div class="row">
 		<div class="large-12 column">
-			<?php echo $form->dropDownList($element, 'lens_id_'.$side, CHtml::listData(OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_'.$side})->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),null,array('label'=>3, 'field'=>6))?>
+			<?php
+			//We should move this code to the controller some point of time.
+			if($element->isNewRecord && empty($post) ){
+				$element->lens_id_left = null;
+				$element->lens_id_right = null;
+			}
+			echo $form->dropDownList($element, 'lens_id_'.$side, CHtml::listData(OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_'.$side})->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),null,array('label'=>3, 'field'=>6))
+			?>
 		</div>
 	</div>
 	<div class="row">
