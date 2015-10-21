@@ -3,8 +3,7 @@
 	<div class="row">
 		<div class="large-12 column">
 			<?php
-			$post = Yii::app()->request->getPost('Element_OphInBiometry_Selection');
-
+			//We should move this code to the controller some point of time.
 			if($element->isNewRecord && empty($post) ){
 				$element->lens_id_left = null;
 				$element->lens_id_right = null;
