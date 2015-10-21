@@ -57,4 +57,12 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<?php
+		foreach($measurementInput as $measurementData){
+			$this->renderPartial('form_Element_OphInBiometry_Measurement_fields_iolRefValues', array('side' => $side, 'form' => $form, 'iolRefValues' => $measurementData));
+			//var_dump(json_decode($measurementData->{"iol_ref_values_$side"}));
+		}
+		?>
+	</div>
 </div>
