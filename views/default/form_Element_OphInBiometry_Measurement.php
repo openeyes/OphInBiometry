@@ -26,6 +26,10 @@
 				'event_id' => $element->event->id
 			));
 	}
+	else
+	{
+		$iolRefValues = array();
+	}
 ?>
 
 <section class="element <?php echo $element->elementType->class_name?>"
