@@ -57,6 +57,57 @@
 			</div>
 		</div>
 	</div>
+	<?php
+	foreach($measurementInput as $measurementData){
+		$lens[] = $measurementData->{"lens_id"};
+		$formulas[] = $measurementData->{"formula_id"};
+	}
+
+	?>
+	<div class="row">
+		<div class="large-12 column">
+			<div class="row field-row">
+				<div class="large-4 column">
+					<span class="field-info">Lens:</span>
+				</div>
+				<div class="large-2 column">
+					<?php echo
+					CHtml::dropDownList('lens_id', 'lens_id',
+						CHtml::listData(
+							OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (".implode(",",$lens).")", array('order' => 'display_order')),
+							'id',
+							'name'
+						),
+						array(
+							'empty' => '- Select Lens -',
+							'options' => array(2 => array('selected' => true)),
+							'class' => 'pcr_doctor_grade'
+						)
+					); ?>
+				</div>
+				<div class="large-4 column">
+					<span class="field-info">Formula:</span>
+				</div>
+				<div class="large-2 column">
+					<?php echo
+					CHtml::dropDownList('formula_id', 'formula_id',
+						CHtml::listData(
+							OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (".implode(",",$formulas).")", array('order' => 'display_order')),
+							'id',
+							'name'
+						),
+						array(
+							'empty' => '- Select Formula -',
+							'options' => array(2 => array('selected' => true)),
+							'class' => 'pcr_doctor_grade'
+						)
+					); ?>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 	<div class="row">
 		<?php
 		foreach($measurementInput as $measurementData){
