@@ -43,7 +43,7 @@ class DefaultController extends BaseEventTypeController
 		$unlinkedEvents = OphInBiometry_Imported_Events::model()->with('patient')->findAll($criteria);
 
 		// if we have 0 unlinked event we follow the manual process
-		if (sizeof($unlinkedEvents) == 0) {
+		if (sizeof($unlinkedEvents) == 0 || Yii::app()->request->getQuery("force_manual")=="1") {
 			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
 			parent::actionCreate();
 		} elseif (sizeof($unlinkedEvents) == 1) {

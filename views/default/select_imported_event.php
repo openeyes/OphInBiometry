@@ -54,7 +54,7 @@
 						</div>
 
 						<fieldset class="row field-row">
-							<div class="large-14 column end">
+							<div class="large-12 column end">
 								<?php foreach ($imported_events as $imported_event) {?>
 									<label class="highlight booking">
 										<span class="row">
@@ -65,14 +65,17 @@
 												<img src="<?php echo Yii::app()->assetManager->createUrl('img/small.png', $assetAliasPath)?>" alt="op" style="height:15px" />
 											</span>
 											<span class="large-2 column">
-												<b>Date and time: </b><br><?php echo $imported_event->event->event_date?>
+												<b>Date and time: </b><br><?php
+																				$eventDateTime = explode(' ', $imported_event->event->event_date);
+																				echo date("j M Y", strtotime($eventDateTime[0]))." ".$eventDateTime[1];
+												?>
 											</span>
 											<span class="large-1 column">
 												<b>Machine:</b>
 											</span>
 											<span class="large-3 column">
 												<?php
-													echo $imported_event->device_name."(".$imported_event->device_id.")";
+													echo $imported_event->device_name." (".$imported_event->device_id.")";
 												?>
 											</span>
 											<span class="large-1 column">
@@ -94,6 +97,7 @@
 					<?php $this->displayErrors($errors, true)?>
 				<?php $this->endWidget(); ?>
 			</section>
+			<a href="/OphInBiometry/Default/create?patient_id=<?php echo$this->patient->id ?>&force_manual=1" style="float:right;margin:10px;">I don't want to select a report let me enter the data manually</a>
 		</div>
 	</div>
 
