@@ -2,14 +2,81 @@
 
 class DefaultController extends BaseEventTypeController
 {
+
 	public $flash_message = '<b>Data source</b>: Manual entry <i>This data should not be relied upon for clinical purposes</i>';
 	public $flash_message_auto;
 
+	/**
+	 * @param Event $unlinkedEvent
+	 * @param OphInBiometry_Imported_Events $importedEvent
+     */
+	private function updateImportedEvent(Event $unlinkedEvent, OphInBiometry_Imported_Events $importedEvent){
+		$unlinkedEvent->episode_id = $this->episode->id;
+		$importedEvent->is_linked = 1;
+		$unlinkedEvent->save();
+		$importedEvent->save();
+	}
+
+	/**
+	 * Handle the selection of a booking for creating an op note
+	 *
+	 * (non-phpdoc)
+	 * @see parent::actionCreate()
+	 */
 	public function actionCreate()
 	{
-		Yii::app()->user->setFlash('warning.formula', $this->flash_message);
-		parent::actionCreate();
+		$errors = array();
+
+		// if we are after the submit we need to check if any event is selected
+		if (preg_match('/^biometry([0-9]+)$/', Yii::app()->request->getPost('SelectBiometry'), $m)) {
+			$importedEvent = OphInBiometry_Imported_Events::model()->findByPk($m[1]);
+			$this->updateImportedEvent(Event::model()->findByPk($importedEvent->event_id), $importedEvent);
+			$this->redirect(array('/OphInBiometry/default/update/' . $importedEvent->event_id));
+		}
+
+		$criteria = new CDbCriteria();
+
+		// we are looking for the unlinked imported events in the database
+		$criteria->addCondition("patient_id = :patient_id");
+		$criteria->addCondition("is_linked = 0");
+		$criteria->params = array(':patient_id' => $this->patient->id);
+		$unlinkedEvents = OphInBiometry_Imported_Events::model()->with('patient')->findAll($criteria);
+
+		// if we have 0 unlinked event we follow the manual process
+		if (sizeof($unlinkedEvents) == 0 || Yii::app()->request->getQuery("force_manual")=="1") {
+			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+			parent::actionCreate();
+		} elseif (sizeof($unlinkedEvents) == 1) {
+			// if we have only 1 unlinked event we just simply link that event to the episode
+			$this->updateImportedEvent(Event::model()->findByPk($unlinkedEvents[0]->event_id), $unlinkedEvents[0]);
+			$this->redirect(array('/OphInBiometry/default/update/' . $unlinkedEvents[0]->event_id));
+		} elseif (sizeof($unlinkedEvents) > 1) {
+			// if we have more than 1 event we render the selection screen
+			$this->title = "Please Select a Biometry Report";
+			$this->event_tabs = array(
+				array(
+					'label' => 'The following Biometry reports are available for this patient:',
+					'active' => true,
+				),
+			);
+			$cancel_url = ($this->episode) ? '/patient/episode/' . $this->episode->id : '/patient/episodes/' . $this->patient->id;
+			$this->event_actions = array(
+				EventAction::link('Cancel',
+					Yii::app()->createUrl($cancel_url),
+					null, array('class' => 'button small warning')
+				)
+			);
+
+			$this->render('select_imported_event', array(
+				'errors' => $errors,
+				'imported_events' => $unlinkedEvents,
+			));
+
+		}
 	}
+
+
+
 
 	public function actionUpdate($id)
 	{
