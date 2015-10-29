@@ -2,7 +2,8 @@
 
 class DefaultController extends BaseEventTypeController
 {
-	public $flash_message = 'This data was entered manually .Please refer to the IOL Master printout for all patient safety applications';
+	public $flash_message = '<b>Data source</b>: Manual entry <i>This data should not be relied upon for clinical purposes</i>';
+	public $flash_message_auto;
 
 	public function actionCreate()
 	{
@@ -12,13 +13,40 @@ class DefaultController extends BaseEventTypeController
 
 	public function actionUpdate($id)
 	{
-		Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+		if($this->isAutoBiometryEvent($id))
+		{
+			$event_data = $this->getAutoBiometryEventData($id);
+			foreach ($event_data as $detail)
+			{
+				$this->flash_message_auto = '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
+			}
+
+			Yii::app()->user->setFlash('warning.formula', $this->flash_message_auto);
+		}
+		else
+		{
+			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+		}
+
 		parent::actionUpdate($id);
 	}
 
 	public function actionView($id)
 	{
-		Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+		if($this->isAutoBiometryEvent($id))
+		{
+			$event_data = $this->getAutoBiometryEventData($id);
+			foreach ($event_data as $detail)
+			{
+				$this->flash_message_auto = '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
+			}
+
+			Yii::app()->user->setFlash('warning.formula', $this->flash_message_auto);
+		}
+		else
+		{
+			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+		}
 		parent::actionView($id);
 	}
 
@@ -55,6 +83,34 @@ class DefaultController extends BaseEventTypeController
 	{
 		Yii::app()->assetManager->registerScriptFile('js/spliteventtype.js', null, null, AssetManager::OUTPUT_SCREEN);
 		return parent::beforeAction($action);
+	}
+
+	/**
+	 * Check Automatic Biometrc Event
+	 * @param $id
+	 * @return bool
+	 */
+	protected function isAutoBiometryEvent($id)
+	{
+		if(count(OphInBiometry_Imported_Events::model()->findAllByAttributes(array('event_id' => $id)))>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+
+	/**
+	 * Get Auto Event data
+	 * @param $id
+	 * @return mixed
+	 */
+	protected function getAutoBiometryEventData($id)
+	{
+		return OphInBiometry_Imported_Events::model()->findAllByAttributes(array('event_id' => $id));
 	}
 }
 
