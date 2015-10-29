@@ -5,6 +5,10 @@ class DefaultController extends BaseEventTypeController
 	public $flash_message = '<b>Data source</b>: Manual entry <i>This data should not be relied upon for clinical purposes</i>';
 	public $flash_message_auto;
 
+	/**
+	 * @param Event $unlinkedEvent
+	 * @param OphInBiometry_Imported_Events $importedEvent
+     */
 	private function updateImportedEvent(Event $unlinkedEvent, OphInBiometry_Imported_Events $importedEvent){
 		$unlinkedEvent->episode_id = $this->episode->id;
 		$importedEvent->is_linked = 1;
@@ -22,6 +26,7 @@ class DefaultController extends BaseEventTypeController
 	{
 		$errors = array();
 
+		// if we are after the submit we need to check if any event is selected
 		if (preg_match('/^biometry([0-9]+)$/', Yii::app()->request->getPost('SelectBiometry'), $m)) {
 			$importedEvent = OphInBiometry_Imported_Events::model()->findByPk($m[1]);
 			$this->updateImportedEvent(Event::model()->findByPk($importedEvent->event_id), $importedEvent);
@@ -30,13 +35,13 @@ class DefaultController extends BaseEventTypeController
 
 		$criteria = new CDbCriteria();
 
+		// we are looking for the unlinked imported events in the database
 		$criteria->addCondition("patient_id = :patient_id");
 		$criteria->addCondition("is_linked = 0");
-		//$criteria->addCondition("patient = :event_id");
 		$criteria->params = array(':patient_id' => $this->patient->id);
 		$unlinkedEvents = OphInBiometry_Imported_Events::model()->with('patient')->findAll($criteria);
 
-
+		// if we have 0 unlinked event we follow the manual process
 		if (sizeof($unlinkedEvents) == 0) {
 			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
 			parent::actionCreate();
