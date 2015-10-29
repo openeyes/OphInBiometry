@@ -58,11 +58,15 @@
 		</div>
 	</div>
 	<?php
+	/*
 	foreach($measurementInput as $measurementData){
 		$lens[] = $measurementData->{"lens_id"};
 		$formulas[] = $measurementData->{"formula_id"};
-	}
-
+	}*/
+//'element' => $element
+	//echo  $element;
+	//echo '<pre>';
+	//print_r($element);
 	?>
 	<div class="row">
 		<div class="large-12 column">
@@ -71,8 +75,10 @@
 					<span class="field-info">Lens:</span>
 				</div>
 				<div class="large-2 column">
-					<?php echo
-					CHtml::dropDownList('lens_id', 'lens_id',
+					<?php
+					/*
+					echo
+					CHtml::dropDownList('select_len_'. $side, 'lens_id',
 						CHtml::listData(
 							OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (".implode(",",$lens).")", array('order' => 'display_order')),
 							'id',
@@ -81,16 +87,16 @@
 						array(
 							'empty' => '- Select Lens -',
 							'options' => array(2 => array('selected' => true)),
-							'class' => 'pcr_doctor_grade'
+							'class' => 'classname'
 						)
-					); ?>
+					); */?>
 				</div>
 				<div class="large-4 column">
 					<span class="field-info">Formula:</span>
 				</div>
 				<div class="large-2 column">
-					<?php echo
-					CHtml::dropDownList('formula_id', 'formula_id',
+					<?php /* echo
+					CHtml::dropDownList('select_formula_'. $side, 'formula_id',
 						CHtml::listData(
 							OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (".implode(",",$formulas).")", array('order' => 'display_order')),
 							'id',
@@ -98,10 +104,10 @@
 						),
 						array(
 							'empty' => '- Select Formula -',
-							'options' => array(2 => array('selected' => true)),
-							'class' => 'pcr_doctor_grade'
+							'options' => array(1 => array('selected' => true)),
+							'class' => 'classname'
 						)
-					); ?>
+					); */ ?>
 				</div>
 
 			</div>
@@ -110,9 +116,10 @@
 
 	<div class="row">
 		<?php
+		//echo '<pre>'; var_dump($measurementInput);
 		foreach($measurementInput as $measurementData){
 			$this->renderPartial('form_Element_OphInBiometry_Measurement_fields_iolRefValues', array('side' => $side, 'form' => $form, 'iolRefValues' => $measurementData));
-			//var_dump(json_decode($measurementData->{"iol_ref_values_$side"}));
+			 //var_dump(json_decode($measurementData->{"iol_ref_values_$side"}));
 		}
 		?>
 	</div>
