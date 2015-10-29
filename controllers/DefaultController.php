@@ -2,8 +2,29 @@
 
 class DefaultController extends BaseEventTypeController
 {
+
 	public $flash_message = '<b>Data source</b>: Manual entry <i>This data should not be relied upon for clinical purposes</i>';
-	public $flash_message_auto;
+
+	/**
+	 * @param $id
+     */
+	private function setFlashMessage($id){
+		if($this->isAutoBiometryEvent($id))
+		{
+			$event_data = $this->getAutoBiometryEventData($id);
+			foreach ($event_data as $detail)
+			{
+				$this->flash_message = '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
+			}
+
+			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+		}
+		else
+		{
+			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+		}
+
+	}
 
 	/**
 	 * @param Event $unlinkedEvent
@@ -79,40 +100,13 @@ class DefaultController extends BaseEventTypeController
 
 	public function actionUpdate($id)
 	{
-		if($this->isAutoBiometryEvent($id))
-		{
-			$event_data = $this->getAutoBiometryEventData($id);
-			foreach ($event_data as $detail)
-			{
-				$this->flash_message_auto = '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
-			}
-
-			Yii::app()->user->setFlash('warning.formula', $this->flash_message_auto);
-		}
-		else
-		{
-			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
-		}
-
+		$this->setFlashMessage($id);
 		parent::actionUpdate($id);
 	}
 
 	public function actionView($id)
 	{
-		if($this->isAutoBiometryEvent($id))
-		{
-			$event_data = $this->getAutoBiometryEventData($id);
-			foreach ($event_data as $detail)
-			{
-				$this->flash_message_auto = '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
-			}
-
-			Yii::app()->user->setFlash('warning.formula', $this->flash_message_auto);
-		}
-		else
-		{
-			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
-		}
+		$this->setFlashMessage($id);
 		parent::actionView($id);
 	}
 
