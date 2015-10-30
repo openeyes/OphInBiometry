@@ -95,12 +95,6 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
-	/*public function actionCreate()
-	{
-		Yii::app()->user->setFlash('warning.formula', $this->flash_message);
-		parent::actionCreate();
-	}*/
-
 	public function actionUpdate($id)
 	{
 		$this->setFlashMessage($id);
