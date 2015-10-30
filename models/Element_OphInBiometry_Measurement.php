@@ -89,8 +89,6 @@ class Element_OphInBiometry_Measurement extends SplitEventTypeElement
 				'requiredIfSide',
 				'side' => 'right'
 			),
-			array('snr_left', 'checkNumericRangeIfSide', 'side'=>'left','integerOnly' => true, 'max' => 200, 'min' => 0),
-			array('snr_right', 'checkNumericRangeIfSide', 'side'=>'right','integerOnly' => true, 'max' => 200, 'min' => 0),
 			array('k1_left, k2_left', 'checkNumericRangeIfSide', 'side'=>'left', 'max' => 60, 'min' => 30),
 			array('k1_right, k2_right', 'checkNumericRangeIfSide', 'side'=>'right', 'max' => 60, 'min' => 30),
 			array('axis_k1_left', 'checkNumericRangeIfSide', 'side'=>'left','max' => 180, 'min' => 0),
