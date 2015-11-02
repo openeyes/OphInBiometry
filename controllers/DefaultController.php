@@ -4,6 +4,7 @@ class DefaultController extends BaseEventTypeController
 {
 	public $flash_message = '<b>Data source</b>: Manual entry <i>This data should not be relied upon for clinical purposes</i>';
 	public $is_auto=0;
+	public $iolRefValues = array();
 
 	/**
 	 * @param Event $unlinkedEvent
@@ -98,6 +99,18 @@ class DefaultController extends BaseEventTypeController
 	public function actionUpdate($id)
 	{
 		$this->setFlashMessage($id);
+
+		if($this->event != null &&  $this->event->id > 0) {
+			$this->iolRefValues = Element_OphInBiometry_IolRefValues::Model()->findAllByAttributes(
+				array(
+					'event_id' => $this->event->id,
+				));
+		}
+		else
+		{
+			$this->iolRefValues = array();
+		}
+
 		parent::actionUpdate($id);
 	}
 
