@@ -182,6 +182,11 @@ class DefaultController extends BaseEventTypeController
 	{
 		return OphInBiometry_Imported_Events::model()->findAllByAttributes(array('event_id' => $id));
 	}
+
+	public function getIolRefVal($id){
+		//echo json_encode(array());
+		echo json_encode(array("name"=>"John","time"=>"2pm"));
+	}
 }
 
 

@@ -131,10 +131,12 @@ $(document).ready(function() {
 	})
 
 	$('#Element_OphInBiometry_Selection_lens_id_left').die('change').live('change',function() {
+		alert('Element_OphInBiometry_Selection_lens_id_left');
 		update('left');
 	})
 
 	$('#Element_OphInBiometry_Selection_lens_id_right').die('change').live('change',function() {
+
 		update('right');
 	})
 
@@ -214,6 +216,11 @@ function updateBiometryData(side)
 
 function updateIolData(index,side) {
 
+	alert(side);
+	alert($('#Element_OphInBiometry_Selection_lens_id_' + side + ' option:selected').val());
+	alert($('#formula_id_' + side + ' option:selected').val());
+
+
 	var acon = document.getElementById('acon_'+side);
 	var sf = document.getElementById('sf_'+side);
 	var type = document.getElementById('type_'+side);
@@ -235,6 +242,25 @@ function updateIolData(index,side) {
 		if(type) type.innerHTML = OphInBioemtry_lens_types[index].model + " " + OphInBioemtry_lens_types[index].description;
 		if(position) position.innerHTML = OphInBioemtry_lens_types[index].position;
 		if(comments) comments.innerHTML = OphInBioemtry_lens_types[index].comments;
+
+
+/*
+		alert($('input[name="Element_OphInBiometry_Selection[iol_power_'+side+']"]').val());
+
+		$.ajax({
+			method: "POST",
+			url: "default/getIolRefVal/",
+			data: { id:3685008, name: "John", location: "Boston" }
+		})
+			.done(function( msg ) {
+				alert( "Data Saved: " + msg );
+			});*/
+/*
+		for (i = 0; i < 4; i++) {
+			var radioBtn = $('<tr><td><input type="radio" name="rbtnCount" /></td></tr>');
+			radioBtn.appendTo('#target');
+		}*/
+
 	}
     /*
     else {
