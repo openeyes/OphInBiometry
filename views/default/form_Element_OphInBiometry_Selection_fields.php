@@ -20,9 +20,6 @@
                 $iolrefdata["right"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
             }
 
-
-
-            // var_dump($measurementData);
         }
         ?>
         <div class="row">
@@ -60,7 +57,6 @@
                         )
                     );
                 }
-
                 ?>
             </div>
         </div>
@@ -123,7 +119,7 @@
                 <?php
                 if ($side == "left") {
                     echo
-                    CHtml::dropDownList('formula_id_' . $side, 'formula_id',
+                    CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
                         CHtml::listData(
                             OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_left)) . ")", array('order' => 'display_order')),
                             'id',
@@ -137,7 +133,7 @@
                     );
                 } else {
                     echo
-                    CHtml::dropDownList('formula_id_' . $side, 'formula_id',
+                    CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
                         CHtml::listData(
                             OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_right)) . ")", array('order' => 'display_order')),
                             'id',
@@ -150,71 +146,147 @@
                         )
                     );
                 }
-
                 ?>
             </div>
         </div>
 
-    <div class="row">
-
-
-        <div class="large-12 column">
-            <div id="target"></div>
-            <table>
-                <tr>
-                    <th>#</th>
-                    <th>IOL</th>
-                    <th>REF</th>
-                </tr>
+        <div class="row">
+            <div class="large-12 column">
                 <?php
+                //  echo '<pre>';
+                // echo ($iolrefdata['left'][1][1]);
+                if ($side == "left") {
+                    $iolrefdata_left = $iolrefdata['left'];
+                    // for ($i = 1; $i <= count($iolrefdata_left); $i++) {
+                    foreach ($iolrefdata_left as $k => $v) {
+                        //  echo $iolrefdata_left[$i];
 
-                echo '<pre>';
-               // echo ($iolrefdata['left'][1][1]);
+                        foreach ($v as $key => $value) {
+                            // echo 'HHH->'.$key.' --- VAL';
 
-                foreach ($iolrefdata as $key => $value){
+                            if (!empty($value)) {
+                                // echo "<br>" . $value;
+                                $iolData = json_decode($value, true);
+                                $divid = $side . '_' . $k . '_' . $key;
+                                echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
+                                //echo '<table>';
+                                for ($j = 0; $j < count($iolData['IOL']); $j++) {
+                                    //  echo '<br>'.($iolData["IOL"][$i]);
+                                    echo "<tr><td><input type='radio'  id='iolrefval_$j' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                }
+                                //echo '</table>';
+                                echo '</table>';
+                            }
+                        }
+                    }
+                } else {
+                    $iolrefdata_right = $iolrefdata['right'];
+                    // print_r($iolrefdata_right);
+                    foreach ($iolrefdata_right as $k => $v) {
+                        foreach ($v as $key => $value) {
+                            if (!empty($value)) {
+                                // echo "<br>" . $value;
+                                $iolData = json_decode($value, true);
+                                $divid = $side . '_' . $k . '_' . $key;
+                                echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
+                                for ($j = 0; $j < count($iolData['IOL']); $j++) {
+                                    //  echo '<br>'.($iolData["IOL"][$i]);
+                                    echo "<tr><td><input type='radio'  id='iolrefval_$j' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                }
+                                echo '</table>';
+                            }
 
-
-                   //echo '<div id='.$key.'></div>';
-
-                    foreach ($value as $key1 => $value1){
-                        echo '<br>K3->'.$key1.' V3->'.$value1;
-                        foreach ($value1 as $key2 => $value2){
-                            echo '<br>K3->'.$key2.' V3->'.$value2;
-                            echo '<br>ID '. $divid = $key.'_'.$key1.'_'.$key2;
-                            echo '<div id='.$divid.'></div>';
                         }
 
                     }
-                    print_r($value);
 
+                    /* for ($i = 1; $i <= count($iolrefdata_right); $i++) {
+                         //  echo $iolrefdata_left[$i];
+
+                         foreach($iolrefdata_right[$i] as $key=>$value){
+                             // echo 'HHH->'.$key.' --- VAL';
+
+                             if(!empty($value)) {
+                                 // echo "<br>" . $value;
+                                 $iolData = json_decode($value,true);
+                                 $divid = $side.'_'.$i.'_'.$key;
+                                 echo '<div id='.$divid.'><table>';
+                                 for ($j = 0; $j < count($iolData['IOL']); $j++) {
+                                     //  echo '<br>'.($iolData["IOL"][$i]);
+                                     echo "<tr><td><input type='radio'  id='iolrefval_$j' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                 }
+                                 echo '</table></div>';
+                             }
+
+                         }
+
+                     }*/
                 }
-               // echo 'Right';
-             //   print_r($iolrefdata_right);
-              //  echo 'Left';
-             //   print_r($iolrefdata_left);
+                // print_r($iolrefdata_left);
+
+                // print_r($iolrefdata_right);
+                /*
+                                foreach ($iolrefdata as $key => $value){
 
 
+                                   //echo '<div id='.$key.'></div>';
 
-               // print_r($this->iolRefValues);
+                                    foreach ($value as $key1 => $value1){
+                                        //echo '<br>K3->'.$key1.' V3->'.$value1;
+                                        foreach ($value1 as $key2 => $value2){
+                                           // echo '<br>K3->'.$key2.' V3->'.$value2;
+                                             $divid = $key.'_'.$key1.'_'.$key2;
+                                           // echo ' <br> IOL REF VALUE ::  <div id='.$divid.'>'.$value2.'</div>';
 
-                foreach ($this->iolRefValues as $measurementData) {
+                                            echo '<div id='.$divid.'><table>';
 
-                    $iolData = json_decode($measurementData->{"formula_id"}, true);
-                    $iolData = json_decode($measurementData->{"lens_id"}, true);
-                    $iolData = json_decode($measurementData->{"iol_ref_values_$side"}, true);
+                                            $iolData = json_decode($value2,true);
+                                           // echo '<br> CNT -> '. count($iolData).'<br>';
+                                            //print_r($iolData['REF']);
 
-                    for ($i = 0; $i < count($iolData["IOL"]); $i++) {
-                        if ($i == 3) {
-                            echo "<tr><td><input type='radio' id='iolrefval_$i' name='iolrefval'></td><td><b>" . $iolData["IOL"][$i] . "</b></td><td><b>" . $iolData["REF"][$i] . "</b></td></tr>";
-                        } else {
-                            echo "<tr><td><input type='radio'  id='iolrefval_$i' name='iolrefval'></td><td>" . $iolData["IOL"][$i] . "</td><td>" . $iolData["REF"][$i] . "</td></tr>";
-                        }
-                    }
-                }
+                                            for ($i = 0; $i < count($iolData['IOL']); $i++) {
+                                              //  echo '<br>'.($iolData["IOL"][$i]);
+                                                echo "<tr><td><input type='radio'  id='iolrefval_$i' name='iolrefval'></td><td>" . $iolData["IOL"][$i] . "</td><td>" . $iolData["REF"][$i] . "</td></tr>";
+                                            }
+
+                                            /*
+                                            for ($i = 0; $i < count($iolData["IOL"]); $i++) {
+                                                if ($i == 3) {
+                                                    echo "<tr><td><input type='radio' id='iolrefval_$i' name='iolrefval'></td><td><b>" . $iolData["IOL"][$i] . "</b></td><td><b>" . $iolData["REF"][$i] . "</b></td></tr>";
+                                                } else {
+                                                    echo "<tr><td><input type='radio'  id='iolrefval_$i' name='iolrefval'></td><td>" . $iolData["IOL"][$i] . "</td><td>" . $iolData["REF"][$i] . "</td></tr>";
+                                                }
+                                            }*/
+                /*echo '</table></div>';
+            }
+
+        }
+       // print_r($value);
+
+    }*/
+                // echo 'Right';
+                //   print_r($iolrefdata_right);
+                //  echo 'Left';
+                //   print_r($iolrefdata_left);
+
+
+                // print_r($this->iolRefValues);
+
+                /*  foreach ($this->iolRefValues as $measurementData) {
+
+                      $iolData = json_decode($measurementData->{"formula_id"}, true);
+                      $iolData = json_decode($measurementData->{"lens_id"}, true);
+                      $iolData = json_decode($measurementData->{"iol_ref_values_$side"}, true);
+
+                      for ($i = 0; $i < count($iolData["IOL"]); $i++) {
+                          if ($i == 3) {
+                              echo "<tr><td><input type='radio' id='iolrefval_$i' name='iolrefval'></td><td><b>" . $iolData["IOL"][$i] . "</b></td><td><b>" . $iolData["REF"][$i] . "</b></td></tr>";
+                          } else {
+                              echo "<tr><td><input type='radio'  id='iolrefval_$i' name='iolrefval'></td><td>" . $iolData["IOL"][$i] . "</td><td>" . $iolData["REF"][$i] . "</td></tr>";
+                          }
+                      }
+                  }*/
                 ?>
-            </table>
-
-
             </div>
         </div>
         <?php
