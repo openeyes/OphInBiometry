@@ -150,8 +150,6 @@ $(document).ready(function() {
 
 	renderCalculatedValues('left');
 	renderCalculatedValues('right');
-	updateIolRefTable('left');
-	updateIolRefTable('right');
 });
 
 function update(side)
@@ -258,25 +256,6 @@ function updateIolData(index,side) {
 		if(type) type.innerHTML = OphInBioemtry_lens_types[index].model + " " + OphInBioemtry_lens_types[index].description;
 		if(position) position.innerHTML = OphInBioemtry_lens_types[index].position;
 		if(comments) comments.innerHTML = OphInBioemtry_lens_types[index].comments;
-
-
-/*
-		alert($('input[name="Element_OphInBiometry_Selection[iol_power_'+side+']"]').val());
-
-		$.ajax({
-			method: "POST",
-			url: "default/getIolRefVal/",
-			data: { id:3685008, name: "John", location: "Boston" }
-		})
-			.done(function( msg ) {
-				alert( "Data Saved: " + msg );
-			});*/
-/*
-		for (i = 0; i < 4; i++) {
-			var radioBtn = $('<tr><td><input type="radio" name="rbtnCount" /></td></tr>');
-			radioBtn.appendTo('#target');
-		}*/
-
 	}
     /*
     else {
@@ -287,6 +266,7 @@ function updateIolData(index,side) {
 		comments.innerHTML = '';
 	}
      */
+
 	updateIolRefTable('left');
 	updateIolRefTable('right');
 }
