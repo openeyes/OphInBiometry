@@ -143,7 +143,6 @@ $(document).ready(function() {
 	$('#Element_OphInBiometry_Selection_formula_id_left').die('change').live('change',function() {
 		updateIolRefTable('left');
 	})
-	updateIolRefTable
 	$('#Element_OphInBiometry_Selection_formula_id_right').die('change').live('change',function() {
 		updateIolRefTable('right');
 	})
@@ -226,8 +225,7 @@ function updateIolRefTable(side){
 	var f_id =($('#Element_OphInBiometry_Selection_formula_id_' + side + ' option:selected').val());
 	$('table[id^="right_"]').hide();
 	$('table[id^="left_"]').hide();
-	$('#swtb').show();
-	if(!isNaN(l_id) && !isNaN(f_id)) {
+	if(!isNaN(parseInt(l_id)) && !isNaN(parseInt(f_id))) {
 		var swtb = side + '_' + l_id + '_' + f_id;
 		$('table[id^=' + swtb + ']').show();
 	}
