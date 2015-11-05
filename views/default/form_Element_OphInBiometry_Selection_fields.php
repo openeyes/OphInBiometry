@@ -163,7 +163,9 @@
                                 $divid = $side . '_' . $k . '_' . $key;
                                 echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                 for ($j = 0; $j < count($iolData['IOL']); $j++) {
-                                    echo "<tr><td><input type='radio'  id='iolrefval_$j' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                    $radid = $side . '_' . $k . '_' . $key.'__'.$j;
+                                    echo "<tr><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                    echo "<input type='hidden'  id='iolval-$radid' value=".$iolData["IOL"][$j]."><input type='hidden'  id='refval-$radid' value=".$iolData["REF"][$j].">";
                                 }
                                 echo '</table>';
                             }
@@ -178,7 +180,9 @@
                                 $divid = $side . '_' . $k . '_' . $key;
                                 echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                 for ($j = 0; $j < count($iolData['IOL']); $j++) {
-                                    echo "<tr><td><input type='radio'  id='iolrefval_$j' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                    $radid = $side . '_' . $k . '_' . $key.'__'.$j;
+                                    echo "<tr><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                    echo "<input type='hidden'  id='iolval-$radid' value=".$iolData["IOL"][$j]."><input type='hidden'  id='refval-$radid' value=".$iolData["REF"][$j].">";
                                 }
                                 echo '</table>';
                             }
