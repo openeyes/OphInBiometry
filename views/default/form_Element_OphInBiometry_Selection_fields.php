@@ -6,20 +6,26 @@
             $element->lens_id_left = null;
             $element->lens_id_right = null;
         }
-        foreach ($this->iolRefValues as $measurementData) {
-            if ($measurementData->{"eye_id"} == 3) {
-                $lens_left[] = $measurementData->{"lens_id"};
-                $formulas_left[] = $measurementData->{"formula_id"};
-                $iolrefdata_left[$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
-                $iolrefdata["left"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
 
-            } elseif ($measurementData->{"eye_id"} == 1) {
-                $lens_right[] = $measurementData->{"lens_id"};
-                $formulas_right[] = $measurementData->{"formula_id"};
-                $iolrefdata_right[$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
-                $iolrefdata["right"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
+        if (empty($this->iolRefValues)) {
+            $this->flash_message = "Missing IOL Measurement data";
+            Yii::app()->user->setFlash('warning.noiolrefdata', $this->flash_message);
+        } else {
+
+            foreach ($this->iolRefValues as $measurementData) {
+                if (!empty($measurementData->{"iol_ref_values_left"})) {
+                    $lens_left[] = $measurementData->{"lens_id"};
+                    $formulas_left[] = $measurementData->{"formula_id"};
+                    $iolrefdata_left[$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
+                    $iolrefdata["left"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
+                }
+                if (!empty($measurementData->{"iol_ref_values_right"})) {
+                    $lens_right[] = $measurementData->{"lens_id"};
+                    $formulas_right[] = $measurementData->{"formula_id"};
+                    $iolrefdata_right[$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
+                    $iolrefdata["right"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
+                }
             }
-
         }
         ?>
         <div class="row">
@@ -29,33 +35,37 @@
             <div class="large-8 column">
                 <?php
                 if ($side == "left") {
-                    echo
-                    CHtml::dropDownList('Element_OphInBiometry_Selection_lens_id_' . $side, 'lens_id',
-                        CHtml::listData(
-                            OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_left)) . ")", array('order' => 'display_order')),
-                            'id',
-                            'name'
-                        ),
-                        array(
-                            'empty' => '- Select Lens -',
-                            'options' => array(1 => array('selected' => true)),
-                            'class' => 'classname'
-                        )
-                    );
+                    if (!empty($lens_left)) {
+                        echo
+                        CHtml::dropDownList('Element_OphInBiometry_Selection_lens_id_' . $side, 'lens_id',
+                            CHtml::listData(
+                                OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_left)) . ")", array('order' => 'display_order')),
+                                'id',
+                                'name'
+                            ),
+                            array(
+                                'empty' => '- Select Lens -',
+                                'options' => array(1 => array('selected' => true)),
+                                'class' => 'classname'
+                            )
+                        );
+                    }
                 } else {
-                    echo
-                    CHtml::dropDownList('Element_OphInBiometry_Selection_lens_id_' . $side, 'lens_id',
-                        CHtml::listData(
-                            OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_right)) . ")", array('order' => 'display_order')),
-                            'id',
-                            'name'
-                        ),
-                        array(
-                            'empty' => '- Select Lens -',
-                            'options' => array(1 => array('selected' => true)),
-                            'class' => 'classname'
-                        )
-                    );
+                    if (!empty($lens_right)) {
+                        echo
+                        CHtml::dropDownList('Element_OphInBiometry_Selection_lens_id_' . $side, 'lens_id',
+                            CHtml::listData(
+                                OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_right)) . ")", array('order' => 'display_order')),
+                                'id',
+                                'name'
+                            ),
+                            array(
+                                'empty' => '- Select Lens -',
+                                'options' => array(1 => array('selected' => true)),
+                                'class' => 'classname'
+                            )
+                        );
+                    }
                 }
                 ?>
             </div>
@@ -118,33 +128,37 @@
             <div class="large-8 column">
                 <?php
                 if ($side == "left") {
-                    echo
-                    CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
-                        CHtml::listData(
-                            OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_left)) . ")", array('order' => 'display_order')),
-                            'id',
-                            'name'
-                        ),
-                        array(
-                            'empty' => '- Select Formula -',
-                            'options' => array(1 => array('selected' => true)),
-                            'class' => 'classname'
-                        )
-                    );
+                    if (!empty($formulas_left)) {
+                        echo
+                        CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
+                            CHtml::listData(
+                                OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_left)) . ")", array('order' => 'display_order')),
+                                'id',
+                                'name'
+                            ),
+                            array(
+                                'empty' => '- Select Formula -',
+                                'options' => array(1 => array('selected' => true)),
+                                'class' => 'classname'
+                            )
+                        );
+                    }
                 } else {
-                    echo
-                    CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
-                        CHtml::listData(
-                            OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_right)) . ")", array('order' => 'display_order')),
-                            'id',
-                            'name'
-                        ),
-                        array(
-                            'empty' => '- Select Formula -',
-                            'options' => array(1 => array('selected' => true)),
-                            'class' => 'classname'
-                        )
-                    );
+                    if (!empty($formulas_right)) {
+                        echo
+                        CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
+                            CHtml::listData(
+                                OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_right)) . ")", array('order' => 'display_order')),
+                                'id',
+                                'name'
+                            ),
+                            array(
+                                'empty' => '- Select Formula -',
+                                'options' => array(1 => array('selected' => true)),
+                                'class' => 'classname'
+                            )
+                        );
+                    }
                 }
                 ?>
             </div>
@@ -154,41 +168,44 @@
             <div class="large-12 column">
                 <?php
                 if ($side == "left") {
-                    $iolrefdata_left = $iolrefdata['left'];
-                    foreach ($iolrefdata_left as $k => $v) {
-                        foreach ($v as $key => $value) {
-                            if (!empty($value)) {
-                                // echo "<br>" . $value;
-                                $iolData = json_decode($value, true);
-                                $divid = $side . '_' . $k . '_' . $key;
-                                echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
-                                for ($j = 0; $j < count($iolData['IOL']); $j++) {
-                                    $radid = $side . '_' . $k . '_' . $key.'__'.$j;
-                                    echo "<tr><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
-                                    echo "<input type='hidden'  id='iolval-$radid' value=".$iolData["IOL"][$j]."><input type='hidden'  id='refval-$radid' value=".$iolData["REF"][$j].">";
+                    if (!empty($iolrefdata['left'])) {
+                        $iolrefdata_left = $iolrefdata['left'];
+                        foreach ($iolrefdata_left as $k => $v) {
+                            foreach ($v as $key => $value) {
+                                if (!empty($value)) {
+                                    $iolData = json_decode($value, true);
+                                    $divid = $side . '_' . $k . '_' . $key;
+                                    echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
+                                    for ($j = 0; $j < count($iolData['IOL']); $j++) {
+                                        $radid = $side . '_' . $k . '_' . $key . '__' . $j;
+                                        echo "<tr><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                        echo "<input type='hidden'  id='iolval-$radid' value=" . $iolData["IOL"][$j] . "><input type='hidden'  id='refval-$radid' value=" . $iolData["REF"][$j] . ">";
+                                    }
+                                    echo '</table>';
                                 }
-                                echo '</table>';
                             }
                         }
                     }
                 } else {
-                    $iolrefdata_right = $iolrefdata['right'];
-                    foreach ($iolrefdata_right as $k => $v) {
-                        foreach ($v as $key => $value) {
-                            if (!empty($value)) {
-                                $iolData = json_decode($value, true);
-                                $divid = $side . '_' . $k . '_' . $key;
-                                echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
-                                for ($j = 0; $j < count($iolData['IOL']); $j++) {
-                                    $radid = $side . '_' . $k . '_' . $key.'__'.$j;
-                                    echo "<tr><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
-                                    echo "<input type='hidden'  id='iolval-$radid' value=".$iolData["IOL"][$j]."><input type='hidden'  id='refval-$radid' value=".$iolData["REF"][$j].">";
+                    if (!empty($iolrefdata['right'])) {
+                        $iolrefdata_right = $iolrefdata['right'];
+                        foreach ($iolrefdata_right as $k => $v) {
+                            foreach ($v as $key => $value) {
+                                if (!empty($value)) {
+                                    $iolData = json_decode($value, true);
+                                    $divid = $side . '_' . $k . '_' . $key;
+                                    echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
+                                    for ($j = 0; $j < count($iolData['IOL']); $j++) {
+                                        $radid = $side . '_' . $k . '_' . $key . '__' . $j;
+                                        echo "<tr><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                        echo "<input type='hidden'  id='iolval-$radid' value=" . $iolData["IOL"][$j] . "><input type='hidden'  id='refval-$radid' value=" . $iolData["REF"][$j] . ">";
+                                    }
+                                    echo '</table>';
                                 }
-                                echo '</table>';
+
                             }
 
                         }
-
                     }
                 }
                 ?>
