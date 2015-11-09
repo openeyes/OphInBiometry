@@ -4,6 +4,16 @@ $(document).ready(function() {
 	handleButton($('#et_save'),function() {
 	});
 
+
+	$('input[id^="iolrefrad-"]').click(function(event) {
+		var id = event.target.id;
+		id = id.split("-").pop();
+		var d = id.split('__');
+		var s = d[0].split('_');
+		$("#Element_OphInBiometry_Selection_iol_power_"+s[0]).val($("#iolval-"+d[0]+"__"+d[1]).val());
+		$("#Element_OphInBiometry_Selection_predicted_refraction_"+s[0]).val($("#refval-"+d[0]+"__"+d[1]).val());
+	});
+
 	handleButton($('#et_cancel'),function(e) {
 		if (m = window.location.href.match(/\/update\/[0-9]+/)) {
 			window.location.href = window.location.href.replace('/update/','/view/');
@@ -132,15 +142,23 @@ $(document).ready(function() {
 
 	$('#Element_OphInBiometry_Selection_lens_id_left').die('change').live('change',function() {
 		update('left');
+		updateIolRefTable('left');
 	})
 
 	$('#Element_OphInBiometry_Selection_lens_id_right').die('change').live('change',function() {
 		update('right');
+		updateIolRefTable('right');
+	})
+
+	$('#Element_OphInBiometry_Selection_formula_id_left').die('change').live('change',function() {
+		updateIolRefTable('left');
+	})
+	$('#Element_OphInBiometry_Selection_formula_id_right').die('change').live('change',function() {
+		updateIolRefTable('right');
 	})
 
 	renderCalculatedValues('left');
 	renderCalculatedValues('right');
-
 });
 
 function update(side)
@@ -212,6 +230,18 @@ function updateBiometryData(side)
 	}
 }
 
+function updateIolRefTable(side){
+	var l_id = ($('#Element_OphInBiometry_Selection_lens_id_' + side + ' option:selected').val());
+	var f_id =($('#Element_OphInBiometry_Selection_formula_id_' + side + ' option:selected').val());
+	$('table[id^="right_"]').hide();
+	$('table[id^="left_"]').hide();
+	if(!isNaN(parseInt(l_id)) && !isNaN(parseInt(f_id))) {
+		var swtb = side + '_' + l_id + '_' + f_id;
+		$('table[id^=' + swtb + ']').show();
+	}
+
+}
+
 function updateIolData(index,side) {
 
 	var acon = document.getElementById('acon_'+side);
@@ -246,6 +276,8 @@ function updateIolData(index,side) {
 	}
      */
 
+	updateIolRefTable('left');
+	updateIolRefTable('right');
 }
 
 function updateSuggestedPowerTable(side)
