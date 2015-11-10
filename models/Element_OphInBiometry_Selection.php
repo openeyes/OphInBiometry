@@ -64,7 +64,7 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, eye_id, iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right, lens_id_left, lens_id_right', 'safe'),
+			array('event_id, eye_id, iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right, lens_id_left, lens_id_right ,formula_id_left, formula_id_right', 'safe'),
 			// The following rule is used by search().
 			array('iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,2})?/'),
 			array('iol_power_left, predicted_refraction_left','requiredIfSide', 'side' => 'left'),
@@ -112,6 +112,8 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 			'lens_id' => 'Lens',
 			'lens_id_right' => 'Lens',
 			'lens_id_left' => 'Lens',
+			'formula_id_right' => 'Formula',
+			'formula_id_left' => 'Formula',
 
 		);
 	}

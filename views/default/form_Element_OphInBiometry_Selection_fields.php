@@ -2,6 +2,7 @@
     <?php
     if ($this->is_auto) {
         $post = Yii::app()->request->getPost('Element_OphInBiometry_Selection');
+
         if ($element->isNewRecord && empty($post)) {
             $element->lens_id_left = null;
             $element->lens_id_right = null;
@@ -29,13 +30,14 @@
         }
         ?>
         <div class="row">
-            <div class="large-4 column">
+           <!-- <div class="large-4 column">
                 <span class="field-info">Lens:</span>
-            </div>
-            <div class="large-8 column">
+            </div>-->
+            <div class="large-12 column">
                 <?php
                 if ($side == "left") {
                     if (!empty($lens_left)) {
+                        /*
                         echo
                         CHtml::dropDownList('Element_OphInBiometry_Selection_lens_id_' . $side, 'lens_id',
                             CHtml::listData(
@@ -45,14 +47,20 @@
                             ),
                             array(
                                 'empty' => '- Select Lens -',
-                                'options' => array(1 => array('selected' => true)),
+                                'options' => array(6 => array('selected' => true)),
                                 'class' => 'classname'
                             )
-                        );
+                        );*/
+
+
+                        echo $form->dropDownList($element, 'lens_id_' . $side, CHtml::listData(
+                        // OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_' . $side})->findAll(array('order' => 'display_order asc')), 'id', 'name'
+                            OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_left)) . ")", array('order' => 'display_order')), 'id','name'
+                        ), array('empty' => '- Please select -'), null, array('label' => 3, 'field' => 6));
                     }
                 } else {
                     if (!empty($lens_right)) {
-                        echo
+                      /*  echo
                         CHtml::dropDownList('Element_OphInBiometry_Selection_lens_id_' . $side, 'lens_id',
                             CHtml::listData(
                                 OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_right)) . ")", array('order' => 'display_order')),
@@ -61,10 +69,16 @@
                             ),
                             array(
                                 'empty' => '- Select Lens -',
-                                'options' => array(1 => array('selected' => true)),
+                                'options' => array(5 => array('selected' => true)),
                                 'class' => 'classname'
                             )
-                        );
+                        );*/
+
+                        echo $form->dropDownList($element, 'lens_id_' . $side, CHtml::listData(
+                           // OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_' . $side})->findAll(array('order' => 'display_order asc')), 'id', 'name'
+                            OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_right)) . ")", array('order' => 'display_order')), 'id','name'
+                        ), array('empty' => '- Please select -'), null, array('label' => 3, 'field' => 6));
+
                     }
                 }
                 ?>
@@ -122,14 +136,14 @@
         ?>
         <div class="row">
 
-            <div class="large-4 column">
+            <!--<div class="large-4 column">
                 <span class="field-info">Formula:</span>
-            </div>
+            </div>-->
             <div class="large-8 column">
                 <?php
                 if ($side == "left") {
                     if (!empty($formulas_left)) {
-                        echo
+                       /* echo
                         CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
                             CHtml::listData(
                                 OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_left)) . ")", array('order' => 'display_order')),
@@ -141,10 +155,16 @@
                                 'options' => array(1 => array('selected' => true)),
                                 'class' => 'classname'
                             )
-                        );
+                        );*/
+
+                        echo $form->dropDownList($element, 'formula_id_' . $side, CHtml::listData(
+                        // OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_' . $side})->findAll(array('order' => 'display_order asc')), 'id', 'name'
+                            OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_left)) . ")", array('order' => 'display_order')), 'id','name'
+                        ), array('empty' => '- Please select -'), null, array('label' => 3, 'field' => 6));
                     }
                 } else {
                     if (!empty($formulas_right)) {
+                        /*
                         echo
                         CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
                             CHtml::listData(
@@ -157,7 +177,11 @@
                                 'options' => array(1 => array('selected' => true)),
                                 'class' => 'classname'
                             )
-                        );
+                        );*/
+                        echo $form->dropDownList($element, 'formula_id_' . $side, CHtml::listData(
+                        // OphInBiometry_LensType_Lens::model()->activeOrPk($element->{'lens_id_' . $side})->findAll(array('order' => 'display_order asc')), 'id', 'name'
+                            OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_right)) . ")", array('order' => 'display_order')), 'id','name'
+                        ), array('empty' => '- Please select -'), null, array('label' => 3, 'field' => 6));
                     }
                 }
                 ?>
