@@ -1,7 +1,18 @@
 <div class="element-data">
     <?php
     if (empty($element->{'lens_' . $side})) {
-        echo 'No selection has been made - use edit mode to select a lens.';
+        ?>
+        <div class="row data-row">
+            <div class="large-12 column">
+                <div
+                    class="data-label">
+                    <?php
+                    echo 'No selection has been made - use edit mode to select a lens.';
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
     } else {
         ?>
         <div class="row data-row">
