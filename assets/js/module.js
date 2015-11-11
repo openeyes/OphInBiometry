@@ -233,8 +233,15 @@ function updateBiometryData(side)
 function updateIolRefTable(side){
 	var l_id = ($('#Element_OphInBiometry_Selection_lens_id_' + side + ' option:selected').val());
 	var f_id =($('#Element_OphInBiometry_Selection_formula_id_' + side + ' option:selected').val());
-	$('table[id^="right_"]').hide();
-	$('table[id^="left_"]').hide();
+
+	if(side == 'left') {
+		$('table[id^="left_"]').hide();
+	}
+
+	if(side == 'right') {
+		$('table[id^="right_"]').hide();
+	}
+
 	if(!isNaN(parseInt(l_id)) && !isNaN(parseInt(f_id))) {
 		var swtb = side + '_' + l_id + '_' + f_id;
 		$('table[id^=' + swtb + ']').show();
