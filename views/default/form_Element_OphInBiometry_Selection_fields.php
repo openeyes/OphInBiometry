@@ -1,3 +1,9 @@
+<style type="text/css">
+    tr:hover,tr.even:hover {
+        border:2px solid #FF9900;
+    }
+</style>
+
 <div class="element-fields">
     <?php
     if ($this->is_auto) {

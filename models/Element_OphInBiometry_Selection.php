@@ -73,10 +73,54 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 			array('iol_power_right', 'checkNumericRangeIfSide', 'side' => 'right', 'max' => 40, 'min' => -10),
 			array('predicted_refraction_left', 'checkNumericRangeIfSide', 'side' => 'left', 'max' => 10, 'min' => -10),
 			array('predicted_refraction_right', 'checkNumericRangeIfSide', 'side' => 'right', 'max' => 10, 'min' => -10),
+			array('lens_id_left', 'checkSelectedLensFormula', 'selectData'=>'left_lens'),
+			array('formula_id_left', 'checkSelectedLensFormula', 'selectData'=>'left_formula'),
+			array('lens_id_right', 'checkSelectedLensFormula', 'selectData'=>'right_lens'),
+			array('formula_id_right', 'checkSelectedLensFormula', 'selectData'=>'right_formula'),
 
 			// Please remove those attributes that should not be searched.
 			array('id, event_id ', 'safe', 'on' => 'search'),
 		);
+	}
+
+	/**
+	 * @param $attribute
+	 * @param $params
+	 */
+	public function checkSelectedLensFormula($attribute, $params)
+	{
+		if ($params['selectData'] == "left_lens") {
+			if (((empty($this->formula_id_left)) && ((!empty($this->lens_id_left))))
+				|| ((!empty($this->formula_id_left)) && ((empty($this->lens_id_left))))
+			) {
+				if (empty($this->lens_id_left))
+					$this->addError('lens_id_left', "Lens and Formula must be selected or left blank (Left side).");
+			}
+		} elseif ($params['selectData'] == "left_formula") {
+			if (((empty($this->formula_id_left)) && ((!empty($this->lens_id_left))))
+				|| ((!empty($this->formula_id_left)) && ((empty($this->lens_id_left))))
+			) {
+
+				if (empty($this->formula_id_left))
+					$this->addError('formula_id_left', "Lens and Formula must be selected or left blank (Left side).");
+			}
+		} elseif ($params['selectData'] == "right_lens") {
+			if (((empty($this->formula_id_right)) && ((!empty($this->lens_id_right))))
+				|| ((!empty($this->formula_id_right)) && ((empty($this->lens_id_right))))
+			) {
+				if (empty($this->lens_id_right))
+					$this->addError('lens_id_right', "Lens and Formula must be selected or left blank (Right side).");
+
+			}
+
+		} elseif ($params['selectData'] == "right_formula") {
+			if (((empty($this->formula_id_right)) && ((!empty($this->lens_id_right))))
+				|| ((!empty($this->formula_id_right)) && ((empty($this->lens_id_right))))
+			) {
+				if (empty($this->lens_id_right))
+					$this->addError('formula_id_right', "Lens and Formula must be selected or left blank (Right side).");
+			}
+		}
 	}
 
 	/**
