@@ -42,9 +42,6 @@ class m150907_105613_iol_master_import extends OEMigration
 		$this->addForeignKey('et_ophinbiometry_iol_ref_values_lens_id_fk', 'et_ophinbiometry_iol_ref_values', 'lens_id', 'ophinbiometry_lenstype_lens', 'id');
 		$this->addForeignKey('et_ophinbiometry_iol_ref_values_formula_id_fk', 'et_ophinbiometry_iol_ref_values', 'formula_id', 'ophinbiometry_calculation_formula', 'id');
 
-		// if we import from DICOM file we will have a device + study ID value
-		$this->addColumn('et_ophinbiometry_measurement', 'study_id', 'varchar(255)');
-		$this->addColumn('et_ophinbiometry_measurement', 'device_id', 'varchar(255)');
 
 //		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('class_name=:class_name', array(':class_name'=>'OphInBiometry'))->queryRow();
 //		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('class_name=:class_name and event_type_id=:eventTypeId', array(':class_name'=>'Element_OphInBiometry_IolRefValues', ':eventTypeId'=>$event_type['id']))->queryRow()) {
