@@ -1,11 +1,17 @@
 <style type="text/css">
-    tr:hover,tr.even:hover {
-        border:2px solid #FF9900;
+    tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
+        border:0px solid #FF9900;
+        background: #FFFFE0;
+    }
+
+    .highlighted,tr:nth-of-type(even).highlighted {
+        background-color : #FF9900;
     }
 </style>
 
 <div class="element-fields">
     <?php
+
     if ($this->is_auto) {
         $post = Yii::app()->request->getPost('Element_OphInBiometry_Selection');
 
@@ -141,7 +147,7 @@
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
 
                                         if (($this->selectionValues[0]->{"predicted_refraction_left"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_left"} == $iolData["IOL"][$j])) {
-                                            echo "<tr  style='background:#FFFFE0; border:2px solid #FF9900;'  id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            echo "<tr  class='highlighted'  id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                         } else {
                                             echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                         }
@@ -164,7 +170,7 @@
                                     for ($j = 0; $j < count($iolData['IOL']); $j++) {
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
                                         if (($this->selectionValues[0]->{"predicted_refraction_right"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_right"} == $iolData["IOL"][$j])) {
-                                            echo "<tr style='background:#FFFFE0; border:2px solid #FF9900;'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            echo "<tr class='highlighted' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                         } else {
                                             echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                         }
