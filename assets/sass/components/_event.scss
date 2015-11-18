@@ -94,3 +94,12 @@ label.rse_d_left, label.rse_d_right {
 .disabled{
   opacity: 0.60;
 }
+
+tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
+  border:0px solid #FF9900;
+  background: #FFFFE0;
+}
+
+.highlighted,tr:nth-of-type(even).highlighted {
+  background-color : #FF9900;
+}

@@ -26,12 +26,6 @@ class m151027_111155_add_biometry_imports_table extends CDbMigration
 		$this->addForeignKey('ophinbiometry_imported_events_patient_id_fk','ophinbiometry_imported_events','patient_id','patient','id');
 		$this->addForeignKey('ophinbiometry_imported_events_last_modified_user_id_fk','ophinbiometry_imported_events','last_modified_user_id','user','id');
 		$this->addForeignKey('ophinbiometry_imported_events_created_user_id_fk','ophinbiometry_imported_events','created_user_id','user','id');
-
-		$this->dropColumn('et_ophinbiometry_measurement', 'study_id');
-		$this->dropColumn('et_ophinbiometry_measurement', 'device_id');
-		$this->dropColumn('et_ophinbiometry_measurement_version', 'study_id');
-		$this->dropColumn('et_ophinbiometry_measurement_version', 'device_id');
-
 	}
 
 	public function down()

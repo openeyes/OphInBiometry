@@ -40,12 +40,4 @@
 			<div class="data-value" id="snr_<?php echo $side?>"><?php echo CHtml::encode($element->{'snr_'.$side}) ?></div>
 		</div>
 	</div>
-	<div class="row">
-		<?php
-		foreach($measurementInput as $measurementData){
-			$this->renderPartial('form_Element_OphInBiometry_Measurement_fields_iolRefValues', array('side' => $side, 'iolRefValues' => $measurementData));
-			//var_dump(json_decode($measurementData->{"iol_ref_values_$side"}));
-		}
-		?>
-	</div>
 </div>

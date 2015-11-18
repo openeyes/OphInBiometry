@@ -1,7 +1,9 @@
 <div class="element-fields">
     <?php
+
     if ($this->is_auto) {
         $post = Yii::app()->request->getPost('Element_OphInBiometry_Selection');
+
         if ($element->isNewRecord && empty($post)) {
             $element->lens_id_left = null;
             $element->lens_id_right = null;
@@ -29,42 +31,20 @@
         }
         ?>
         <div class="row">
-            <div class="large-4 column">
-                <span class="field-info">Lens:</span>
-            </div>
-            <div class="large-8 column">
+            <div class="large-12 column">
                 <?php
                 if ($side == "left") {
                     if (!empty($lens_left)) {
-                        echo
-                        CHtml::dropDownList('Element_OphInBiometry_Selection_lens_id_' . $side, 'lens_id',
-                            CHtml::listData(
-                                OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_left)) . ")", array('order' => 'display_order')),
-                                'id',
-                                'name'
-                            ),
-                            array(
-                                'empty' => '- Select Lens -',
-                                'options' => array(1 => array('selected' => true)),
-                                'class' => 'classname'
-                            )
-                        );
+                        echo $form->dropDownList($element, 'lens_id_' . $side, CHtml::listData(
+                            OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_left)) . ")", array('order' => 'display_order')), 'id', 'name'
+                        ), array('empty' => '- Please select -'), null, array('label' => 3, 'field' => 6));
                     }
                 } else {
                     if (!empty($lens_right)) {
-                        echo
-                        CHtml::dropDownList('Element_OphInBiometry_Selection_lens_id_' . $side, 'lens_id',
-                            CHtml::listData(
-                                OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_right)) . ")", array('order' => 'display_order')),
-                                'id',
-                                'name'
-                            ),
-                            array(
-                                'empty' => '- Select Lens -',
-                                'options' => array(1 => array('selected' => true)),
-                                'class' => 'classname'
-                            )
-                        );
+                        echo $form->dropDownList($element, 'lens_id_' . $side, CHtml::listData(
+                            OphInBiometry_LensType_Lens::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($lens_right)) . ")", array('order' => 'display_order')), 'id', 'name'
+                        ), array('empty' => '- Please select -'), null, array('label' => 3, 'field' => 6));
+
                     }
                 }
                 ?>
@@ -94,10 +74,10 @@
     <div class="row">
         <div class="large-12 column">
             <div class="row field-row">
-                <div class="large-4 column">
+                <div class="large-3 column">
                     <span class="field-info">Lens Description:</span>
                 </div>
-                <div class="large-8 column">
+                <div class="large-9 column">
                     <span id="type_<?php echo $side ?>"
                           class="field-info"><?php echo $element->{'lens_' . $side} ? $element->{'lens_' . $side}->description : '' ?></span>
                 </div>
@@ -107,10 +87,10 @@
     <div class="row">
         <div class="large-12 column">
             <div class="row field-row">
-                <div class="large-4 column">
+                <div class="large-3 column">
                     <span class="field-info">Lens A constant:</span>
                 </div>
-                <div class="large-8 column">
+                <div class="large-9 column">
                     <span id="acon_<?php echo $side ?>"
                           class="field-info"><?php echo $element->{'lens_' . $side} ? number_format($element->{'lens_' . $side}->acon, 1) : '' ?></span>
                 </div>
@@ -121,43 +101,19 @@
     if ($this->is_auto) {
         ?>
         <div class="row">
-
-            <div class="large-4 column">
-                <span class="field-info">Formula:</span>
-            </div>
-            <div class="large-8 column">
+            <div class="large-12 column">
                 <?php
                 if ($side == "left") {
                     if (!empty($formulas_left)) {
-                        echo
-                        CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
-                            CHtml::listData(
-                                OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_left)) . ")", array('order' => 'display_order')),
-                                'id',
-                                'name'
-                            ),
-                            array(
-                                'empty' => '- Select Formula -',
-                                'options' => array(1 => array('selected' => true)),
-                                'class' => 'classname'
-                            )
-                        );
+                        echo $form->dropDownList($element, 'formula_id_' . $side, CHtml::listData(
+                            OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_left)) . ")", array('order' => 'display_order')), 'id', 'name'
+                        ), array('empty' => '- Please select -'), null, array('label' => 3, 'field' => 6));
                     }
                 } else {
                     if (!empty($formulas_right)) {
-                        echo
-                        CHtml::dropDownList('Element_OphInBiometry_Selection_formula_id_' . $side, 'formula_id',
-                            CHtml::listData(
-                                OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_right)) . ")", array('order' => 'display_order')),
-                                'id',
-                                'name'
-                            ),
-                            array(
-                                'empty' => '- Select Formula -',
-                                'options' => array(1 => array('selected' => true)),
-                                'class' => 'classname'
-                            )
-                        );
+                        echo $form->dropDownList($element, 'formula_id_' . $side, CHtml::listData(
+                            OphInBiometry_Calculation_Formula::model()->findAll($criteria->condition = "id in (" . implode(",", array_unique($formulas_right)) . ")", array('order' => 'display_order')), 'id', 'name'
+                        ), array('empty' => '- Please select -'), null, array('label' => 3, 'field' => 6));
                     }
                 }
                 ?>
@@ -178,7 +134,12 @@
                                     echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                     for ($j = 0; $j < count($iolData['IOL']); $j++) {
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
-                                        echo "<tr><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+
+                                        if (($this->selectionValues[0]->{"predicted_refraction_left"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_left"} == $iolData["IOL"][$j])) {
+                                            echo "<tr  class='highlighted'  id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                        } else {
+                                            echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                        }
                                         echo "<input type='hidden'  id='iolval-$radid' value=" . $iolData["IOL"][$j] . "><input type='hidden'  id='refval-$radid' value=" . $iolData["REF"][$j] . ">";
                                     }
                                     echo '</table>';
@@ -197,7 +158,11 @@
                                     echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                     for ($j = 0; $j < count($iolData['IOL']); $j++) {
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
-                                        echo "<tr><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                        if (($this->selectionValues[0]->{"predicted_refraction_right"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_right"} == $iolData["IOL"][$j])) {
+                                            echo "<tr class='highlighted' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                        } else {
+                                            echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                        }
                                         echo "<input type='hidden'  id='iolval-$radid' value=" . $iolData["IOL"][$j] . "><input type='hidden'  id='refval-$radid' value=" . $iolData["REF"][$j] . ">";
                                     }
                                     echo '</table>';
