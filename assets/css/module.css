@@ -116,3 +116,12 @@ label.rse_d_left, label.rse_d_right {
 .element-header.left-side {
   margin-left: 14.5em;
 }
+
+tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
+  border:0px solid #FF9900;
+  background: #FFFFE0;
+}
+
+.highlighted,tr:nth-of-type(even).highlighted {
+  background-color : #FF9900;
+}

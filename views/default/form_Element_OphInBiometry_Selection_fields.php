@@ -1,14 +1,3 @@
-<style type="text/css">
-    tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
-        border:0px solid #FF9900;
-        background: #FFFFE0;
-    }
-
-    .highlighted,tr:nth-of-type(even).highlighted {
-        background-color : #FF9900;
-    }
-</style>
-
 <div class="element-fields">
     <?php
 
