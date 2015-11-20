@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 	$('input[id^="iolrefrad-"]').click(function(event) {
 		var id = event.target.id;
-		alert ('radio  -  ' + id);
+	//	alert ('radio  -  ' + id);
 		id = id.split("-").pop();
 		var d = id.split('__');
 		var s = d[0].split('_');

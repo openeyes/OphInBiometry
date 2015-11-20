@@ -33,6 +33,7 @@
         <div class="row">
             <div class="large-12 column">
                 <?php
+                $criteria = new CDbCriteria();
                 if ($side == "left") {
                     if (!empty($lens_left)) {
                         echo $form->dropDownList($element, 'lens_id_' . $side, CHtml::listData(
