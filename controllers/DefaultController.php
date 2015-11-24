@@ -262,15 +262,16 @@ class DefaultController extends BaseEventTypeController
 			$reason['code'] = 1;
 			$reason['reason'] = 'Axial Length < 22';
 		} elseif ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
-			if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= 3)
+			if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= 3) {
 				$reason['code'] = 1;
-			$reason['reason'] = 'Difference in Axial Length between right and left eye of >= 3mm';
+				$reason['reason'] = 'Difference in Axial Length between right and left eye of >= 3mm';
+			}
 		} elseif ((($measurementData->{'axial_length_left'}) < ($measurementData->{'axial_length_right'}))) {
-			if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= 3)
+			if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= 3) {
 				$reason['code'] = 1;
-			$reason['reason'] = 'Difference in Axial Length between right and left eye of >= 3mm';
+				$reason['reason'] = 'Difference in Axial Length between right and left eye of >= 3mm';
+			}
 		}
-
 		return $reason;
 
 	}
