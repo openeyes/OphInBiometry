@@ -6,6 +6,8 @@ class DefaultController extends BaseEventTypeController
 	public $is_auto=0;
 	public $iolRefValues = array();
 	public $selectionValues = array();
+	public $snrValues = array();
+	public $quality=0;
 
 	/**
 	 * @param Event $unlinkedEvent
@@ -45,7 +47,7 @@ class DefaultController extends BaseEventTypeController
 
 		// if we have 0 unlinked event we follow the manual process
 		if (sizeof($unlinkedEvents) == 0 || Yii::app()->request->getQuery("force_manual")=="1") {
-			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+			Yii::app()->user->setFlash('issue.formula', $this->flash_message);
 			parent::actionCreate();
 		} elseif (sizeof($unlinkedEvents) == 1) {
 			// if we have only 1 unlinked event we just simply link that event to the episode
@@ -77,11 +79,12 @@ class DefaultController extends BaseEventTypeController
 	}
 
 
-
-
 	private  function setFlashMessage($id){
+
 		if($this->isAutoBiometryEvent($id))
 		{
+			$this->snrValues  = $this->checkBiometryReportsQuality($id);
+
 			$this->is_auto=1;
 			$event_data = $this->getAutoBiometryEventData($id);
 			foreach ($event_data as $detail)
@@ -89,11 +92,27 @@ class DefaultController extends BaseEventTypeController
 				$this->flash_message= '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
 			}
 
-			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+			Yii::app()->user->setFlash('issue.formula', $this->flash_message);
+
+			$quality  = $this->isBadQuality($id);
+
+			if( !empty($quality) && ($quality['code']))
+			{
+				$this->flash_message= '<b>The quality of this biometry data is bad and not recommended for clinical use </b>: ('.$quality['reason'].')';
+				Yii::app()->user->setFlash('warning.quality', $this->flash_message);
+			}
+			else
+			{
+				$quality  = $this->isBordelineQuality($id);
+				if( !empty($quality) && ($quality['code'])){
+					$this->flash_message= '<b>The quality of this biometry data is borderline </b>: ('.$quality['reason'].')';
+					Yii::app()->user->setFlash('warning.quality', $this->flash_message);
+				}
+			}
 		}
 		else
 		{
-			Yii::app()->user->setFlash('warning.formula', $this->flash_message);
+			Yii::app()->user->setFlash('issue.formula', $this->flash_message);
 		}
 	}
 
@@ -191,6 +210,81 @@ class DefaultController extends BaseEventTypeController
 	public function getIolRefVal($id){
 		//echo json_encode(array());
 		echo json_encode(array("name"=>"John","time"=>"2pm"));
+	}
+
+	/**
+	 * @param $id
+	 */
+	protected function getMeasurementData($id)
+	{
+		return Element_OphInBiometry_Measurement::Model()->findAllByAttributes(
+			array(
+				'event_id' => $this->event->id,
+			));
+
+	}
+
+	protected function checkBiometryReportsQuality($id)
+	{
+
+		$measurementValues = $this->getMeasurementData($id);
+		$data  = $this->isBadQuality($measurementValues[0]);
+
+		$this->flash_message= '<b>Data Source123</b>:)';
+		//print_r($data);
+		//$this->isBordelineQuality($measurementValues[0]);
+		//echo $measurementValues[0]->{'axial_length_left'};
+	}
+
+	private function isBadQuality($id)
+	{
+		$reason = array();
+		$measurementValues = $this->getMeasurementData($id);
+		$measurementData = $measurementValues[0];
+
+		if (($measurementData->{'snr_left'}) < 1.6 || ($measurementData->{'snr_right'} < 1.6)) {
+			$reason['code'] = 1;
+			$reason['reason'] = 'Composite SNR < 1.6';
+
+		} elseif (($measurementData->{'snr_min_left'}) < 1.5 || ($measurementData->{'snr_min_right'} < 1.5)) {
+			$reason['code'] = 1;
+			$reason['reason'] = 'An individual SNR value was < 1.5';
+		} elseif (($measurementData->{'axial_length_left'}) < 21 || ($measurementData->{'axial_length_right'} < 21)) {
+			$reason['code'] = 1;
+			$reason['reason'] = 'Axial Length < 21';
+		}
+
+		return $reason;
+
+	}
+
+	private function isBordelineQuality($id)
+	{
+		$reason = array();
+		$measurementValues = $this->getMeasurementData($id);
+		$measurementData = $measurementValues[0];
+
+		if (($measurementData->{'snr_left'}) < 20 || ($measurementData->{'snr_right'} < 20)) {
+			$reason['code'] = 1;
+			$reason['reason'] = 'Composite SNR of < 20';
+		} elseif (($measurementData->{'snr_min_left'}) < 2 || ($measurementData->{'snr_min_right'} < 2)) {
+			$reason['code'] = 1;
+			$reason['reason'] = 'Individual SNR < 2';
+		} elseif (($measurementData->{'axial_length_left'}) < 22 || ($measurementData->{'axial_length_right'} < 22)) {
+			$reason['code'] = 1;
+			$reason['reason'] = 'Axial Length < 22';
+		} elseif ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
+			if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= 3)
+				$reason['code'] = 1;
+			$reason['reason'] = 'Difference in Axial Length between right and left eye of >= 3mm';
+		} elseif ((($measurementData->{'axial_length_left'}) < ($measurementData->{'axial_length_right'}))) {
+			if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= 3)
+				$reason['code'] = 1;
+			$reason['reason'] = 'Difference in Axial Length between right and left eye of >= 3mm';
+		}
+
+		return $reason;
+
 	}
 }
 
