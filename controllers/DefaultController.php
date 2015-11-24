@@ -6,7 +6,6 @@ class DefaultController extends BaseEventTypeController
 	public $is_auto=0;
 	public $iolRefValues = array();
 	public $selectionValues = array();
-	public $snrValues = array();
 	public $quality=0;
 
 	/**
@@ -83,8 +82,6 @@ class DefaultController extends BaseEventTypeController
 
 		if($this->isAutoBiometryEvent($id))
 		{
-			$this->snrValues  = $this->checkBiometryReportsQuality($id);
-
 			$this->is_auto=1;
 			$event_data = $this->getAutoBiometryEventData($id);
 			foreach ($event_data as $detail)
@@ -207,11 +204,6 @@ class DefaultController extends BaseEventTypeController
 		return OphInBiometry_Imported_Events::model()->findAllByAttributes(array('event_id' => $id));
 	}
 
-	public function getIolRefVal($id){
-		//echo json_encode(array());
-		echo json_encode(array("name"=>"John","time"=>"2pm"));
-	}
-
 	/**
 	 * @param $id
 	 */
@@ -224,18 +216,10 @@ class DefaultController extends BaseEventTypeController
 
 	}
 
-	protected function checkBiometryReportsQuality($id)
-	{
-
-		$measurementValues = $this->getMeasurementData($id);
-		$data  = $this->isBadQuality($measurementValues[0]);
-
-		$this->flash_message= '<b>Data Source123</b>:)';
-		//print_r($data);
-		//$this->isBordelineQuality($measurementValues[0]);
-		//echo $measurementValues[0]->{'axial_length_left'};
-	}
-
+	/**
+	 * @param $id
+	 * @return array
+	 */
 	private function isBadQuality($id)
 	{
 		$reason = array();
@@ -258,6 +242,10 @@ class DefaultController extends BaseEventTypeController
 
 	}
 
+	/**
+	 * @param $id
+	 * @return array
+	 */
 	private function isBordelineQuality($id)
 	{
 		$reason = array();
