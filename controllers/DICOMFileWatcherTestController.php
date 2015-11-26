@@ -36,7 +36,7 @@ class DICOMFileWatcherTestController extends BaseAdminController
             }
         }
 
-        $dirlist = $this->getFileList("/var/www/IOLMaster/DICOM Files");
+        $dirlist = $this->getFileList("/home/iolmaster/test");
         $this->render('dicom_files_watcher', array('msg' => $msg, 'dirlist' => $dirlist));
     }
 
