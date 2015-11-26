@@ -20,8 +20,8 @@ class DICOMFileWatcherTestController extends BaseAdminController
         $msg = 0;
         if (!empty($_GET['dicomfiles'])) {
             $file = $_GET['dicomfiles'];
-            $ori_dir = "/var/www/IOLMaster/DICOM Files/";
-            $dest_dir = "/home/IOLMaster/incoming/";
+            $ori_dir = "/home/iolmaster/test/";
+            $dest_dir = "/home/iolmaster/incoming/";
 
             if (file_exists($ori_dir . $file)) {
 
