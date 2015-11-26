@@ -29,6 +29,7 @@ return array(
 	'params' => array(
 		'admin_menu' => array(
 			'Lens types' => '/OphInBiometry/lensTypeAdmin/list',
+			'File Watcher' => '/OphInBiometry/DICOMFileWatcherTest/list',
 		),
 		'OphInBiometry_allow_manual_changes' => false,
 	),
