@@ -81,4 +81,9 @@ class AdminController extends ModuleAdminController
 
 		OphInBiometry_LensType_Lens::model()->deleteAll($criteria);
 	}
+
+	public function actionFileLog()
+	{
+		return $this->redirect('../../DicomLogViewer/log');
+	}
 }
