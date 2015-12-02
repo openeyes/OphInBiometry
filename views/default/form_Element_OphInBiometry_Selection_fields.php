@@ -139,7 +139,7 @@
                                     echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                     for ($j = 0; $j < count($iolData['IOL']); $j++) {
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
-                                        if (($this->selectionValues[0]->{"predicted_refraction_left"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_left"} == $iolData["IOL"][$j]) && ($found)) {
+                                        if (($this->selectionValues[0]->{"predicted_refraction_left"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_left"} == $iolData["IOL"][$j])) {
                                             $found = 1;
                                             echo "<tr  class='highlighted'  id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                         } else {
