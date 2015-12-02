@@ -125,3 +125,18 @@ tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
 .highlighted,tr:nth-of-type(even).highlighted {
   background-color : #FF9900;
 }
+
+.readonly-box  {
+  background-color: #dddddd;
+  padding: 4px 10px;
+  border: 1px solid #6b8aaa;
+  margin: 0;
+  font-size:small;
+  border-radius: 3px;
+}
+
+.box-margin  {
+  margin-left: 40px;
+  display: block;
+  min-width: 55px;
+}

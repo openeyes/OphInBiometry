@@ -53,6 +53,8 @@
         </div>
 
         <?php
+        echo $form->hiddenField($element,'iol_power_' . $side,array('value'=>$element->{"iol_power_$side"}));
+
     } else {
         ?>
         <div class="row">
@@ -100,6 +102,7 @@
     </div>
     <?php
     if ($this->is_auto) {
+        echo $form->hiddenField($element,'predicted_refraction_' . $side,array('value'=>$element->{"predicted_refraction_$side"}));
         ?>
         <div class="row">
             <div class="large-12 column">
@@ -132,11 +135,12 @@
                                 if (!empty($value)) {
                                     $iolData = json_decode($value, true);
                                     $divid = $side . '_' . $k . '_' . $key;
+                                    $found = 0;
                                     echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                     for ($j = 0; $j < count($iolData['IOL']); $j++) {
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
-
                                         if (($this->selectionValues[0]->{"predicted_refraction_left"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_left"} == $iolData["IOL"][$j])) {
+                                            $found = 1;
                                             echo "<tr  class='highlighted'  id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                         } else {
                                             echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
@@ -156,10 +160,12 @@
                                 if (!empty($value)) {
                                     $iolData = json_decode($value, true);
                                     $divid = $side . '_' . $k . '_' . $key;
+                                    $found = 0;
                                     echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                     for ($j = 0; $j < count($iolData['IOL']); $j++) {
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
                                         if (($this->selectionValues[0]->{"predicted_refraction_right"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_right"} == $iolData["IOL"][$j])) {
+                                            $found = 1;
                                             echo "<tr class='highlighted' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                         } else {
                                             echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
@@ -181,7 +187,47 @@
     }
     ?>
     <div id="div_Element_OphInBiometry_Selection_<?php echo $side ?>">
+        <?php
+        if ($this->is_auto) {
+        ?>
+        <div class="row">
+            <div class="large-12 column">
+                <div class="row field-row">
+                    <div class="large-3 column">
+                        <span class="field-info">IOL Power:</span>
+                    </div>
+                    <div class="large-9 column">
+                    <span id="iolpower_<?php echo $side ?>"
+                          class="field-info"><span  id="iol_power_<?php echo $side ?>" class="readonly-box box-margin"><?php echo $element->{"iol_power_$side"}; ?></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 column">
+                <div class="row field-row">
+                    <div class="large-3 column">
+                        <span class="field-info">Predicted Refraction:</span>
+                    </div>
+                    <div class="large-9 column">
+                <span id="preref_<?php echo $side ?>"
+                      class="field-info"><span id="predicted_refraction_<?php echo $side ?>" class="readonly-box box-margin"><?php echo $element->{"predicted_refraction_$side"}; ?></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+       //     echo $form->hiddenField($element,'iol_power_' . $side,array('value'=>$element->{"iol_power_$side"}));
+        //    echo $form->hiddenField($element,'predicted_refraction_' . $side,array('value'=>$element->{"predicted_refraction_$side"}));
+        }
+        else
+        {
+            ?>
+
         <?php echo $form->textField($element, 'iol_power_' . $side, ($this->is_auto) ? array('readonly' => true) : null, null, array('label' => 4, 'field' => 2)) ?>
         <?php echo $form->textField($element, 'predicted_refraction_' . $side, ($this->is_auto) ? array('readonly' => true) : null, null, array('label' => 4, 'field' => 2)) ?>
+        <?php
+        }
+        ?>
     </div>
 </div>

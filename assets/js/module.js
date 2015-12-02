@@ -257,6 +257,8 @@ function updateIolRefRow(side) {
 
 						$("#Element_OphInBiometry_Selection_iol_power_"+side).val($(iolvalstr+i).val());
 						$("#Element_OphInBiometry_Selection_predicted_refraction_"+side).val($(refvalstr+i).val());
+						$("#iol_power_"+side).text($(iolvalstr+i).val());
+						$("#predicted_refraction_"+side).text($(refvalstr+i).val());
 
 						for (j = 0; j < $(trstr).length; j++) {
 							if (i == j) {
