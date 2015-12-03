@@ -89,7 +89,7 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 	 */
 	public function checkSelectedLensFormula($attribute, $params)
 	{
-		if (!empty($this->event_id))
+		if(count(OphInBiometry_Imported_Events::model()->findAllByAttributes(array('event_id' => $this->event_id)))>0)
 		{
 			if ($params['selectData'] == "left_lens") {
 				if (((empty($this->formula_id_left)) && ((!empty($this->lens_id_left))))
