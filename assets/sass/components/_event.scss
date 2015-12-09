@@ -75,24 +75,34 @@ label.rse_d_left, label.rse_d_right {
 }
 
 .highlighted-lens {
-  border-top: 3px solid #FF9900;
-  border-left: 3px solid #FF9900;
-  border-right: 3px solid #FF9900;
+  border-top: 3px solid #FF9900 !important;
+  border-left: 3px solid #FF9900 !important;
+  border-right: 3px solid #FF9900 !important;
 }
 
 .highlighted-selection{
-  border-left: 3px solid #FF9900;
-  border-right: 3px solid #FF9900;
+  border-left: 3px solid #FF9900 !important;
+  border-right: 3px solid #FF9900 !important;
+  border-top:3px solid transparent;
+  margin-bottom:3px;
 }
 
 .highlighted-calculation{
-  border-left: 3px solid #FF9900;
-  border-right: 3px solid #FF9900;
+  border-left: 3px solid #FF9900 !important;
+  border-right: 3px solid #FF9900 !important;
   border-bottom: 3px solid #FF9900;
 }
 
 .disabled{
   opacity: 0.60;
+  border-bottom: 3px solid transparent;
+}
+
+.top-pad{
+  border-top:3px solid transparent;
+  border-left:3px solid transparent;
+  border-right:3px solid transparent;
+  border-bottom:3px solid transparent;
 }
 
 tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
