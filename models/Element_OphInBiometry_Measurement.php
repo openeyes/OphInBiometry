@@ -66,7 +66,7 @@ class Element_OphInBiometry_Measurement extends SplitEventTypeElement
 		// will receive user inputs.
 		return array(
 			array(
-				'event_id, eye_id k1_left, k1_right, k2_left, k2_right, axis_k1_left, axis_k1_right, axial_length_left, axial_length_right, snr_left, snr_right',
+				'event_id, eye_id k1_left, k1_right, k2_left, k2_right, axis_k1_left, axis_k1_right, axial_length_left, axial_length_right, snr_left, snr_right, k2_axis_left, k2_axis_right, delta_k_left, delta_k_right, delta_k_axis_left, delta_k_axis_right, acd_left, acd_right, refraction_sphere_left, refraction_sphere_right, refraction_delta_left, refraction_delta_right, refraction_axis_left, refraction_axis_right, eye_status_left, eye_status_right, comments',
 				'safe'
 			),
 			array(
