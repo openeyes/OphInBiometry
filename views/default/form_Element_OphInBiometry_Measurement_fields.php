@@ -10,12 +10,12 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"axial_length_$side"}.'</span>&nbsp;mm';
+						echo '<span class="readonly-box">'.$element->{"axial_length_$side"}.'</span><span class="field-info">mm</span>';
 					}
 					else
 					{
 						?>
-						<input type="text" id="Element_OphInBiometry_Measurement_axial_length_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[axial_length_<?php echo $side; ?>]" value="<?php echo $element->{"axial_length_$side"}?>">&nbsp;mm
+						<input type="text" id="Element_OphInBiometry_Measurement_axial_length_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[axial_length_<?php echo $side; ?>]" value="<?php echo $element->{"axial_length_$side"}?>"><span class="field-info">mm</span>
 						<?php
 					}
 					?>
@@ -52,12 +52,12 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"k1_$side"}.'</span>&nbsp;D';
+						echo '<span class="readonly-box">'.$element->{"k1_$side"}.'</span><span class="field-info">D</span>';
 					}
 					else
 					{
 					?>
-					<input type="text" id="Element_OphInBiometry_Measurement_k1_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[k1_<?php echo $side; ?>]" value="<?php echo $element->{"k1_$side"}?>">D
+					<input type="text" id="Element_OphInBiometry_Measurement_k1_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[k1_<?php echo $side; ?>]" value="<?php echo $element->{"k1_$side"}?>"><span class="field-info">D</span>
 						<?php
 					}
 					?>
@@ -86,12 +86,12 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"delta_k_$side"}.'</span>&nbsp;D';
+						echo '<span class="readonly-box">'.$element->{"delta_k_$side"}.'</span><span class="field-info">D</span>';
 					}
 					else
 					{
 					?>
-					<input type="text" id="Element_OphInBiometry_Measurement_delta_k_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[delta_k_<?php echo $side; ?>]" value="<?php echo $element->{"delta_k_$side"}?>">D
+					<input type="text" id="Element_OphInBiometry_Measurement_delta_k_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[delta_k_<?php echo $side; ?>]" value="<?php echo $element->{"delta_k_$side"}?>"><span class="field-info">D</span>
 						<?php
 					}
 					?>
@@ -127,12 +127,12 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"k2_$side"}.'</span>&nbsp;D';
+						echo '<span class="readonly-box">'.$element->{"k2_$side"}.'</span><span class="field-info">D</span>';
 					}
 					else
 					{
 					?>
-						<input type="text" id="Element_OphInBiometry_Measurement_k2_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[k2_<?php echo $side; ?>]" value="<?php echo $element->{"k2_$side"}?>">D
+						<input type="text" id="Element_OphInBiometry_Measurement_k2_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[k2_<?php echo $side; ?>]" value="<?php echo $element->{"k2_$side"}?>"><span class="field-info">D</span>
 					<?php
 					}
 					?>
@@ -162,12 +162,12 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"acd_$side"}.'</span>&nbsp;mm';
+						echo '<span class="readonly-box">'.$element->{"acd_$side"}.'</span><span class="field-info">mm</span>';
 					}
 					else
 					{
 					?>
-						<input type="text" id="Element_OphInBiometry_Measurement_acd_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[acd_<?php echo $side; ?>]" value="<?php echo $element->{"acd_$side"}?>">&nbsp;mm
+						<input type="text" id="Element_OphInBiometry_Measurement_acd_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[acd_<?php echo $side; ?>]" value="<?php echo $element->{"acd_$side"}?>"><span class="field-info">mm</span>
 					<?php
 					}
 					?>
