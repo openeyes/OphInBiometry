@@ -54,8 +54,8 @@ class m151209_110519_add_additional_dicom_biometryreports_data extends CDbMigrat
 		$this->addColumn('et_ophinbiometry_measurement','eye_status_right','varchar(255)');
 		$this->addColumn('et_ophinbiometry_measurement_version','eye_status_right','varchar(255)');
 		
-		$this->addColumn('et_ophinbiometry_measurement','comments','varchar(1000)');
-		$this->addColumn('et_ophinbiometry_measurement_version','comments','varchar(1000)');
+		$this->addColumn('et_ophinbiometry_calculation','comments','varchar(1000)');
+		$this->addColumn('et_ophinbiometry_calculation_version','comments','varchar(1000)');
 
 	}
 
@@ -111,8 +111,8 @@ class m151209_110519_add_additional_dicom_biometryreports_data extends CDbMigrat
 		$this->dropColumn('et_ophinbiometry_measurement','eye_status_right');
 		$this->dropColumn('et_ophinbiometry_measurement_version','eye_status_right');
 		
-		$this->dropColumn('et_ophinbiometry_measurement','comments');
-		$this->dropColumn('et_ophinbiometry_measurement_version','comments');
+		$this->dropColumn('et_ophinbiometry_calculation','comments');
+		$this->dropColumn('et_ophinbiometry_calculation_version','comments');
 
 	}
 
