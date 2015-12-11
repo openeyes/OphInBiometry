@@ -91,7 +91,7 @@
 /* line 46, ../sass/components/_event.scss */
 input[type="text"] {
   display: inline-block;
-  width: 4em;
+  width: 3.5em;
 }
 
 /* line 51, ../sass/components/_event.scss */
@@ -148,4 +148,10 @@ tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
   margin-left: 40px;
   display: block;
   min-width: 55px;
+}
+
+.readonly-div{
+  height: auto;
+  border: 1px solid #6b8aaa;
+  background-color: #dddddd;
 }

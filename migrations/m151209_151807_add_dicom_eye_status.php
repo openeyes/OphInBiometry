@@ -5,17 +5,18 @@ class m151209_151807_add_dicom_eye_status extends CDbMigration
     public function up()
     {
 
-        $this->alterColumn('et_ophinbiometry_measurement', 'eye_status_left', 'int(10) unsigned NOT NULL');
-        $this->alterColumn('et_ophinbiometry_measurement', 'eye_status_right', 'int(10) unsigned NOT NULL');
-        $this->alterColumn('et_ophinbiometry_measurement_version', 'eye_status_left', 'int(10) unsigned NOT NULL');
-        $this->alterColumn('et_ophinbiometry_measurement_version', 'eye_status_right', 'int(10) unsigned NOT NULL');
+        $this->alterColumn('et_ophinbiometry_measurement', 'eye_status_left', 'int(10) signed NOT NULL');
+        $this->alterColumn('et_ophinbiometry_measurement', 'eye_status_right', 'int(10) signed NOT NULL');
+        $this->alterColumn('et_ophinbiometry_measurement_version', 'eye_status_left', 'int(10) signed NOT NULL');
+        $this->alterColumn('et_ophinbiometry_measurement_version', 'eye_status_right', 'int(10) signed NOT NULL');
 
 
         $this->createTable('dicom_eye_status', array(
-            'id' => 'int(10) unsigned NOT NULL PRIMARY KEY',
+            'id' => 'int(10) signed NOT NULL PRIMARY KEY',
             'name' => 'varchar(255)'
         ));
 
+        $this->insert('dicom_eye_status', array('id' => -1, 'name' => 'unknown'));
         $this->insert('dicom_eye_status', array('id' => 0, 'name' => 'phakic eye'));
         $this->insert('dicom_eye_status', array('id' => 1, 'name' => 'aphakic eye'));
         $this->insert('dicom_eye_status', array('id' => 2, 'name' => 'silicone filled eye'));

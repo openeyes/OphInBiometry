@@ -13,19 +13,20 @@
             $this->flash_message = "Missing IOL Measurement data";
             Yii::app()->user->setFlash('warning.noiolrefdata', $this->flash_message);
         } else {
-
             foreach ($this->iolRefValues as $measurementData) {
                 if (!empty($measurementData->{"iol_ref_values_left"})) {
                     $lens_left[] = $measurementData->{"lens_id"};
                     $formulas_left[] = $measurementData->{"formula_id"};
                     $iolrefdata_left[$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
                     $iolrefdata["left"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
+                    $emmetropiadata["left"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"emmetropia_left"};
                 }
                 if (!empty($measurementData->{"iol_ref_values_right"})) {
                     $lens_right[] = $measurementData->{"lens_id"};
                     $formulas_right[] = $measurementData->{"formula_id"};
                     $iolrefdata_right[$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
                     $iolrefdata["right"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
+                    $emmetropiadata["right"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"emmetropia_right"};
                 }
             }
         }
@@ -136,14 +137,29 @@
                                     $iolData = json_decode($value, true);
                                     $divid = $side . '_' . $k . '_' . $key;
                                     $found = 0;
+                                    $closet = $this->getClosest($emmetropiadata['left'][$k][$key],$iolData['IOL']);
                                     echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                     for ($j = 0; $j < count($iolData['IOL']); $j++) {
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
                                         if (($this->selectionValues[0]->{"predicted_refraction_left"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_left"} == $iolData["IOL"][$j])) {
                                             $found = 1;
-                                            echo "<tr  class='highlighted'  id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            if($iolData["IOL"][$j] == $closet )
+                                            {
+                                                echo "<tr  class='highlighted closet' id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td><b>" . $iolData["IOL"][$j] . "</b></td><td><b>" . $iolData["REF"][$j] . "</b></td></tr>";
+                                            }
+                                            else
+                                            {
+                                                echo "<tr  class='highlighted' id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            }
                                         } else {
-                                            echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            if($iolData["IOL"][$j] == $closet )
+                                            {
+                                                echo "<tr class='closet' id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td><b>" . $iolData["IOL"][$j] . "</b></td><td><b>" . $iolData["REF"][$j] . "</b></td></tr>";
+                                            }
+                                            else
+                                            {
+                                                echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            }
                                         }
                                         echo "<input type='hidden'  id='iolval-$radid' value=" . $iolData["IOL"][$j] . "><input type='hidden'  id='refval-$radid' value=" . $iolData["REF"][$j] . ">";
                                     }
@@ -161,14 +177,23 @@
                                     $iolData = json_decode($value, true);
                                     $divid = $side . '_' . $k . '_' . $key;
                                     $found = 0;
+                                    $closet = $this->getClosest($emmetropiadata['right'][$k][$key],$iolData['IOL']);
                                     echo '<table id=' . $divid . '><tr><th>#</th> <th>IOL</th><th>REF</th>';
                                     for ($j = 0; $j < count($iolData['IOL']); $j++) {
                                         $radid = $side . '_' . $k . '_' . $key . '__' . $j;
                                         if (($this->selectionValues[0]->{"predicted_refraction_right"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_right"} == $iolData["IOL"][$j])) {
                                             $found = 1;
-                                            echo "<tr class='highlighted' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            if($iolData["IOL"][$j] == $closet ) {
+                                                echo "<tr class='highlighted closet' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td><b>" . $iolData["IOL"][$j] . "</b></td><td><b>" . $iolData["REF"][$j] . "</b></td></tr>";
+                                            }else{
+                                                echo "<tr class='highlighted' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            }
                                         } else {
-                                            echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            if($iolData["IOL"][$j] == $closet ) {
+                                                echo "<tr class='closet' id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td><b>" . $iolData["IOL"][$j] . "</b></td><td><b>" . $iolData["REF"][$j] . "</b></td></tr>";
+                                            } else {
+                                                echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . $iolData["IOL"][$j] . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
+                                            }
                                         }
                                         echo "<input type='hidden'  id='iolval-$radid' value=" . $iolData["IOL"][$j] . "><input type='hidden'  id='refval-$radid' value=" . $iolData["REF"][$j] . ">";
                                     }

@@ -45,7 +45,7 @@
 
 input[type="text"] {
 	display: inline-block;
-	width: 4em;
+	width: 3.5em;
 }
 
 #Event_event_date_0 {
@@ -125,4 +125,9 @@ tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
 
 .box-margin  {
   margin-left: 40px;
+}
+.readonly-div{
+  height: auto;
+  border: 1px solid #6b8aaa;
+  background-color: #dddddd;
 }

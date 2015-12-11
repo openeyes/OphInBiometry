@@ -275,6 +275,21 @@ class DefaultController extends BaseEventTypeController
 		return $reason;
 
 	}
+
+	/**
+	 * @param $search
+	 * @param $arr
+	 * @return null
+	 */
+	public function getClosest($search, $arr) {
+		$closest = null;
+		foreach ($arr as $item) {
+			if ($closest === null || abs($search - $closest) > abs($item - $search)) {
+				$closest = $item;
+			}
+		}
+		return $closest;
+	}
 }
 
 
