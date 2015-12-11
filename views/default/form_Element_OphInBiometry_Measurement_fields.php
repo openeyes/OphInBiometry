@@ -179,25 +179,27 @@
 	<div class="row">
 		<div class="large-12 column">
 			<div class="row field-row">
-				<div class="large-4 column">
+				<div class="large-3 column">
 					<span class="field-info"></span>
 				</div>
-				<div class="large-2 column">
-					<span>&nbsp;</span>
-				</div>
 				<div class="large-1 column">
-					<span class="field-info">Status:</span>
+					<span class="field-info">Status:&nbsp;:&nbsp;</span>
 				</div>
-				<div class="large-5 column">
+				<div class="large-8 column">
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"eye_status_$side"}.'</span>';
+						echo '<div class="readonly-box">'.Eye_Status::model()->findByPk($element->{"eye_status_$side"})->name.'</div>';
 					}
 					else
 					{
+
 					?>
-					<input type="text" id="Element_OphInBiometry_Measurement_eye_status_<?php echo $side; ?>" name="Element_OphInBiometry_Measurement[eye_status_<?php echo $side; ?>]" value="<?php echo $element->{"eye_status_$side"}?>">
+						<?php
+						$eye_status_data = Eye_Status::model()->findAll();
+						echo CHtml::dropDownList('Element_OphInBiometry_Measurement[eye_status_'.$side.']', 'Element_OphInBiometry_Measurement[eye_status_'.$side.']', CHtml::listData($eye_status_data, 'id', 'name'),
+							array('options' => array($element->{"eye_status_$side"} => array('selected' => true))));
+						?>
 						<?php
 					}
 					?>

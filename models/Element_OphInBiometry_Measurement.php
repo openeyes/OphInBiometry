@@ -122,6 +122,8 @@ class Element_OphInBiometry_Measurement extends SplitEventTypeElement
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 			'eye' => array(self::BELONGS_TO, 'Eye', 'eye_id'),
+			'eye_status_left' => array(self::BELONGS_TO, 'Eye_Status', 'eye_status_left'),
+			'eye_status_right' => array(self::BELONGS_TO, 'Eye_Status', 'eye_status_right'),
 		);
 	}
 
