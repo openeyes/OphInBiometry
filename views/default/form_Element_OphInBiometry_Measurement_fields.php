@@ -183,7 +183,7 @@
 					<span class="field-info"></span>
 				</div>
 				<div class="large-1 column">
-					<span class="field-info">Status:&nbsp;:&nbsp;</span>
+					<span class="field-info">Status:</span>
 				</div>
 				<div class="large-8 column">
 					<?php
