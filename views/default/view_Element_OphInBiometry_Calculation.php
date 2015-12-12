@@ -36,5 +36,13 @@
 				<div class="data-value">Not recorded</div>
 			<?php } ?>
 		</div>
+		<div class="column" id="comments">
+			<span class="field-info">
+				<?php
+				echo '<b>Comments :</b>&nbsp;'. $element->{"comments"};
+				?>
+			</span>
+		</div>
 	</div>
+
 </section>
