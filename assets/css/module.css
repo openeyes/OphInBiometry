@@ -154,4 +154,5 @@ tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
   height: auto;
   border: 1px solid #6b8aaa;
   background-color: #dddddd;
+  width: 1025px;
 }
