@@ -10,7 +10,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"axial_length_$side"}.'</span><span class="field-info">mm</span>';
+						echo '<span class="readonly-box">'.$element->{"axial_length_$side"}.'</span><span class="field-info">&nbsp;mm</span>';
 					}
 					else
 					{
@@ -52,7 +52,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"k1_$side"}.'</span><span class="field-info">D</span>';
+						echo '<span class="readonly-box">'.$element->{"k1_$side"}.'</span><span class="field-info">&nbsp;D</span>';
 					}
 					else
 					{
@@ -86,7 +86,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"delta_k_$side"}.'</span><span class="field-info">D</span>';
+						echo '<span class="readonly-box">'.$element->{"delta_k_$side"}.'</span><span class="field-info">&nbsp;D</span>';
 					}
 					else
 					{
@@ -127,7 +127,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"k2_$side"}.'</span><span class="field-info">D</span>';
+						echo '<span class="readonly-box">'.$element->{"k2_$side"}.'</span><span class="field-info">&nbsp;D</span>';
 					}
 					else
 					{
@@ -162,7 +162,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"acd_$side"}.'</span><span class="field-info">mm</span>';
+						echo '<span class="readonly-box">'.$element->{"acd_$side"}.'</span><span class="field-info">&nbsp;mm</span>';
 					}
 					else
 					{
