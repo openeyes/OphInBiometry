@@ -52,7 +52,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"k1_$side"}.'</span><span class="field-info">&nbsp;D</span>';
+						echo '<span class="readonly-box">'.$element->{"k1_$side"}.'</span><span class="field-info">D</span>';
 					}
 					else
 					{
@@ -86,7 +86,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"delta_k_$side"}.'</span><span class="field-info">&nbsp;D</span>';
+						echo '<span class="readonly-box">'.$element->{"delta_k_$side"}.'</span><span class="field-info">D</span>';
 					}
 					else
 					{
