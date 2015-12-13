@@ -127,7 +127,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"k2_$side"}.'</span><span class="field-info">&nbsp;D</span>';
+						echo '<span class="readonly-box">'.$element->{"k2_$side"}.'</span><span class="field-info">D</span>';
 					}
 					else
 					{
