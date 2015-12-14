@@ -235,7 +235,7 @@ class DefaultController extends BaseEventTypeController
 				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < 1.6)) {
 					$reason['code'] = 1;
 					$reason['reason'] = 'A composite SNR is less than 1.6';
-				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_right'} < 1.6)) {
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} < 1.6)) {
 					$reason['code'] = 1;
 					$reason['reason'] = 'A composite SNR is less than 1.6';
 				}
