@@ -18,7 +18,7 @@
         <div class="row data-row">
             <div class="large-3 column">
                 <div
-                    class="data-label "><?php echo CHtml::encode($element->getAttributeLabel('lens_id_' . $side)) ?>
+                    class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('lens_id_' . $side)) ?>
                 </div>
             </div>
             <div class="large-9 column end">
