@@ -227,15 +227,51 @@ class DefaultController extends BaseEventTypeController
 		$measurementData = $measurementValues[0];
 
 		if (($measurementData->{'snr_left'}) < 1.6 || ($measurementData->{'snr_right'} < 1.6)) {
-			$reason['code'] = 1;
-			$reason['reason'] = 'Composite SNR < 1.6';
 
+			if ($measurementData->{'eye_id'} == 3) {
+				$reason['code'] = 1;
+				$reason['reason'] = 'A composite SNR is less than 1.6';
+			} else {
+				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < 1.6)) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'A composite SNR is less than 1.6';
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_right'} < 1.6)) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'A composite SNR is less than 1.6';
+				}
+			}
 		} elseif (($measurementData->{'snr_min_left'}) < 1.5 || ($measurementData->{'snr_min_right'} < 1.5)) {
-			$reason['code'] = 1;
-			$reason['reason'] = 'An individual SNR value was < 1.5';
+			if ($measurementData->{'eye_id'} == 3) {
+				if ($measurementData->{'snr_min_right'} < $measurementData->{'snr_min_left'}) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'An individual SNR value was less than 1.5 - Actual value=' . $measurementData->{'snr_min_right'};
+				} else {
+					$reason['code'] = 1;
+					$reason['reason'] = 'An individual SNR value was less than 1.5 - Actual value=' . $measurementData->{'snr_min_left'};
+				}
+			} else {
+				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_min_right'} < 1.5)) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'An individual SNR value was less than 1.5 - Actual value=' . $measurementData->{'snr_min_right'};
+				} elseif ($measurementData->{'eye_id'} == 1 && $measurementData->{'snr_min_left'} < 1.5) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'An individual SNR value was less than 1.5 - Actual value=' . $measurementData->{'snr_min_left'};
+				}
+			}
 		} elseif (($measurementData->{'axial_length_left'}) < 21 || ($measurementData->{'axial_length_right'} < 21)) {
-			$reason['code'] = 1;
-			$reason['reason'] = 'Axial Length < 21';
+
+			if ($measurementData->{'eye_id'} == 3) {
+				$reason['code'] = 1;
+				$reason['reason'] = 'Axial Length is less than 21';
+			} else {
+				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'axial_length_right'} < 21)) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'Axial Length is less than 21';
+				} elseif (($measurementData->{'eye_id'} == 1) && ($measurementData->{'axial_length_left'} < 21)) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'Axial Length is less than 21';
+				}
+			}
 		}
 
 		return $reason;
@@ -252,24 +288,67 @@ class DefaultController extends BaseEventTypeController
 		$measurementValues = $this->getMeasurementData($id);
 		$measurementData = $measurementValues[0];
 
-		if (($measurementData->{'snr_left'}) < 20 || ($measurementData->{'snr_right'} < 20)) {
-			$reason['code'] = 1;
-			$reason['reason'] = 'Composite SNR of < 20';
-		} elseif (($measurementData->{'snr_min_left'}) < 2 || ($measurementData->{'snr_min_right'} < 2)) {
-			$reason['code'] = 1;
-			$reason['reason'] = 'Individual SNR < 2';
-		} elseif (($measurementData->{'axial_length_left'}) < 22 || ($measurementData->{'axial_length_right'} < 22)) {
-			$reason['code'] = 1;
-			$reason['reason'] = 'Axial Length < 22';
-		} elseif ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
-			if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= 3) {
+		if (($measurementData->{'snr_left'}) < 15 || ($measurementData->{'snr_right'} < 15)) {
+			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				$reason['reason'] = 'Difference in Axial Length between right and left eye of >= 3mm';
+				$reason['reason'] = 'A composite SNR is less than 15';
+			} else {
+				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_right'} < 15)) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'A composite SNR is less than 15';
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'}) < 15) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'A composite SNR is less than 15';
+				}
+			}
+		} elseif (($measurementData->{'snr_min_left'}) < 2 || ($measurementData->{'snr_min_right'} < 2)) {
+			if ($measurementData->{'eye_id'} == 3) {
+
+				if ($measurementData->{'snr_min_left'} < $measurementData->{'snr_min_right'}) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'An individual SNR value was less than 2.0 - Actual value=' . $measurementData->{'snr_min_left'};
+
+				} else {
+					$reason['code'] = 1;
+					$reason['reason'] = 'An individual SNR value was less than 2.0 - Actual value=' . $measurementData->{'snr_min_right'};
+				}
+			} else {
+				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_min_right'} < 2)) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'An individual SNR value was less than 2.0 - Actual value=' . $measurementData->{'snr_min_right'};
+
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_min_left'}) < 2) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'An individual SNR value was less than 2.0 - Actual value=' . $measurementData->{'snr_min_left'};
+				}
+			}
+
+		} elseif (($measurementData->{'axial_length_left'}) < 22 || ($measurementData->{'axial_length_right'} < 22)) {
+			if ($measurementData->{'eye_id'} == 3) {
+				$reason['code'] = 1;
+				$reason['reason'] = 'Axial Length is less than 22';
+			} else {
+				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'axial_length_right'} < 22)) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'Axial Length is less than 22';
+				} elseif ($measurementData->{'eye_id'} == 1 && $measurementData->{'axial_length_left'} < 22) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'Axial Length is less than 22';
+				}
+			}
+		} elseif ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
+			if ($measurementData->{'eye_id'} == 3) {
+				if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= 3) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'The axial length is more than 3mm different between eyes';
+				}
 			}
 		} elseif ((($measurementData->{'axial_length_left'}) < ($measurementData->{'axial_length_right'}))) {
-			if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= 3) {
-				$reason['code'] = 1;
-				$reason['reason'] = 'Difference in Axial Length between right and left eye of >= 3mm';
+			if ($measurementData->{'eye_id'} == 3) {
+				if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= 3) {
+					$reason['code'] = 1;
+					$reason['reason'] = 'The axial length is more than 3mm different between eyes';
+				}
 			}
 		}
 		return $reason;
