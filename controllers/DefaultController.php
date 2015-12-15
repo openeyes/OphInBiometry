@@ -33,7 +33,7 @@ class DefaultController extends BaseEventTypeController
 		if (preg_match('/^biometry([0-9]+)$/', Yii::app()->request->getPost('SelectBiometry'), $m)) {
 			$importedEvent = OphInBiometry_Imported_Events::model()->findByPk($m[1]);
 			$this->updateImportedEvent(Event::model()->findByPk($importedEvent->event_id), $importedEvent);
-			$this->redirect(array('/OphInBiometry/default/update/' . $importedEvent->event_id));
+			$this->redirect(array('/OphInBiometry/default/view/' . $importedEvent->event_id));
 		}
 
 		$criteria = new CDbCriteria();
