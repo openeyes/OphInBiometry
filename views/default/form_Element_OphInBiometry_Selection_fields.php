@@ -215,15 +215,15 @@
         <?php
         if ($this->is_auto) {
         ?>
-        <div class="row">
+<!--        <div class="row">
             <div class="large-12 column">
                 <div class="row field-row">
                     <div class="large-3 column">
                         <span class="field-info">IOL Power:</span>
                     </div>
                     <div class="large-9 column">
-                    <span id="iolpower_<?php echo $side ?>"
-                          class="field-info"><span  id="iol_power_<?php echo $side ?>" class="readonly-box box-margin"><?php echo $element->{"iol_power_$side"}; ?></span></span>
+                    <span id="iolpower_<?php /*echo $side */?>"
+                          class="field-info"><span  id="iol_power_<?php /*echo $side */?>" class="readonly-box box-margin"><?php /*echo $element->{"iol_power_$side"}; */?></span></span>
                     </div>
                 </div>
             </div>
@@ -235,12 +235,14 @@
                         <span class="field-info">Predicted Refraction:</span>
                     </div>
                     <div class="large-9 column">
-                <span id="preref_<?php echo $side ?>"
-                      class="field-info"><span id="predicted_refraction_<?php echo $side ?>" class="readonly-box box-margin"><?php echo $element->{"predicted_refraction_$side"}; ?></span></span>
+                <span id="preref_<?php /*echo $side */?>"
+                      class="field-info"><span id="predicted_refraction_<?php /*echo $side */?>" class="readonly-box box-margin"><?php /*echo $element->{"predicted_refraction_$side"}; */?></span></span>
                     </div>
                 </div>
             </div>
         </div>
+            <input type="hidden" id="predicted_refraction_<?php /*echo $side */?>" value="<?php /*echo $element->{"predicted_refraction_$side"}; */?>"
+            <input type="hidden" id="iol_power_<?php /*echo $side */?>" value="--><?php /*echo $element->{"iol_power_$side"}; */?>
         <?php
        //     echo $form->hiddenField($element,'iol_power_' . $side,array('value'=>$element->{"iol_power_$side"}));
         //    echo $form->hiddenField($element,'predicted_refraction_' . $side,array('value'=>$element->{"predicted_refraction_$side"}));
