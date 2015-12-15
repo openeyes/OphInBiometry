@@ -16,19 +16,19 @@ class m151209_151807_add_dicom_eye_status extends CDbMigration
             'name' => 'varchar(255)'
         ));
 
-        $this->insert('dicom_eye_status', array('id' => -1, 'name' => 'unknown'));
-        $this->insert('dicom_eye_status', array('id' => 0, 'name' => 'phakic eye'));
-        $this->insert('dicom_eye_status', array('id' => 1, 'name' => 'aphakic eye'));
-        $this->insert('dicom_eye_status', array('id' => 2, 'name' => 'silicone filled eye'));
-        $this->insert('dicom_eye_status', array('id' => 3, 'name' => 'pseudophakic silicone'));
-        $this->insert('dicom_eye_status', array('id' => 6, 'name' => 'pseudophakic memory'));
-        $this->insert('dicom_eye_status', array('id' => 7, 'name' => 'pseudophakic PMMA'));
-        $this->insert('dicom_eye_status', array('id' => 8, 'name' => 'pseudophakic acryl'));
-        $this->insert('dicom_eye_status', array('id' => 9, 'name' => 'silicone filled eye (aphakic)'));
-        $this->insert('dicom_eye_status', array('id' => 10, 'name' => 'silicone filled eye (pseudophakic)'));
-        $this->insert('dicom_eye_status', array('id' => 11, 'name' => 'phakic IOL PMMA (0,2mm)'));
-        $this->insert('dicom_eye_status', array('id' => 12, 'name' => 'primary piggy-back silicone (SLM 2)'));
-        $this->insert('dicom_eye_status', array('id' => 13, 'name' => 'primary piggy-back hydrophobic acrylate'));
+        $this->insert('dicom_eye_status', array('id' => -1, 'name' => 'Unknown'));
+        $this->insert('dicom_eye_status', array('id' => 0, 'name' => 'Phakic'));
+        $this->insert('dicom_eye_status', array('id' => 1, 'name' => 'Aphakic'));
+        $this->insert('dicom_eye_status', array('id' => 2, 'name' => 'Silicone filled'));
+        $this->insert('dicom_eye_status', array('id' => 3, 'name' => 'Pseudophakic silicone'));
+        $this->insert('dicom_eye_status', array('id' => 6, 'name' => 'Pseudophakic memory'));
+        $this->insert('dicom_eye_status', array('id' => 7, 'name' => 'Pseudophakic PMMA'));
+        $this->insert('dicom_eye_status', array('id' => 8, 'name' => 'Pseudophakic acryl'));
+        $this->insert('dicom_eye_status', array('id' => 9, 'name' => 'Silicone filled (Aphakic)'));
+        $this->insert('dicom_eye_status', array('id' => 10, 'name' => 'Silicone filled (Pseudophakic)'));
+        $this->insert('dicom_eye_status', array('id' => 11, 'name' => 'Phakic IOL PMMA (0,2mm)'));
+        $this->insert('dicom_eye_status', array('id' => 12, 'name' => 'Primary piggy-back silicone (SLM 2)'));
+        $this->insert('dicom_eye_status', array('id' => 13, 'name' => 'Primary piggy-back hydrophobic acrylate'));
 
         $this->addForeignKey('dicom_eye_status_left_id_fk', 'et_ophinbiometry_measurement', 'eye_status_left', 'dicom_eye_status', 'id');
         $this->addForeignKey('dicom_eye_status_right_id_fk', 'et_ophinbiometry_measurement', 'eye_status_right', 'dicom_eye_status', 'id');
