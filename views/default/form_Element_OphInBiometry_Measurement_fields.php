@@ -179,13 +179,10 @@
 	<div class="row">
 		<div class="large-12 column">
 			<div class="row field-row">
-				<div class="large-3 column">
-					<span class="field-info"></span>
-				</div>
-				<div class="large-1 column">
+				<div class="large-4 column">
 					<span class="field-info">Status:</span>
 				</div>
-				<div class="large-8 column">
+				<div class="large-7 column">
 					<?php
 					if($this->is_auto)
 					{
@@ -204,6 +201,7 @@
 					}
 					?>
 				</div>
+				<div class="large-1 column"></div>
 
 			</div>
 		</div>

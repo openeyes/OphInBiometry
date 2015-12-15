@@ -43,7 +43,7 @@
     ?> inactive<?php 
 } ?>" onClick="switchSides($(this));" data-side="right">
 			<div class="element-header right-side">
-				<h4>Right side</h4>
+				<h4><b>RIGHT</b></h4>
 			</div>
 			<div class="active-form">
 				<a href="#" class="icon-remove-side remove-side">Remove side</a>
@@ -61,7 +61,7 @@
     ?> inactive<?php 
 } ?>" onClick="switchSides($(this));" data-side="left">
 			<div class="element-header left-side">
-				<h4>Left side</h4>
+				<h4><b>LEFT</b></h4>
 			</div>
 			<div class="active-form">
 				<a href="#" class="icon-remove-side remove-side">Remove side</a>
