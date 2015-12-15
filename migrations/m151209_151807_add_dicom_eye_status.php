@@ -25,7 +25,7 @@ class m151209_151807_add_dicom_eye_status extends CDbMigration
         $this->insert('dicom_eye_status', array('id' => 7, 'name' => 'pseudophakic PMMA'));
         $this->insert('dicom_eye_status', array('id' => 8, 'name' => 'pseudophakic acryl'));
         $this->insert('dicom_eye_status', array('id' => 9, 'name' => 'silicone filled eye (aphakic)'));
-        $this->insert('dicom_eye_status', array('id' => 10, 'name' => 'silicone filled eye (pseudophakic'));
+        $this->insert('dicom_eye_status', array('id' => 10, 'name' => 'silicone filled eye (pseudophakic)'));
         $this->insert('dicom_eye_status', array('id' => 11, 'name' => 'phakic IOL PMMA (0,2mm)'));
         $this->insert('dicom_eye_status', array('id' => 12, 'name' => 'primary piggy-back silicone (SLM 2)'));
         $this->insert('dicom_eye_status', array('id' => 13, 'name' => 'primary piggy-back hydrophobic acrylate'));
