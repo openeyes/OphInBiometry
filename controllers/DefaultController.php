@@ -90,10 +90,14 @@ class DefaultController extends BaseEventTypeController
 			foreach ($event_data as $detail)
 			{
 				$this->flash_message= '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
+				Yii::app()->user->setFlash('issue.formula', $this->flash_message);
+
+				if($detail['is_merged']){
+					$this->flash_message= 'New data has been added to this event.';
+					Yii::app()->user->setFlash('success.merged', $this->flash_message);
+					$this->mergedView($id);
+				}
 			}
-
-			Yii::app()->user->setFlash('issue.formula', $this->flash_message);
-
 			$quality  = $this->isBadQuality($id);
 
 			if( !empty($quality) && ($quality['code']))
@@ -219,6 +223,18 @@ class DefaultController extends BaseEventTypeController
 
 	}
 
+	/**
+	 * @param $id
+	 */
+	protected function mergedView($id)
+	{
+		Yii::app()->db->createCommand()
+			->update('ophinbiometry_imported_events',
+				array('is_merged'=>0),
+				'event_id=:id',
+				array(':id'=>$this->event->id)
+			);
+	}
 	/**
 	 * @param $id
 	 * @return array
