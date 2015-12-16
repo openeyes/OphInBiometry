@@ -312,10 +312,9 @@ function updateIolData(index,side) {
 	var type = document.getElementById('type_'+side);
 	var position = document.getElementById('position_'+side);
 	var comments = document.getElementById('comments_'+side);
-
 	if (typeof(OphInBioemtry_lens_types[index]) != 'undefined') {
 		if (acon) {
-			acon.innerHTML = OphInBioemtry_lens_types[index].acon.toFixed(1);
+			acon.innerHTML = OphInBioemtry_lens_types[index].acon.toFixed(2);
 		}
 
 		if(sf) {
