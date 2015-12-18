@@ -33,7 +33,7 @@ class DefaultController extends BaseEventTypeController
 		if (preg_match('/^biometry([0-9]+)$/', Yii::app()->request->getPost('SelectBiometry'), $m)) {
 			$importedEvent = OphInBiometry_Imported_Events::model()->findByPk($m[1]);
 			$this->updateImportedEvent(Event::model()->findByPk($importedEvent->event_id), $importedEvent);
-			$this->redirect(array('/OphInBiometry/default/view/' . $importedEvent->event_id));
+			$this->redirect(array('/OphInBiometry/default/view/' . $importedEvent->event_id.'?autosaved=1'));
 		}
 
 		$criteria = new CDbCriteria();
@@ -96,6 +96,11 @@ class DefaultController extends BaseEventTypeController
 					$this->flash_message= 'New data has been added to this event.';
 					Yii::app()->user->setFlash('success.merged', $this->flash_message);
 					$this->mergedView($id);
+				}
+
+				if(Yii::app()->request->getParam('autosaved')){
+					$this->flash_message= 'The event has been added to this episode.';
+					Yii::app()->user->setFlash('success.merged', $this->flash_message);
 				}
 			}
 			$quality  = $this->isBadQuality($id);
