@@ -65,10 +65,11 @@
 												<img src="<?php echo Yii::app()->assetManager->createUrl('img/small.png', $assetAliasPath)?>" alt="op" style="height:15px" />
 											</span>
 											<span class="large-2 column">
-												<b>Date and time: </b><br><?php
+												<b>Date and time: </b><br>
+												<span id="date_and_time"><?php
 																				$eventDateTime = explode(' ', $imported_event->event->event_date);
 																				echo date("j M Y", strtotime($eventDateTime[0]))." ".$eventDateTime[1];
-												?>
+												?></span>
 											</span>
 											<span class="large-1 column">
 												<b>Machine:</b>
