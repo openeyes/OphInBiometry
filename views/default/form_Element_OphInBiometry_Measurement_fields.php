@@ -27,7 +27,11 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"snr_$side"}.'</span>';
+						if(!$element->{"al_modified_$side"}) {
+							echo '<span class="readonly-box">' . $element->{"snr_$side"} . '</span>';
+						}else{
+							echo '<span class="field-value">* AL entered manually</span>';
+						}
 					}
 					else
 					{

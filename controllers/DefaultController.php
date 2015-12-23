@@ -80,13 +80,31 @@ class DefaultController extends BaseEventTypeController
 		}
 	}
 
-
+	/**
+	 * @param $id
+	 */
 	private  function setFlashMessage($id){
 
 		if($this->isAutoBiometryEvent($id))
 		{
 			$this->is_auto=1;
 			$event_data = $this->getAutoBiometryEventData($id);
+			$isAlMod = $this->isAlModified($id);
+
+			if(($isAlMod['left']) && ($isAlMod['right'])) {
+				$this->flash_message = 'AL for both eyes was entered manually. Possibly Ultrasound? Use with caution.';
+				Yii::app()->user->setFlash('warning.botheyesalmodified', $this->flash_message);
+
+			}else {
+				if ($isAlMod['left']) {
+					$this->flash_message = 'AL for left eye was entered manually. Possibly Ultrasound? Use with caution.';
+					Yii::app()->user->setFlash('warning.lefteyealmodified', $this->flash_message);
+				} elseif ($isAlMod['right']) {
+					$this->flash_message = 'AL for right eye was entered manually. Possibly Ultrasound? Use with caution.';
+					Yii::app()->user->setFlash('warning.righteyealmodified', $this->flash_message);
+				}
+			}
+
 			foreach ($event_data as $detail)
 			{
 				$this->flash_message= '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
@@ -393,6 +411,21 @@ class DefaultController extends BaseEventTypeController
 		}
 		return $closest;
 	}
+
+	/**
+	 * @param $id
+	 * @return mixed
+	 */
+
+	private function isAlModified($id){
+		$measurementValues = $this->getMeasurementData($id);
+		$measurementData = $measurementValues[0];
+
+		$data['left'] = $measurementData->{'al_modified_left'};
+		$data['right'] = $measurementData->{'al_modified_right'};
+		return $data;
+	}
+
 }
 
 
