@@ -8,12 +8,20 @@
 		<div class="large-5 column">
 			<div class="data-value" id="axial_length_<?php echo $side?>"><?php echo CHtml::encode($element->{'axial_length_'.$side}) ?>&nbsp;mm</div>
 		</div>
+		<?php
+		if(!$element->{"al_modified_$side"}) {
+		?>
 		<div class="large-1 column">
 			<div class="data-label">SNR:</div>
 		</div>
 		<div class="large-5 column">
 			<div class="data-value" id="snr_<?php echo $side?>"><?php echo CHtml::encode($element->{'snr_'.$side}) ?></div>
 		</div>
+		<?php
+		}else{
+			echo '<div class="large-6 column"><span class="field-value">* AL entered manually</span></div>';
+		}
+		?>
 	</div>
 
 	<div class="row field-row">
@@ -24,10 +32,22 @@
 			<div class="data-value" id="k1_<?php echo $side?>"><?php echo CHtml::encode($element->{'k1_'.$side}) ?>&nbsp;D</div>
 		</div>
 		<div class="large-1 column">
-			<div class="data-label">@</div>
+			<?php
+			if(!$element->{"k_modified_$side"}) {
+				?>
+				<span class="field-info">@</span>
+			<?php } else {?>
+				<span class="field-info"><b>*</b></span>
+			<?php } ?>
 		</div>
 		<div class="large-2 column">
+			<?php
+			if(!$element->{"k_modified_$side"}) {
+			?>
 			<div class="data-value" id="axis_k1_<?php echo $side?>"><?php echo CHtml::encode($element->{'axis_k1_'.$side}) ?>&deg;</div>
+			<?php }else{
+				echo '&nbsp;';
+			}?>
 		</div>
 
 		<div class="large-1 column">
@@ -37,10 +57,22 @@
 			<div class="data-value" id="delta_k_<?php echo $side?>"><?php echo CHtml::encode($element->{'delta_k_'.$side}) ?>&nbsp;D</div>
 		</div>
 		<div class="large-1 column">
-			<div class="data-label">@</div>
+			<?php
+			if(!$element->{"k_modified_$side"}) {
+				?>
+				<span class="field-info">@</span>
+			<?php } else {?>
+				<span class="field-info"><b>*</b></span>
+			<?php } ?>
 		</div>
 		<div class="large-2 column">
+			<?php
+			if(!$element->{"k_modified_$side"}) {
+			?>
 			<div class="data-value" id="delta_k_axis_<?php echo $side?>"><?php echo CHtml::encode($element->{'delta_k_axis_'.$side}) ?>&deg;</div>
+			<?php }else{
+				echo '&nbsp;';
+			}?>
 		</div>
 	</div>
 
@@ -52,10 +84,22 @@
 			<div class="data-value" id="k2_<?php echo $side?>"><?php echo CHtml::encode($element->{'k2_'.$side}) ?>&nbsp;D</div>
 		</div>
 		<div class="large-1 column">
-			<div class="data-label">@</div>
+			<?php
+			if(!$element->{"k_modified_$side"}) {
+				?>
+				<span class="field-info">@</span>
+			<?php } else {?>
+				<span class="field-info"><b>*</b></span>
+			<?php } ?>
 		</div>
 		<div class="large-2 column">
+			<?php
+			if(!$element->{"k_modified_$side"}) {
+				?>
 			<div class="data-value" id="k2_axis_<?php echo $side?>"><?php echo CHtml::encode($element->{'k2_axis_'.$side}) ?>&deg;</div>
+			<?php }else{
+				echo '&nbsp;';
+			}?>
 		</div>
 		<div class="large-1 column">
 			<div class="data-label">ACD:</div>

@@ -90,6 +90,7 @@ class DefaultController extends BaseEventTypeController
 			$this->is_auto=1;
 			$event_data = $this->getAutoBiometryEventData($id);
 			$isAlMod = $this->isAlModified($id);
+			$isKMod =  $this->isKModified($id);
 
 			if(($isAlMod['left']) && ($isAlMod['right'])) {
 				$this->flash_message = 'AL for both eyes was entered manually. Possibly Ultrasound? Use with caution.';
@@ -102,6 +103,20 @@ class DefaultController extends BaseEventTypeController
 				} elseif ($isAlMod['right']) {
 					$this->flash_message = 'AL for right eye was entered manually. Possibly Ultrasound? Use with caution.';
 					Yii::app()->user->setFlash('warning.righteyealmodified', $this->flash_message);
+				}
+			}
+
+			if(($isKMod['left']) && ($isKMod['right'])) {
+				$this->flash_message = '* K value for both eyes was entered manually. Use with caution.';
+				Yii::app()->user->setFlash('warning.botheyeskmodified', $this->flash_message);
+
+			}else {
+				if ($isKMod['left']) {
+					$this->flash_message = '* K value for left eye was entered manually. Use with caution.';
+					Yii::app()->user->setFlash('warning.lefteyekmodified', $this->flash_message);
+				} elseif ($isKMod['right']) {
+					$this->flash_message = '* K value for right eye was entered manually. Use with caution.';
+					Yii::app()->user->setFlash('warning.righteyekmodified', $this->flash_message);
 				}
 			}
 
@@ -426,6 +441,18 @@ class DefaultController extends BaseEventTypeController
 		return $data;
 	}
 
+	/**
+	 * @param $id
+	 * @return mixed
+	 */
+	private function isKModified($id){
+		$measurementValues = $this->getMeasurementData($id);
+		$measurementData = $measurementValues[0];
+
+		$data['left'] = $measurementData->{'k_modified_left'};
+		$data['right'] = $measurementData->{'k_modified_right'};
+		return $data;
+	}
 }
 
 

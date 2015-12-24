@@ -66,14 +66,25 @@
 					}
 					?>
 				</div>
+
 				<div class="large-1 column">
-					<span class="field-info">@</span>
+					<?php
+					if(!$element->{"k_modified_$side"}) {
+					?>
+						<span class="field-info">@</span>
+					<?php } else {?>
+						<span class="field-info"><b>*</b></span>
+					<?php } ?>
 				</div>
 				<div class="large-2 column">
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"axis_k1_$side"}.'</span>&nbsp;&deg;';
+						if(!$element->{"k_modified_$side"}) {
+							echo '<span class="readonly-box">' . $element->{"axis_k1_$side"} . '</span>&nbsp;&deg;';
+						}else{
+							echo '&nbsp;';
+						}
 					}
 					else
 					{
@@ -83,6 +94,7 @@
 					}
 					?>
 				</div>
+
 				<div class="large-1 column">
 					<span class="field-info">&Delta;K:</span>
 				</div>
@@ -101,13 +113,23 @@
 					?>
 				</div>
 				<div class="large-1 column">
+					<?php
+					if(!$element->{"k_modified_$side"}) {
+					?>
 					<span class="field-info">@</span>
+					<?php } else {?>
+						<span class="field-info"><b>*</b></span>
+					<?php } ?>
 				</div>
 				<div class="large-2 column">
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"delta_k_axis_$side"}.'</span>&nbsp;&deg;';
+						if(!$element->{"k_modified_$side"}) {
+							echo '<span class="readonly-box">'.$element->{"delta_k_axis_$side"}.'</span>&nbsp;&deg;';
+						}else{
+							echo '&nbsp;';
+						}
 					}
 					else
 					{
@@ -142,13 +164,23 @@
 					?>
 				</div>
 				<div class="large-1 column">
-					<span class="field-info">@</span>
+					<?php
+					if(!$element->{"k_modified_$side"}) {
+						?>
+						<span class="field-info">@</span>
+					<?php } else {?>
+						<span class="field-info"><b>*</b></span>
+					<?php } ?>
 				</div>
 				<div class="large-2 column">
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"k2_axis_$side"}.'</span>&nbsp;&deg;';
+						if(!$element->{"k_modified_$side"}) {
+							echo '<span class="readonly-box">'.$element->{"k2_axis_$side"}.'</span>&nbsp;&deg;';
+						}else{
+							echo '&nbsp;';
+						}
 					}
 					else
 					{
