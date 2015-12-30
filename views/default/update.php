@@ -30,7 +30,7 @@ $this->beginContent('//patient/event_container', array());
 		if($this->is_auto) {
 			$imported_event_data = OphInBiometry_Imported_Events::model()->findByAttributes(array('event_id' => $this->event->id));
 			?>
-			<div class="row data-row"  style="margin-left: 0.025rem; margin-right: 0.025rem; margin-top: 0.025rem; background: #dae6f1;">
+			<div id="surgeon" class="row data-row"  style="margin-left: 0.025rem; margin-right: 0.025rem; margin-top: 0.025rem; background: #dae6f1;">
 				<div class="large-2 column">
 					<div class="data-label"  style="margin-top: 1rem;">Surgeon:</div>
 				</div>

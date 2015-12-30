@@ -29,7 +29,7 @@ $this->moduleNameCssClass.=" highlight-fields";
 if($this->is_auto) {
 	$imported_event_data = OphInBiometry_Imported_Events::model()->findByAttributes(array('event_id' => $this->event->id));
 ?>
-<div class="row data-row">
+<div id="surgeon" class="row data-row">
 	<div class="large-2 column" style="margin-left: 10px;">
 		<div class="data-label">Surgeon:</div>
 	</div>
