@@ -30,7 +30,7 @@
                 }
             }
         }
-        $lens_left = array();
+        //$lens_left = array();
     if (empty($lens_left) && empty($lens_right)) {
         $this->flash_message = "No lens options were received from device - Please calculate lenses on device and resend";
         Yii::app()->user->setFlash('warning.nolensoptions', $this->flash_message);
