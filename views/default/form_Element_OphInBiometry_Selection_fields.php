@@ -139,6 +139,45 @@
         </div>
 
         <div class="row">
+            <div class="large-4 column">
+                <span class="field-info">Emmetropia:</span>
+             </div>
+            <div class="large-8 column">
+                <?php
+                if ($side == "left") {
+                    if (!empty($iolrefdata['left'])) {
+                        $iolrefdata_left = $iolrefdata['left'];
+                        foreach ($iolrefdata_left as $k => $v) {
+                            foreach ($v as $key => $value) {
+                                if (!empty($value)) {
+                                    $spanid = 'emmetropia_'.$side . '_' . $k . '_' . $key;
+                                    echo '<span id='.$spanid.' class="field-info">'.$emmetropiadata['left'][$k][$key].'</span>';
+
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (!empty($iolrefdata['right'])) {
+                        $iolrefdata_right = $iolrefdata['right'];
+                        foreach ($iolrefdata_right as $k => $v) {
+                            foreach ($v as $key => $value) {
+                                if (!empty($value)) {
+                                    $spanid = 'emmetropia_'.$side . '_' . $k . '_' . $key;
+                                    echo '<span id='.$spanid.' class="field-info">'.$emmetropiadata['right'][$k][$key].'</span>';
+
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+                ?>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="large-12 column">
                 <?php
                 if ($side == "left") {

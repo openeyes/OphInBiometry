@@ -4,7 +4,6 @@ $(document).ready(function() {
 	handleButton($('#et_save'),function() {
 	});
 
-
 	$('input[id^="iolrefrad-"]').click(function(event) {
 		var id = event.target.id;
 	//	alert ('radio  -  ' + id);
@@ -283,23 +282,24 @@ function updateIolRefRow(side) {
 
 function updateIolRefTable(side) {
 
-
 	var l_id = ($('#Element_OphInBiometry_Selection_lens_id_' + side + ' option:selected').val());
 	var f_id = ($('#Element_OphInBiometry_Selection_formula_id_' + side + ' option:selected').val());
-
 	if (side == 'left') {
 		$('table[id^="left_"]').hide();
+		$('span[id^="emmetropia_left_"]').hide();
 	}
 
 	if (side == 'right') {
 		$('table[id^="right_"]').hide();
+		$('span[id^="emmetropia_right_"]').hide();
 	}
 
 	if (!isNaN(parseInt(l_id)) && !isNaN(parseInt(f_id))) {
 		var swtb = side + '_' + l_id + '_' + f_id;
+		var swsn = 'emmetropia_'+side + '_' + l_id + '_' + f_id;
 		$('table[id^=' + swtb + ']').show();
+		$('span[id^=' + swsn + ']').show();
 	}
-
 }
 
 
