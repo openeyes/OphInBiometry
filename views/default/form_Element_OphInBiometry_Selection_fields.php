@@ -152,7 +152,6 @@
                                 if (!empty($value)) {
                                     $spanid = 'emmetropia_'.$side . '_' . $k . '_' . $key;
                                     echo '<span id='.$spanid.' class="field-info">'.$emmetropiadata['left'][$k][$key].'</span>';
-
                                 }
                             }
                         }
@@ -165,11 +164,8 @@
                                 if (!empty($value)) {
                                     $spanid = 'emmetropia_'.$side . '_' . $k . '_' . $key;
                                     echo '<span id='.$spanid.' class="field-info">'.$emmetropiadata['right'][$k][$key].'</span>';
-
                                 }
-
                             }
-
                         }
                     }
                 }
