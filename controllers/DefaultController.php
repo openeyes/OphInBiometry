@@ -182,6 +182,12 @@ class DefaultController extends BaseEventTypeController
 
 	public function actionView($id)
 	{
+		if($this->event != null &&  $this->event->id > 0) {
+			$this->selectionValues  = Element_OphInBiometry_Selection::Model()->findAllByAttributes(
+				array(
+					'event_id' => $this->event->id,
+				));
+		}
 		$this->setFlashMessage($id);
 		parent::actionView($id);
 	}
