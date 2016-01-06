@@ -106,6 +106,8 @@ class Element_OphInBiometry_Calculation extends SplitEventTypeElement
 			'formula_id_left' => 'Formula',
 			'target_refraction_right' => 'Target Refraction',
 			'formula_id_right' => 'Formula',
+			'emmetropia_left' => 'Emmetropia',
+			'emmetropia_right' => 'Emmetropia',
 		);
 	}
 
