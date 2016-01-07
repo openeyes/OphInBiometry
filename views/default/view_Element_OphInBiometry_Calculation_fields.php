@@ -12,24 +12,24 @@
                         'formula_id' => $this->selectionValues[0]->{"formula_id_$side"},
                     ));
      ?>
-            <div class="row data-row">
-                <div class="large-4 column">
-                    <div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('formula_id_' . $side)) ?>
-                        &nbsp;Used:
-                    </div>
-                </div>
-                <div class="large-2 column">
-                    <div class="data-value"><?php  foreach ($data as $k => $v) { echo $v->{"name"}; break; }?>&nbsp;</div>
-                </div>
-                <div class="large-4 column">
-                    <div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('emmetropia_' . $side)) ?>
-                        :
-                    </div>
-                </div>
-                <div class="large-2 column">
-                    <div class="data-value"><?php foreach ($data1 as $k1 => $v1) { echo $v1->{"emmetropia_$side"}; break;} ?>&nbsp;</div>
+        <div class="row data-row">
+            <div class="large-6 column">
+                <div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('formula_id_' . $side)) ?>
+                    &nbsp;Used
                 </div>
             </div>
+            <div class="large-6 column">
+                <div class="data-value"><?php  foreach ($data as $k => $v) { echo $v->{"name"}; break; }?>&nbsp;</div>
+            </div>
+            </div>
+            <div class="row data-row">
+            <div class="large-6 column">
+                <div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('emmetropia_' . $side)) ?></div>
+            </div>
+            <div class="large-6 column">
+                <div class="data-value"><?php foreach ($data1 as $k1 => $v1) { echo $v1->{"emmetropia_$side"}; break;} ?>&nbsp;</div>
+            </div>
+        </div>
     <?php
     }
     ?>
