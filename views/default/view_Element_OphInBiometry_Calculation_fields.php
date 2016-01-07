@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="large-2 column">
-                    <div class="data-value"><?php  foreach ($data as $k => $v) { echo $v->{"name"}; }?>&nbsp;</div>
+                    <div class="data-value"><?php  foreach ($data as $k => $v) { echo $v->{"name"}; break; }?>&nbsp;</div>
                 </div>
                 <div class="large-4 column">
                     <div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('emmetropia_' . $side)) ?>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="large-2 column">
-                    <div class="data-value"><?php foreach ($data1 as $k1 => $v1) { echo $v1->{"emmetropia_$side"};} ?>&nbsp;</div>
+                    <div class="data-value"><?php foreach ($data1 as $k1 => $v1) { echo $v1->{"emmetropia_$side"}; break;} ?>&nbsp;</div>
                 </div>
             </div>
     <?php
