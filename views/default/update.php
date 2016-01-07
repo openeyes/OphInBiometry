@@ -32,10 +32,10 @@ $this->beginContent('//patient/event_container', array());
 			?>
 			<div id="surgeon" class="row data-row"  style="margin-left: 0.025rem; margin-right: 0.025rem; margin-top: 0.025rem; background: #dae6f1;">
 				<div class="large-2 column">
-					<div class="data-label"  style="margin-top: 1rem;">Surgeon:</div>
+					<div class="data-label" style="margin-top: 1rem;">Surgeon:</div>
 				</div>
 				<div class="large-9 column end">
-					<div class="data-value"  style="margin-top: 1rem;"><b><?php echo ($imported_event_data->surgeon_name); ?></b></div>
+					<div class="data-value"  style="margin-top: 1rem;">&nbsp;&nbsp;<b><?php echo ($imported_event_data->surgeon_name); ?></b></div>
 				</div>
 			</div>
 			<?php

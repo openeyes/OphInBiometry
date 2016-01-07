@@ -37,9 +37,9 @@
 			<?php } ?>
 		</div>
 		<div class="column" id="comments">
-			<span class="field-info">
+			<span class="field-info">&nbsp;
 				<?php
-				echo '<b>Comments :</b>&nbsp;'. $element->{"comments"};
+				echo '<b>Comments:</b>&nbsp;'. $element->{"comments"};
 				?>
 			</span>
 		</div>
