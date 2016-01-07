@@ -126,7 +126,7 @@
 
         <div class="row">
             <div class="large-4 column">
-                <span class="field-info">Emmetropia:</span>
+                <span class="field-info">Emmetropic IOL power:</span>
              </div>
             <div class="large-8 column">
                 <?php
