@@ -178,13 +178,13 @@
                                         if (($this->selectionValues[0]->{"predicted_refraction_left"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_left"} == $iolData["IOL"][$j])) {
                                             $found = 1;
                                             if($iolData["IOL"][$j] == $closet ) {
-                                                echo "<tr  class='highlighted closet' id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td><b>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</b></td><td><b>" . $iolData["REF"][$j] . "</b></td></tr>";
+                                                echo "<tr  class='highlighted closet' id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                             } else {
                                                 echo "<tr  class='highlighted' id='iolreftr-$radid'><td><input type='radio' checked  id='iolrefrad-$radid' name='iolrefval_left'></td><td>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                             }
                                         } else {
                                             if($iolData["IOL"][$j] == $closet ) {
-                                                echo "<tr class='closet' id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td><b>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</b></td><td><b>" . $iolData["REF"][$j] . "</b></td></tr>";
+                                                echo "<tr class='closet' id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                             } else {
                                                 echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                             }
@@ -212,13 +212,13 @@
                                         if (($this->selectionValues[0]->{"predicted_refraction_right"} == $iolData["REF"][$j]) && ($this->selectionValues[0]->{"iol_power_right"} == $iolData["IOL"][$j])) {
                                             $found = 1;
                                             if($iolData["IOL"][$j] == $closet ) {
-                                                echo "<tr class='highlighted closet' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td><b>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</b></td><td><b>" . $iolData["REF"][$j] . "</b></td></tr>";
+                                                echo "<tr class='highlighted closet' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                             }else{
                                                 echo "<tr class='highlighted' id='iolreftr-$radid'><td><input type='radio' checked id='iolrefrad-$radid' name='iolrefval_right'></td><td>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                             }
                                         } else {
                                             if($iolData["IOL"][$j] == $closet ) {
-                                                echo "<tr class='closet' id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td><b>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</b></td><td><b>" . $iolData["REF"][$j] . "</b></td></tr>";
+                                                echo "<tr class='closet' id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                             } else {
                                                 echo "<tr id='iolreftr-$radid'><td><input type='radio'  id='iolrefrad-$radid' name='iolrefval'></td><td>" . number_format((float)$iolData["IOL"][$j], 2, '.', '') . "</td><td>" . $iolData["REF"][$j] . "</td></tr>";
                                             }
