@@ -18,7 +18,7 @@
         <div class="row data-row">
             <div class="large-6 column">
                 <div
-                    class="field-info"><?php echo CHtml::encode($element->getAttributeLabel('lens_id_' . $side)) ?>:
+                    class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('lens_id_' . $side)) ?></b>:
                 </div>
             </div>
             <div class="large-6 column end">
@@ -28,7 +28,7 @@
         </div>
         <div class="row field-row">
             <div class="large-6 column">
-                <div class="field-info">A constant:</div>
+                <div class="field-info"><b>A constant</b>:</div>
             </div>
             <div class="large-6 column">
                 <div class="field-info"
@@ -38,7 +38,7 @@
         <div class="row data-row">
             <div class="large-6 column">
                 <div
-                    class="field-info"><?php echo CHtml::encode($element->getAttributeLabel('iol_power_' . $side)) ?>:</div>
+                    class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('iol_power_' . $side)) ?></b>:</div>
             </div>
             <div class="large-6 column end">
                 <div class="field-info iolDisplay"><?php echo CHtml::encode(number_format((float)$element->{'iol_power_' . $side}, 2, '.', '')) ?></div>
@@ -47,7 +47,7 @@
         <div class="row data-row">
             <div class="large-6 column">
                 <div
-                    class="field-info"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction_' . $side)) ?>:</div>
+                    class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction_' . $side)) ?></b>:</div>
             </div>
             <div class="large-6 column end">
                 <div class="field-info"

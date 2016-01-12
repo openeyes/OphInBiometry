@@ -2,7 +2,7 @@
     <div class="row data-row">
         <div class="large-6 column">
             <div
-                class="field-info"><?php echo CHtml::encode($element->getAttributeLabel('target_refraction_' . $side)) ?>:</div>
+                class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('target_refraction_' . $side)) ?></b>:</div>
             </div>
         <div class="large-6 column end">
             <div class="field-info"><?php echo CHtml::encode($element->{'target_refraction_' . $side}) ?></div>
@@ -23,7 +23,7 @@
         ?>
         <div class="row data-row">
             <div class="large-6 column">
-                <div class="field-info"><?php echo CHtml::encode($element->getAttributeLabel('formula_id_' . $side)) ?>&nbsp;Used:
+                <div class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('formula_id_' . $side)) ?>&nbsp;Used</b>:
                 </div>
             </div>
             <div class="large-6 column">
@@ -32,7 +32,7 @@
         </div>
         <div class="row data-row">
             <div class="large-6 column">
-                <div class="field-info"><?php echo CHtml::encode($element->getAttributeLabel('emmetropia_' . $side)) ?>:</div>
+                <div class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('emmetropia_' . $side)) ?></b>:</div>
             </div>
             <div class="large-6 column">
                 <div class="field-info"><?php foreach ($data1 as $k1 => $v1) { echo $v1->{"emmetropia_$side"}; break;} ?>&nbsp;</div>
