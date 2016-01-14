@@ -183,6 +183,10 @@ class DefaultController extends BaseEventTypeController
 	public function actionView($id)
 	{
 		if($this->event != null &&  $this->event->id > 0) {
+			$this->iolRefValues = Element_OphInBiometry_IolRefValues::Model()->findAllByAttributes(
+				array(
+					'event_id' => $this->event->id,
+				));
 			$this->selectionValues  = Element_OphInBiometry_Selection::Model()->findAllByAttributes(
 				array(
 					'event_id' => $this->event->id,
