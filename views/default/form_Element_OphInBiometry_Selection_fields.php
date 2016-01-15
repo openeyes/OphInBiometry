@@ -38,7 +38,7 @@
                 $this->flash_message = "No lens options were received from device for left eye - Please calculate lenses on device and resend";
                 Yii::app()->user->setFlash('warning.nolefteyeslensoptions', $this->flash_message);
             } elseif (empty($lens_right)) {
-                $this->flash_message = "No lens options were received from device for left eye - Please calculate lenses on device and resend";
+                $this->flash_message = "No lens options were received from device for right eye - Please calculate lenses on device and resend";
                 Yii::app()->user->setFlash('warning.norighteyeslensoptions', $this->flash_message);
             }
         }
