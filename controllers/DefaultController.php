@@ -297,46 +297,54 @@ class DefaultController extends BaseEventTypeController
 
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				$reason['reason'] = 'A composite SNR is less than 1.6';
+				if ($measurementData->{'snr_right'} < 1.6) {
+					$reason['reason'] = 'A composite SNR is less than 1.6 for right eye.';
+				} elseif ($measurementData->{'snr_left'} < 1.6) {
+					$reason['reason'] = 'A composite SNR is less than 1.6 for left eye.';
+				}
 			} else {
 				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < 1.6)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'A composite SNR is less than 1.6';
+					$reason['reason'] = 'A composite SNR is less than 1.6 for right eye.';
 				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} < 1.6)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'A composite SNR is less than 1.6';
+					$reason['reason'] = 'A composite SNR is less than 1.6 for left eye.';
 				}
 			}
 		} elseif (($measurementData->{'snr_min_left'}) < 1.5 || ($measurementData->{'snr_min_right'} < 1.5)) {
 			if ($measurementData->{'eye_id'} == 3) {
 				if ($measurementData->{'snr_min_right'} < $measurementData->{'snr_min_left'}) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'An individual SNR value was less than 1.5 - Actual value=' . $measurementData->{'snr_min_right'};
+					$reason['reason'] = 'An individual SNR value was less than 1.5 for right eye - Actual value=' . $measurementData->{'snr_min_right'};
 				} else {
 					$reason['code'] = 1;
-					$reason['reason'] = 'An individual SNR value was less than 1.5 - Actual value=' . $measurementData->{'snr_min_left'};
+					$reason['reason'] = 'An individual SNR value was less than 1.5 for left eye - Actual value=' . $measurementData->{'snr_min_left'};
 				}
 			} else {
 				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_min_right'} < 1.5)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'An individual SNR value was less than 1.5 - Actual value=' . $measurementData->{'snr_min_right'};
+					$reason['reason'] = 'An individual SNR value was less than 1.5 for right eye - Actual value=' . $measurementData->{'snr_min_right'};
 				} elseif ($measurementData->{'eye_id'} == 1 && $measurementData->{'snr_min_left'} < 1.5) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'An individual SNR value was less than 1.5 - Actual value=' . $measurementData->{'snr_min_left'};
+					$reason['reason'] = 'An individual SNR value was less than 1.5 for left eye - Actual value=' . $measurementData->{'snr_min_left'};
 				}
 			}
 		} elseif (($measurementData->{'axial_length_left'}) < 21 || ($measurementData->{'axial_length_right'} < 21)) {
 
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				$reason['reason'] = 'Axial Length is less than 21';
+				if (($measurementData->{'axial_length_right'} < 21)) {
+					$reason['reason'] = 'Axial Length is less than 21 for right eye';
+				} elseif ( ($measurementData->{'axial_length_left'} < 21)) {
+					$reason['reason'] = 'Axial Length is less than 21 for left eye';
+				}
 			} else {
 				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'axial_length_right'} < 21)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'Axial Length is less than 21';
+					$reason['reason'] = 'Axial Length is less than 21 for right eye';
 				} elseif (($measurementData->{'eye_id'} == 1) && ($measurementData->{'axial_length_left'} < 21)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'Axial Length is less than 21';
+					$reason['reason'] = 'Axial Length is less than 21 for left eye';
 				}
 			}
 		}
@@ -358,14 +366,18 @@ class DefaultController extends BaseEventTypeController
 		if (($measurementData->{'snr_left'}) < 15 || ($measurementData->{'snr_right'} < 15)) {
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				$reason['reason'] = 'A composite SNR is less than 15';
+				if ( ($measurementData->{'snr_right'} < 15)) {
+					$reason['reason'] = 'A composite SNR is less than 15 for right eye';
+				} elseif (($measurementData->{'snr_left'}) < 15) {
+					$reason['reason'] = 'A composite SNR is less than 15 for left eye';
+				}
 			} else {
 				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_right'} < 15)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'A composite SNR is less than 15';
+					$reason['reason'] = 'A composite SNR is less than 15 for right eye';
 				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'}) < 15) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'A composite SNR is less than 15';
+					$reason['reason'] = 'A composite SNR is less than 15 for left eye';
 				}
 			}
 		} elseif (($measurementData->{'snr_min_left'}) < 2 || ($measurementData->{'snr_min_right'} < 2)) {
@@ -373,16 +385,16 @@ class DefaultController extends BaseEventTypeController
 
 				if ($measurementData->{'snr_min_left'} < $measurementData->{'snr_min_right'}) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'An individual SNR value was less than 2.0 - Actual value=' . $measurementData->{'snr_min_left'};
+					$reason['reason'] = 'An individual SNR value was less than 2.0  for left eys - Actual value=' . $measurementData->{'snr_min_left'};
 
 				} else {
 					$reason['code'] = 1;
-					$reason['reason'] = 'An individual SNR value was less than 2.0 - Actual value=' . $measurementData->{'snr_min_right'};
+					$reason['reason'] = 'An individual SNR value was less than 2.0 for right eye - Actual value=' . $measurementData->{'snr_min_right'};
 				}
 			} else {
 				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_min_right'} < 2)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'An individual SNR value was less than 2.0 - Actual value=' . $measurementData->{'snr_min_right'};
+					$reason['reason'] = 'An individual SNR value was less than 2.0 for right eye - Actual value=' . $measurementData->{'snr_min_right'};
 
 				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_min_left'}) < 2) {
 					$reason['code'] = 1;
@@ -393,14 +405,18 @@ class DefaultController extends BaseEventTypeController
 		} elseif (($measurementData->{'axial_length_left'}) < 22 || ($measurementData->{'axial_length_right'} < 22)) {
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				$reason['reason'] = 'Axial Length is less than 22';
+				if ($measurementData->{'axial_length_right'} < 22) {
+					$reason['reason'] = 'Axial Length is less than 22 for right eye';
+				} elseif ($measurementData->{'axial_length_left'} < 22) {
+					$reason['reason'] = 'Axial Length is less than 22 for left eye';
+				}
 			} else {
 				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'axial_length_right'} < 22)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'Axial Length is less than 22';
+					$reason['reason'] = 'Axial Length is less than 22 for right eye';
 				} elseif ($measurementData->{'eye_id'} == 1 && $measurementData->{'axial_length_left'} < 22) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'Axial Length is less than 22';
+					$reason['reason'] = 'Axial Length is less than 22 for left eye';
 				}
 			}
 		} elseif ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
