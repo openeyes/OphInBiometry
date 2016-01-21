@@ -193,6 +193,7 @@ class DefaultController extends BaseEventTypeController
 				));
 		}
 		$this->setFlashMessage($id);
+		echo $this->isManualEntryDisabled();
 		parent::actionView($id);
 	}
 
@@ -478,6 +479,25 @@ class DefaultController extends BaseEventTypeController
 		$data['left'] = $measurementData->{'k_modified_left'};
 		$data['right'] = $measurementData->{'k_modified_right'};
 		return $data;
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function isManualEntryDisabled()
+	{
+
+		$state = Yii::app()->db->createCommand()
+			->select('value')
+			->from('setting_installation')
+			->where('`key`=:id', array(':id' => 'disable_manual_biometry'))
+			->queryRow();
+
+		if ($state['value'] == 'on') {
+			return false;
+		}else {
+			return true;
+		}
 	}
 }
 
