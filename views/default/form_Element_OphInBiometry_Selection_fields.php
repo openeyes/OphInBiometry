@@ -9,10 +9,7 @@
             $element->lens_id_right = null;
         }
 
-        if (empty($this->iolRefValues)) {
-            $this->flash_message = "Missing IOL Measurement data";
-            Yii::app()->user->setFlash('warning.noiolrefdata', $this->flash_message);
-        } else {
+        if (!empty($this->iolRefValues)) {
             foreach ($this->iolRefValues as $measurementData) {
                 if (!empty($measurementData->{"iol_ref_values_left"})) {
                     $lens_left[] = $measurementData->{"lens_id"};
@@ -30,18 +27,7 @@
                 }
             }
         }
-        if (empty($lens_left) && empty($lens_right)) {
-            $this->flash_message = "No lens options were received from device - Please calculate lenses on device and resend";
-            Yii::app()->user->setFlash('warning.nolensoptions', $this->flash_message);
-        }else{
-            if (empty($lens_left)) {
-                $this->flash_message = "No lens options were received from device for left eye - Please calculate lenses on device and resend";
-                Yii::app()->user->setFlash('warning.nolefteyeslensoptions', $this->flash_message);
-            } elseif (empty($lens_right)) {
-                $this->flash_message = "No lens options were received from device for right eye - Please calculate lenses on device and resend";
-                Yii::app()->user->setFlash('warning.norighteyeslensoptions', $this->flash_message);
-            }
-        }
+
         ?>
         <div class="row">
             <div class="large-12 column">
