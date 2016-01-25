@@ -28,7 +28,6 @@ class DefaultController extends BaseEventTypeController
 	public function actionCreate()
 	{
 		$errors = array();
-
 		// if we are after the submit we need to check if any event is selected
 		if (preg_match('/^biometry([0-9]+)$/', Yii::app()->request->getPost('SelectBiometry'), $m)) {
 			$importedEvent = OphInBiometry_Imported_Events::model()->findByPk($m[1]);
@@ -47,6 +46,10 @@ class DefaultController extends BaseEventTypeController
 		// if we have 0 unlinked event we follow the manual process
 		if (sizeof($unlinkedEvents) == 0 || Yii::app()->request->getQuery("force_manual")=="1") {
 			Yii::app()->user->setFlash('issue.formula', $this->flash_message);
+			if($this->isManualEntryDisabled()) {
+				$this->flash_message = 'No new Biometry Events are available for this patient. Please generate a new event on your linked device first (e.g., IOL Master)';
+				Yii::app()->user->setFlash('warning.manualentrydisabled', $this->flash_message);
+			}
 			parent::actionCreate();
 		}
 		// we might need this later for automated linking process
@@ -478,6 +481,25 @@ class DefaultController extends BaseEventTypeController
 		$data['left'] = $measurementData->{'k_modified_left'};
 		$data['right'] = $measurementData->{'k_modified_right'};
 		return $data;
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function isManualEntryDisabled()
+	{
+
+		$state = Yii::app()->db->createCommand()
+			->select('value')
+			->from('setting_installation')
+			->where('`key`=:id', array(':id' => 'disable_manual_biometry'))
+			->queryRow();
+
+		if ($state['value'] == 'on') {
+			return true;
+		}else {
+			return false;
+		}
 	}
 }
 

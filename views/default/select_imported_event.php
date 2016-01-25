@@ -98,7 +98,11 @@
 					<?php $this->displayErrors($errors, true)?>
 				<?php $this->endWidget(); ?>
 			</section>
+			<?php
+			if(!$this->isManualEntryDisabled()){
+			?>
 			<a href="/OphInBiometry/Default/create?patient_id=<?php echo$this->patient->id ?>&force_manual=1" style="float:right;margin:10px;">I don't want to select a report let me enter the data manually</a>
+		<?php } ?>
 		</div>
 	</div>
 
