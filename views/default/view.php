@@ -27,14 +27,15 @@ $this->beginContent('//patient/event_container');
 $this->moduleNameCssClass.=" highlight-fields";
 
 if($this->is_auto) {
-	$imported_event_data = OphInBiometry_Imported_Events::model()->findByAttributes(array('event_id' => $this->event->id));
 ?>
 <div id="surgeon" class="row data-row">
 	<div class="large-2 column" style="margin-left: 10px;">
 		<div class="data-label">Surgeon:</div>
 	</div>
 	<div class="large-9 column end">
-		<div class="data-value"><b><?php echo ($imported_event_data->surgeon_name); ?></b></div>
+		<div class="data-value"><b><?php echo (OphInBiometry_Surgeon::model()->findByAttributes(
+					array('id' => Element_OphInBiometry_IolRefValues::model()->findByAttributes(array('event_id' => $this->event->id))->surgeon_id)
+				)->name); ?></b></div>
 	</div>
 </div>
 <?php
