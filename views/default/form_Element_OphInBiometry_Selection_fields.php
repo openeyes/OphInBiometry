@@ -20,6 +20,7 @@
                     $iolrefdata_left[$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
                     $iolrefdata["left"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
                     $emmetropiadata["left"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"emmetropia_left"};
+                    $acon["left"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"constant"};
                 }
                 if (!empty($measurementData->{"iol_ref_values_right"})) {
                     $lens_right[] = $measurementData->{"lens_id"};
@@ -27,6 +28,7 @@
                     $iolrefdata_right[$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
                     $iolrefdata["right"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"iol_ref_values_$side"};
                     $emmetropiadata["right"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"emmetropia_right"};
+                    $acon["right"][$measurementData->{"lens_id"}][$measurementData->{"formula_id"}] = $measurementData->{"constant"};
                 }
             }
         }
@@ -86,21 +88,23 @@
 
         <?php
     }
-    ?>
-    <div class="row">
-        <div class="large-12 column">
-            <div class="row field-row">
-                <div class="large-4 column">
-                    <span class="field-info">Lens A constant:</span>
-                </div>
-                <div class="large-8 column">
+    if (!$this->is_auto) {
+        ?>
+        <div class="row">
+            <div class="large-12 column">
+                <div class="row field-row">
+                    <div class="large-4 column">
+                        <span class="field-info">Lens A constant:</span>
+                    </div>
+                    <div class="large-8 column">
                     <span id="acon_<?php echo $side ?>"
                           class="field-info"><?php echo $element->{'lens_' . $side} ? number_format($element->{'lens_' . $side}->acon, 1) : '' ?></span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <?php
+        <?php
+    }
     if ($this->is_auto) {
         echo $form->hiddenField($element,'predicted_refraction_' . $side,array('value'=>$element->{"predicted_refraction_$side"}));
         ?>
@@ -121,6 +125,46 @@
                     }
                 }
                 ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 column">
+                <div class="row field-row">
+                    <div class="large-4 column">
+                        <span class="field-info">A constant:</span>
+                    </div>
+                    <div class="large-8 column">
+<!--                    <span id="acon_<?php /*echo $side */?>"
+                          class="field-info"><?php /*echo $element->{'lens_' . $side} ? number_format($element->{'lens_' . $side}->acon, 1) : '' */?></span>-->
+                        <?php
+                        if ($side == "left") {
+                            if (!empty($iolrefdata['left'])) {
+                                $acon_left = $acon['left'];
+                                foreach ($acon_left as $k => $v) {
+                                    foreach ($v as $key => $value) {
+                                        if (!empty($value)) {
+                                            $spanid = 'aconstant_'.$side . '_' . $k . '_' . $key;
+                                            echo '<span id='.$spanid.' class="field-value">'.$acon['left'][$k][$key].'</span>';
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (!empty($iolrefdata['right'])) {
+                                $acon_right = $iolrefdata['right'];
+                                foreach ($acon_right as $k => $v) {
+                                    foreach ($v as $key => $value) {
+                                        if (!empty($value)) {
+                                            $spanid = 'aconstant_'.$side . '_' . $k . '_' . $key;
+                                            echo '<span id='.$spanid.' class="field-value">'.$acon['right'][$k][$key].'</span>';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
             </div>
         </div>
 
