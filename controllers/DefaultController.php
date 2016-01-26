@@ -91,71 +91,96 @@ class DefaultController extends BaseEventTypeController
 			$event_data = $this->getAutoBiometryEventData($id);
 			$isAlMod = $this->isAlModified($id);
 			$isKMod =  $this->isKModified($id);
+			$warning_flash_message = "";
+			$issue_flash_message = "";
+			$success_flash_message = "";
 
 			if(($isAlMod['left']) && ($isAlMod['right'])) {
-				$this->flash_message = 'AL for both eyes was entered manually. Possibly Ultrasound? Use with caution.';
-				Yii::app()->user->setFlash('warning.botheyesalmodified', $this->flash_message);
-
+				$warning_flash_message .= '<li>AL for both eyes was entered manually. Possibly Ultrasound? Use with caution.</li>';
 			}else {
 				if ($isAlMod['left']) {
-					$this->flash_message = 'AL for left eye was entered manually. Possibly Ultrasound? Use with caution.';
-					Yii::app()->user->setFlash('warning.lefteyealmodified', $this->flash_message);
+					$warning_flash_message .= '<li>AL for left eye was entered manually. Possibly Ultrasound? Use with caution.</li>';
 				} elseif ($isAlMod['right']) {
-					$this->flash_message = 'AL for right eye was entered manually. Possibly Ultrasound? Use with caution.';
-					Yii::app()->user->setFlash('warning.righteyealmodified', $this->flash_message);
+					$warning_flash_message .= '<li>AL for right eye was entered manually. Possibly Ultrasound? Use with caution.</li>';
 				}
 			}
 
 			if(($isKMod['left']) && ($isKMod['right'])) {
-				$this->flash_message = '* K value for both eyes was entered manually. Use with caution.';
-				Yii::app()->user->setFlash('warning.botheyeskmodified', $this->flash_message);
-
+				$warning_flash_message .= '<li>* K value for both eyes was entered manually. Use with caution.</li>';
 			}else {
 				if ($isKMod['left']) {
-					$this->flash_message = '* K value for left eye was entered manually. Use with caution.';
-					Yii::app()->user->setFlash('warning.lefteyekmodified', $this->flash_message);
+					$warning_flash_message .= '<li>* K value for left eye was entered manually. Use with caution.</li>';
 				} elseif ($isKMod['right']) {
-					$this->flash_message = '* K value for right eye was entered manually. Use with caution.';
-					Yii::app()->user->setFlash('warning.righteyekmodified', $this->flash_message);
+					$warning_flash_message .= '<li>* K value for right eye was entered manually. Use with caution.</li>';
 				}
 			}
 
 			foreach ($event_data as $detail)
 			{
-				$this->flash_message= '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
-				Yii::app()->user->setFlash('issue.formula', $this->flash_message);
+				$issue_flash_message .= '<b>Data Source</b>: '.$detail['device_name'].' (<i>'.$detail['device_manufacturer'] .' '. $detail['device_model'].'</i>)';
 
 				if($detail['is_merged']){
-					$this->flash_message= 'New data has been added to this event.';
-					Yii::app()->user->setFlash('success.merged', $this->flash_message);
+					$success_flash_message .= 'New data has been added to this event.<br>';
 					$this->mergedView($id);
 				}
 
 				if(Yii::app()->request->getParam('autosaved')){
-					$this->flash_message= 'The event has been added to this episode.';
-					Yii::app()->user->setFlash('success.merged', $this->flash_message);
+					$success_flash_message .= 'The event has been added to this episode.<br>';
 				}
 			}
 			$quality  = $this->isBadQuality($id);
 
 			if( !empty($quality) && ($quality['code']))
 			{
-				$this->flash_message= '<b>The quality of this biometry data is bad and not recommended for clinical use </b>: ('.$quality['reason'].')';
-				Yii::app()->user->setFlash('warning.quality', $this->flash_message);
+				$warning_flash_message .= '<li><b>The quality of this biometry data is bad and not recommended for clinical use </b>: ('.$quality['reason'].')</li>';
 			}
 			else
 			{
 				$quality  = $this->isBordelineQuality($id);
 				if( !empty($quality) && ($quality['code'])){
-					$this->flash_message= '<b>The quality of this biometry data is borderline </b>: ('.$quality['reason'].')';
-					Yii::app()->user->setFlash('warning.quality', $this->flash_message);
+					$warning_flash_message .= '<li><b>The quality of this biometry data is borderline </b>: ('.$quality['reason'].')</li>';
 				}
+			}
+
+			if (empty($this->iolRefValues)) {
+				$warning_flash_message .= "Missing IOL Measurement data<br>";
+			}else{
+				foreach ($this->iolRefValues as $measurementData) {
+					if (!empty($measurementData->{"iol_ref_values_left"})) {
+						$lens_left[] = $measurementData->{"lens_id"};
+					}
+					if (!empty($measurementData->{"iol_ref_values_right"})) {
+						$lens_right[] = $measurementData->{"lens_id"};
+					}
+				}
+			}
+
+			if (empty($lens_left) && empty($lens_right)) {
+				$warning_flash_message .= "<li>No lens options were received from device - Please calculate lenses on device and resend</li>";
+			}else{
+				if (empty($lens_left)) {
+					$warning_flash_message .= "<li>No lens options were received from device for left eye - Please calculate lenses on device and resend</li>";
+				} elseif (empty($lens_right)) {
+					$warning_flash_message .= "<li>No lens options were received from device for right eye - Please calculate lenses on device and resend</li>";
+				}
+			}
+
+
+			if($warning_flash_message != "") {
+				Yii::app()->user->setFlash('warning.data', "<ul>".$warning_flash_message."</ul>");
+			}
+			if($issue_flash_message != "") {
+				Yii::app()->user->setFlash('issue.data', "<ul>".$issue_flash_message."</ul>");
+			}
+			if($success_flash_message != "") {
+				Yii::app()->user->setFlash('success.data', "<ul>".$success_flash_message."</ul>");
 			}
 		}
 		else
 		{
 			Yii::app()->user->setFlash('issue.formula', $this->flash_message);
 		}
+
 	}
 
 	public function actionUpdate($id)
