@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
 	$(function() {
-		$( "#dialog-message" ).dialog({
+		$( "#disabled-manual-dialog-message" ).dialog({
 			modal: true,
 			buttons: {
 				Ok: function() {

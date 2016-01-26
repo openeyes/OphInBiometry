@@ -28,7 +28,7 @@ $this->beginContent('//patient/event_container');
 		)
 	));
 if($this->isManualEntryDisabled()) {
-	echo('<div id="dialog-message" title="Disabled manual biometry">
+	echo('<div id="disabled-manual-dialog-message" title="Disabled manual biometry">
 						<p>No new Biometry Events are available for this patient.
 						   Please generate a new event on your linked device first (e.g., IOL Master)
 						</p>
