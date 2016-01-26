@@ -102,7 +102,7 @@
 					<?php
 					if($this->is_auto)
 					{
-						echo '<span class="readonly-box">'.$element->{"delta_k_$side"}.'</span><span class="field-info">D</span>';
+						echo '<span class="readonly-box">';  if (($element->{'delta_k_'.$side}) > 0 ) echo '+'; echo $element->{"delta_k_$side"}.'</span><span class="field-info">D</span>';
 					}
 					else
 					{

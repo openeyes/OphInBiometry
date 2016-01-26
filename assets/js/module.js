@@ -1,5 +1,18 @@
 
 $(document).ready(function() {
+	$(function() {
+		$( "#dialog-message" ).dialog({
+			modal: true,
+			buttons: {
+				Ok: function() {
+					history.go(-1);
+					$("#create-form").hide();
+					$("#et_save").hide();
+					$(this).dialog("close");
+				}
+			}
+		});
+	});
 
 	handleButton($('#et_save'),function() {
 	});

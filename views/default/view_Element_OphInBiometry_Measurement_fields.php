@@ -70,7 +70,7 @@
 			<div class="field-info"><b>&Delta;K:</b></div>
 		</div>
 		<div class="large-5 column">
-			<div class="field-info" id="delta_k_<?php echo $side?>"><?php echo CHtml::encode($element->{'delta_k_'.$side}) ?>&nbsp;D
+			<div class="field-info" id="delta_k_<?php echo $side?>"><?php if (($element->{'delta_k_'.$side}) > 0 ) echo '+'; echo CHtml::encode($element->{'delta_k_'.$side}) ?>&nbsp;D
 				<?php
 				if(!$element->{"k_modified_$side"}) {
 					?>

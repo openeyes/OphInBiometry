@@ -47,10 +47,6 @@ class DefaultController extends BaseEventTypeController
 		// if we have 0 unlinked event we follow the manual process
 		if (sizeof($unlinkedEvents) == 0 || Yii::app()->request->getQuery("force_manual")=="1") {
 			Yii::app()->user->setFlash('issue.formula', $this->flash_message);
-			if($this->isManualEntryDisabled()) {
-				$this->flash_message = 'No new Biometry Events are available for this patient. Please generate a new event on your linked device first (e.g., IOL Master)';
-				Yii::app()->user->setFlash('warning.manualentrydisabled', $this->flash_message);
-			}
 			parent::actionCreate();
 		}
 		// we might need this later for automated linking process
