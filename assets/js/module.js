@@ -4,7 +4,8 @@ $(document).ready(function() {
 	var show_disable_manual_warning = false;
 	var sdmw = $('#show_disable_manual_warning').val();
 	if(sdmw ==1 ){
-		$("#create-form").hide();
+		$("#event-content").hide();
+		$(".sticky-wrapper-event-header").hide();
 		$("#et_save").hide();
 		show_disable_manual_warning = true;
 	}
