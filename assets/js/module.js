@@ -1,18 +1,35 @@
 
 $(document).ready(function() {
-	$(function() {
-		$( "#disabled-manual-dialog-message" ).dialog({
-			modal: true,
-			buttons: {
-				Ok: function() {
-					history.go(-1);
-					$("#create-form").hide();
-					$("#et_save").hide();
-					$(this).dialog("close");
-				}
-			}
+
+	var show_disable_manual_warning = false;
+	var sdmw = $('#show_disable_manual_warning').val();
+	if(sdmw ==1 ){
+		$("#create-form").hide();
+		$("#et_save").hide();
+		show_disable_manual_warning = true;
+	}
+
+	if(show_disable_manual_warning) {
+		var warning_message = 'No new biometry reports are available for this patient. Please generate a new event on your linked device first (e.g., IOL Master).';
+		var dialog_msg = '<div class="ui-dialog ui-widget ui-widget-content ui-corner-all dialog" id="dialog-msg" tabindex="-1" role="dialog" aria-labelledby="ui-id-1" style="outline: 0px; z-index: 10002; height: auto; width: 600px; top: 450px; left: 600px; display: block;">' +
+			'<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">' +
+			'<span id="ui-id-1" class="ui-dialog-title">No New Biometry Reports</span>' +
+			'</div><div id="site-and-firm-dialog" class="ui-dialog-content ui-widget-content" scrolltop="0" scrollleft="0" style="display: block; width: auto; min-height: 0px; height: auto;">' +
+			'<div class="alert-box alert with-icon" id="disabled-manual-dialog-message"> <strong>WARNING: ' + warning_message + ' </strong></div>' +
+			'<div style = "margin-top:20px; float:right">' +
+			'<input class="secondary small" id="prescription-yes" type="submit" name="yt0" style = "margin-right:10px" value="OK" onclick="goBack()">' +
+			'</div>';
+
+		var blackout_box = '<div id="blackout-box" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:black;opacity:0.6;z-index:10000">';
+
+		$(dialog_msg).prependTo("body");
+		$(blackout_box).prependTo("body");
+		$('div#blackout_box').css.opacity = 0.6;
+		$("input#prescription-no").focus();
+		$("input#prescription-yes").keyup(function (e) {
+			hide_dialog();
 		});
-	});
+	}
 
 	handleButton($('#et_save'),function() {
 	});
@@ -540,6 +557,19 @@ function Holladay1 (eyeMeasurements, iolConstants) {
 		return Numerator / Denominator;
 	};
 }
+
+function hide_dialog()
+{
+	$('#blackout-box').hide();
+	$('#dialog-msg').hide();
+
+}
+
+function goBack()
+{
+	window.history.back();
+}
+
 
 function SRKT (eyeMeasurements, iolConstants)
 {
