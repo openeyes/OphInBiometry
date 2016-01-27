@@ -7,6 +7,9 @@ class DefaultController extends BaseEventTypeController
 	public $iolRefValues = array();
 	public $selectionValues = array();
 	public $quality=0;
+	const BADCOMSNRLIMIT = 10;
+	const BORDERCOMSNRLIMIT = 15;
+	const ALDIFFONBOTHEYES = 0.3;
 
 	/**
 	 * @param Event $unlinkedEvent
@@ -132,18 +135,18 @@ class DefaultController extends BaseEventTypeController
 
 			if( !empty($quality) && ($quality['code']))
 			{
-				$warning_flash_message .= '<li><b>The quality of this biometry data is bad and not recommended for clinical use </b>: ('.$quality['reason'].')</li>';
+				$warning_flash_message .= '<li><b>The quality of this data is bad and not recommended for clinical use </b>: ('.$quality['reason'].')</li>';
 			}
 			else
 			{
 				$quality  = $this->isBordelineQuality($id);
 				if( !empty($quality) && ($quality['code'])){
-					$warning_flash_message .= '<li><b>The quality of this biometry data is borderline </b>: ('.$quality['reason'].')</li>';
+					$warning_flash_message .= '<li><b>The quality of this data is borderline </b>: ('.$quality['reason'].')</li>';
 				}
 			}
 
 			if (empty($this->iolRefValues)) {
-				$warning_flash_message .= "Missing IOL Measurement data<br>";
+				//$warning_flash_message .= "Missing IOL Measurement data<br>";
 			}else{
 				foreach ($this->iolRefValues as $measurementData) {
 					if (!empty($measurementData->{"iol_ref_values_left"})) {
@@ -318,25 +321,32 @@ class DefaultController extends BaseEventTypeController
 		$measurementValues = $this->getMeasurementData($id);
 		$measurementData = $measurementValues[0];
 
-		if (($measurementData->{'snr_left'}) < 1.6 || ($measurementData->{'snr_right'} < 1.6)) {
+		if (($measurementData->{'snr_left'}) < self::BADCOMSNRLIMIT || ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT)) {
 
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				if ($measurementData->{'snr_right'} < 1.6) {
-					$reason['reason'] = 'A composite SNR is less than 1.6 for right eye.';
-				} elseif ($measurementData->{'snr_left'} < 1.6) {
-					$reason['reason'] = 'A composite SNR is less than 1.6 for left eye.';
+				if(($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT))
+				{
+					$reason['reason'] = 'the composite SNR for both eyes is less than 10';
+				}
+				else
+				{
+					if ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) {
+						$reason['reason'] = 'the composite SNR for the right eye is less than 10';
+					} elseif ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT) {
+						$reason['reason'] = 'the composite SNR for the left eye is less than 10';
+					}
 				}
 			} else {
-				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < 1.6)) {
+				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'A composite SNR is less than 1.6 for right eye.';
-				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} < 1.6)) {
+					$reason['reason'] = 'the composite SNR for the right eye is less than 10';
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'A composite SNR is less than 1.6 for left eye.';
+					$reason['reason'] = 'the composite SNR for the left eye is less than 10';
 				}
 			}
-		} elseif (($measurementData->{'snr_min_left'}) < 1.5 || ($measurementData->{'snr_min_right'} < 1.5)) {
+		} /*elseif (($measurementData->{'snr_min_left'}) < 1.5 || ($measurementData->{'snr_min_right'} < 1.5)) {
 			if ($measurementData->{'eye_id'} == 3) {
 				if ($measurementData->{'snr_min_right'} < $measurementData->{'snr_min_left'}) {
 					$reason['code'] = 1;
@@ -354,7 +364,7 @@ class DefaultController extends BaseEventTypeController
 					$reason['reason'] = 'An individual SNR value was less than 1.5 for left eye - Actual value=' . $measurementData->{'snr_min_left'};
 				}
 			}
-		} elseif (($measurementData->{'axial_length_left'}) < 21 || ($measurementData->{'axial_length_right'} < 21)) {
+		}*/ elseif (($measurementData->{'axial_length_left'}) < 21 || ($measurementData->{'axial_length_right'} < 21)) {
 
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
@@ -388,24 +398,32 @@ class DefaultController extends BaseEventTypeController
 		$measurementValues = $this->getMeasurementData($id);
 		$measurementData = $measurementValues[0];
 
-		if (($measurementData->{'snr_left'}) < 15 || ($measurementData->{'snr_right'} < 15)) {
+		if (($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT || ($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT)) {
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				if ( ($measurementData->{'snr_right'} < 15)) {
-					$reason['reason'] = 'A composite SNR is less than 15 for right eye';
-				} elseif (($measurementData->{'snr_left'}) < 15) {
-					$reason['reason'] = 'A composite SNR is less than 15 for left eye';
+				if(($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT) && ($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT)
+				{
+					$reason['reason'] = 'the composite SNR for both eyes is less than 15';
 				}
+				else
+				{
+					if ( ($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT)) {
+						$reason['reason'] = 'the composite SNR for the right eye is less than 15';
+					} elseif (($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT) {
+						$reason['reason'] = 'the composite SNR for the left eye is less than 15';
+					}
+				}
+
 			} else {
-				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_right'} < 15)) {
+				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'A composite SNR is less than 15 for right eye';
-				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'}) < 15) {
+					$reason['reason'] = 'the composite SNR for the left eye is right than 15';
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'A composite SNR is less than 15 for left eye';
+					$reason['reason'] = 'the composite SNR for the left eye is less than 15';
 				}
 			}
-		} elseif (($measurementData->{'snr_min_left'}) < 2 || ($measurementData->{'snr_min_right'} < 2)) {
+		}/* elseif (($measurementData->{'snr_min_left'}) < 2 || ($measurementData->{'snr_min_right'} < 2)) {
 			if ($measurementData->{'eye_id'} == 3) {
 
 				if ($measurementData->{'snr_min_left'} < $measurementData->{'snr_min_right'}) {
@@ -427,7 +445,7 @@ class DefaultController extends BaseEventTypeController
 				}
 			}
 
-		} elseif (($measurementData->{'axial_length_left'}) < 22 || ($measurementData->{'axial_length_right'} < 22)) {
+		}*/ elseif (($measurementData->{'axial_length_left'}) < 22 || ($measurementData->{'axial_length_right'} < 22)) {
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
 				if ($measurementData->{'axial_length_right'} < 22) {
@@ -446,16 +464,16 @@ class DefaultController extends BaseEventTypeController
 			}
 		} elseif ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
 			if ($measurementData->{'eye_id'} == 3) {
-				if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= 3) {
+				if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= self::ALDIFFONBOTHEYES) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'The axial length is more than 3mm different between eyes';
+					$reason['reason'] = 'The difference between Axial Length for the left eye and right eye >= 0.3mm.';
 				}
 			}
 		} elseif ((($measurementData->{'axial_length_left'}) < ($measurementData->{'axial_length_right'}))) {
 			if ($measurementData->{'eye_id'} == 3) {
-				if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= 3) {
+				if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= self::ALDIFFONBOTHEYES) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'The axial length is more than 3mm different between eyes';
+					$reason['reason'] = 'The difference between Axial Length for the left eye and right eye >= 0.3mm.';
 				}
 			}
 		}
@@ -517,7 +535,7 @@ class DefaultController extends BaseEventTypeController
 			->where('`key`=:id', array(':id' => 'disable_manual_biometry'))
 			->queryRow();
 
-		if ($state['value'] == 'on') {
+		if ($state['value'] == 'off') {
 			return true;
 		}else {
 			return false;
