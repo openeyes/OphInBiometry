@@ -34,9 +34,7 @@ $this->beginContent('//patient/event_container', array());
 					<div class="data-label" style="margin-top: 1rem;">Surgeon:</div>
 				</div>
 				<div class="large-9 column end">
-					<div class="data-value"  style="margin-top: 1rem;">&nbsp;&nbsp;<b><?php echo (OphInBiometry_Surgeon::model()->findByAttributes(
-								array('id' => Element_OphInBiometry_IolRefValues::model()->findByAttributes(array('event_id' => $this->event->id))->surgeon_id)
-							)->name); ?></b></div>
+					<div class="data-value"  style="margin-top: 1rem;">&nbsp;&nbsp;<b><?php echo OphInBiometry_Imported_Events::model()->findByAttributes(array('event_id' => $this->event->id))->surgeon_name; ?></b></div>
 				</div>
 			</div>
 			<?php
