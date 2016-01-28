@@ -164,12 +164,12 @@ class DefaultController extends BaseEventTypeController
 			}
 
 			if (empty($lens_left) && empty($lens_right) && $this->getLensCalc($id,1) && $this->getLensCalc($id,2)) {
-				$warning_flash_message .= "<li>No lens options were received from device - Please calculate lenses on device and resend</li>";
+				$warning_flash_message .= "<li>No lens options are available for both eyes. Please recalculate lenses on the IOL Master device and resend</li>";
 			}else{
 				if (empty($lens_left) && $this->getLensCalc($id,1)) {
-					$warning_flash_message .= "<li>No lens options were received from device for left eye - Please calculate lenses on device and resend</li>";
+					$warning_flash_message .= "<li>No lens options are available for the left eye. Please recalculate lenses on the IOL Master device and resend</li>";
 				} elseif (empty($lens_right) && $this->getLensCalc($id,2)) {
-					$warning_flash_message .= "<li>No lens options were received from device for right eye - Please calculate lenses on device and resend</li>";
+					$warning_flash_message .= "<li>No lens options are available for the right eye. Please recalculate lenses on the IOL Master device and resend</li>";
 				}
 			}
 
