@@ -33,7 +33,13 @@ if($this->is_auto) {
 		<div class="data-label">Surgeon:</div>
 	</div>
 	<div class="large-9 column end">
-		<div class="data-value"><b><?php echo  OphInBiometry_Imported_Events::model()->findByAttributes(array('event_id' => $this->event->id))->surgeon_name; ?></b></div>
+		<div class="data-value"><b><?php
+				if(isset(Element_OphInBiometry_IolRefValues::model()->findByAttributes(array('event_id' => $this->event->id))->surgeon_id)){
+					echo(OphInBiometry_Surgeon::model()->findByAttributes(
+						array('id' => Element_OphInBiometry_IolRefValues::model()->findByAttributes(array('event_id' => $this->event->id))->surgeon_id)
+					)->name);
+				}
+				?></b></div>
 	</div>
 </div>
 <?php
