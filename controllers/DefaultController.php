@@ -163,12 +163,12 @@ class DefaultController extends BaseEventTypeController
 				}
 			}
 
-			if (empty($lens_left) && empty($lens_right)) {
+			if (empty($lens_left) && empty($lens_right) && $this->getLensCalc($id,1) && $this->getLensCalc($id,2)) {
 				$warning_flash_message .= "<li>No lens options were received from device - Please calculate lenses on device and resend</li>";
 			}else{
-				if (empty($lens_left)) {
+				if (empty($lens_left) && $this->getLensCalc($id,1)) {
 					$warning_flash_message .= "<li>No lens options were received from device for left eye - Please calculate lenses on device and resend</li>";
-				} elseif (empty($lens_right)) {
+				} elseif (empty($lens_right) && $this->getLensCalc($id,2)) {
 					$warning_flash_message .= "<li>No lens options were received from device for right eye - Please calculate lenses on device and resend</li>";
 				}
 			}
@@ -190,6 +190,36 @@ class DefaultController extends BaseEventTypeController
 
 	}
 
+	/**
+	 * @param $id
+	 * @param $eye
+	 * @return int
+	 */
+	public function getLensCalc($id,$eye){
+		$available =0;
+		$measurementValues = $this->getMeasurementData($id);
+		$measurementData = $measurementValues[0];
+		if($eye == 1)
+		{
+			if (($measurementData->{'axial_length_left'})>0 && ($measurementData->{'k1_left'})>0 && ($measurementData->{'k2_left'})>0)
+			{
+				$available =1;
+			}
+		}
+		elseif($eye == 2)
+		{
+			if (($measurementData->{'axial_length_right'})>0 && ($measurementData->{'k1_right'})>0 && ($measurementData->{'k2_right'})>0)
+			{
+				$available =1;
+			}
+		}
+		return $available;
+	}
+
+	/**
+	 * @param $id
+	 */
+
 	public function actionUpdate($id)
 	{
 		if($this->event != null &&  $this->event->id > 0) {
@@ -210,6 +240,9 @@ class DefaultController extends BaseEventTypeController
 		parent::actionUpdate($id);
 	}
 
+	/**
+	 * @param $id
+	 */
 	public function actionView($id)
 	{
 		if($this->event != null &&  $this->event->id > 0) {
