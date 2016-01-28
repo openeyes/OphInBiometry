@@ -150,8 +150,17 @@ class DefaultController extends BaseEventTypeController
 
 			$checkalqual  = $this->checkALQuality($id);
 			if(!empty($checkalqual) && ($checkalqual['code'])) {
-				$warning_flash_message .= '<li>'.$checkalqual['reason'].'</li>';
+				foreach($checkalqual['reason'] as $k=> $v){
+					$warning_flash_message .= '<li>'.$v.'</li>';
+				}
 			}
+
+			$checkaldiff  = $this->checkALDiff($id);
+			if(!empty($checkaldiff) && ($checkaldiff['code'])) {
+				$warning_flash_message .= '<li>'.$checkaldiff['reason'].'</li>';
+			}
+
+
 			if (!empty($this->iolRefValues)) {
 				foreach ($this->iolRefValues as $measurementData) {
 					if (!empty($measurementData->{"iol_ref_values_left"})) {
@@ -164,7 +173,7 @@ class DefaultController extends BaseEventTypeController
 			}
 
 			if (empty($lens_left) && empty($lens_right) && $this->getLensCalc($id,1) && $this->getLensCalc($id,2)) {
-				$warning_flash_message .= "<li>No lens options are available for both eyes. Please recalculate lenses on the IOL Master device and resend</li>";
+				$warning_flash_message .= "<li>No lens options are available for either eye. Please recalculate lenses on the IOL Master device and resend</li>";
 			}else{
 				if (empty($lens_left) && $this->getLensCalc($id,1)) {
 					$warning_flash_message .= "<li>No lens options are available for the left eye. Please recalculate lenses on the IOL Master device and resend</li>";
@@ -360,23 +369,23 @@ class DefaultController extends BaseEventTypeController
 
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				if(($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT))
+				if(($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT) && ($measurementData->{'snr_right'}) > 0 && ($measurementData->{'snr_left'}>0) )
 				{
 					$reason['reason'] = 'the composite SNR for both eyes is less than 10';
 				}
 				else
 				{
-					if ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) {
+					if ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT && $measurementData->{'snr_right'} >0 ) {
 						$reason['reason'] = 'the composite SNR for the right eye is less than 10';
-					} elseif ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT) {
+					} elseif ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT && $measurementData->{'snr_left'} >0) {
 						$reason['reason'] = 'the composite SNR for the left eye is less than 10';
 					}
 				}
 			} else {
-				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT)) {
+				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) && $measurementData->{'snr_right'} >0 ) {
 					$reason['code'] = 1;
 					$reason['reason'] = 'the composite SNR for the right eye is less than 10';
-				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT)) {
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT) && $measurementData->{'snr_left'}>0 ) {
 					$reason['code'] = 1;
 					$reason['reason'] = 'the composite SNR for the left eye is less than 10';
 				}
@@ -440,50 +449,68 @@ class DefaultController extends BaseEventTypeController
 
 		if (($measurementData->{'axial_length_left'}) < self::SHORTALLIMIT || ($measurementData->{'axial_length_right'} < self::SHORTALLIMIT)) {
 			if ($measurementData->{'eye_id'} == 3) {
-				$reason['code'] = 1;
-				if ($measurementData->{'axial_length_right'} < self::SHORTALLIMIT) {
-					$reason['reason'] = 'Right eye is short';
-				} elseif ($measurementData->{'axial_length_left'} < self::SHORTALLIMIT) {
-					$reason['reason'] = 'Left eye is short';
+
+
+				if (($measurementData->{'axial_length_right'} < self::SHORTALLIMIT) && ($measurementData->{'axial_length_right'} >0)) {
+					$reason['reason'][0] = 'Right eye is short'; $reason['code'] = 1;
+				}
+
+				if (($measurementData->{'axial_length_left'} < self::SHORTALLIMIT) && ($measurementData->{'axial_length_left'}) >0) {
+					$reason['reason'][1]= 'Left eye is short'; $reason['code'] = 1;
 				}
 			} else {
-				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'axial_length_right'} < self::SHORTALLIMIT)) {
+				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'axial_length_right'} < self::SHORTALLIMIT) && $measurementData->{'axial_length_right'} >0) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'Right eye is short';
+					$reason['reason'][2] = 'Right eye is short';
 				} elseif ($measurementData->{'eye_id'} == 1 && $measurementData->{'axial_length_left'} < self::SHORTALLIMIT) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'Left eye is short';
+					$reason['reason'][3] = 'Left eye is short';
 				}
 			}
-		}elseif (($measurementData->{'axial_length_left'}) > self::LONGALLIMIT || ($measurementData->{'axial_length_right'} > self::LONGALLIMIT)) {
+		}
+
+		if (($measurementData->{'axial_length_left'}) > self::LONGALLIMIT || ($measurementData->{'axial_length_right'} > self::LONGALLIMIT)) {
 			if ($measurementData->{'eye_id'} == 3) {
-				$reason['code'] = 1;
 				if ($measurementData->{'axial_length_right'} > self::LONGALLIMIT) {
-					$reason['reason'] = 'Right eye is long';
-				} elseif ($measurementData->{'axial_length_left'} > self::LONGALLIMIT) {
-					$reason['reason'] = 'Left eye is long';
+					$reason['reason'][4] = 'Right eye is long'; $reason['code'] = 1;
+				}
+				if ($measurementData->{'axial_length_left'} > self::LONGALLIMIT) {
+					$reason['reason'][5] = 'Left eye is long'; $reason['code'] = 1;
 				}
 			} else {
 				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'axial_length_right'} > self::LONGALLIMIT)) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'Right eye is long';
+					$reason['reason'][6] = 'Right eye is long';
 				} elseif ($measurementData->{'eye_id'} == 1 && $measurementData->{'axial_length_left'} > self::LONGALLIMIT) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'Left eye is long';
+					$reason['reason'][7] = 'Left eye is long';
 				}
 			}
-		} elseif ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
+		}
+
+		//echo '<pre>'; print_r($reason); die;
+		return $reason;
+	}
+
+	private function checkALDiff($id)
+	{
+		$reason = array();
+		$reason['code'] = 0;
+		$measurementValues = $this->getMeasurementData($id);
+		$measurementData = $measurementValues[0];
+
+		if ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
 			if ($measurementData->{'eye_id'} == 3) {
 				if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= self::ALDIFFONBOTHEYES) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'The difference between Axial Length for the left eye and right eye has a is 0.3mm or greater';
+					$reason['reason'] = 'The difference between Axial Length for the left eye and right eye has a is 0.3 mm or greater';
 				}
 			}
 		} elseif ((($measurementData->{'axial_length_left'}) < ($measurementData->{'axial_length_right'}))) {
 			if ($measurementData->{'eye_id'} == 3) {
 				if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= self::ALDIFFONBOTHEYES) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'The difference between Axial Length for the left eye and right eye has a is 0.3mm or greater';
+					$reason['reason'] = 'The difference between Axial Length for the left eye and right eye has a is 0.3 mm or greater';
 				}
 			}
 		}
