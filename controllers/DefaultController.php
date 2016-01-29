@@ -136,14 +136,14 @@ class DefaultController extends BaseEventTypeController
 			}
 			$quality  = $this->isBadQuality($id);
 
-			if( !empty($quality) && ($quality['code']))
+			if( !empty($quality) && (!empty($quality['reason'])))
 			{
 				$warning_flash_message .= '<li><b>The quality of this data is bad and not recommended for clinical use </b>: ('.$quality['reason'].')</li>';
 			}
 			else
 			{
 				$quality  = $this->isBordelineQuality($id);
-				if( !empty($quality) && ($quality['code'])){
+				if( !empty($quality) && (!empty($quality['reason']))){
 					$warning_flash_message .= '<li><b>The quality of this data is borderline </b>: ('.$quality['reason'].')</li>';
 				}
 			}
@@ -151,12 +151,14 @@ class DefaultController extends BaseEventTypeController
 			$checkalqual  = $this->checkALQuality($id);
 			if(!empty($checkalqual) && ($checkalqual['code'])) {
 				foreach($checkalqual['reason'] as $k=> $v){
-					$warning_flash_message .= '<li>'.$v.'</li>';
+					if(!empty($v)) {
+						$warning_flash_message .= '<li>' . $v . '</li>';
+					}
 				}
 			}
 
 			$checkaldiff  = $this->checkALDiff($id);
-			if(!empty($checkaldiff) && ($checkaldiff['code'])) {
+			if(!empty($checkaldiff) && (!empty($checkaldiff['reason']))) {
 				$warning_flash_message .= '<li>'.$checkaldiff['reason'].'</li>';
 			}
 
