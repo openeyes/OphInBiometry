@@ -371,23 +371,23 @@ class DefaultController extends BaseEventTypeController
 
 			if ($measurementData->{'eye_id'} == 3) {
 				$reason['code'] = 1;
-				if(($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT) && ($measurementData->{'snr_right'}) > 0 && ($measurementData->{'snr_left'}>0) )
+				if(($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT) && ($measurementData->{'snr_right'}) > 0 && ($measurementData->{'snr_left'}>0 && !$measurementData->{'al_modified_left'} && !$measurementData->{'al_modified_right'}) )
 				{
 					$reason['reason'] = 'the composite SNR for both eyes is less than 10';
 				}
 				else
 				{
-					if ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT && $measurementData->{'snr_right'} >0 ) {
+					if ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT && $measurementData->{'snr_right'} >0 && !$measurementData->{'al_modified_right'}) {
 						$reason['reason'] = 'the composite SNR for the right eye is less than 10';
-					} elseif ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT && $measurementData->{'snr_left'} >0) {
+					} elseif ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT && $measurementData->{'snr_left'} >0 && !$measurementData->{'al_modified_left'}) {
 						$reason['reason'] = 'the composite SNR for the left eye is less than 10';
 					}
 				}
 			} else {
-				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) && $measurementData->{'snr_right'} >0 ) {
+				if ($measurementData->{'eye_id'} == 2 && ($measurementData->{'snr_right'} < self::BADCOMSNRLIMIT) && $measurementData->{'snr_right'} >0 && !$measurementData->{'al_modified_right'} ) {
 					$reason['code'] = 1;
 					$reason['reason'] = 'the composite SNR for the right eye is less than 10';
-				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT) && $measurementData->{'snr_left'}>0 ) {
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} < self::BADCOMSNRLIMIT) && $measurementData->{'snr_left'}>0 && !$measurementData->{'al_modified_left'}) {
 					$reason['code'] = 1;
 					$reason['reason'] = 'the composite SNR for the left eye is less than 10';
 				}
@@ -410,25 +410,24 @@ class DefaultController extends BaseEventTypeController
 
 		if (($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT || ($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT)) {
 			if ($measurementData->{'eye_id'} == 3) {
-				$reason['code'] = 1;
-				if(($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT) && ($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT)
+				if((($measurementData->{'snr_right'} >0) && $measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT) && ($measurementData->{'snr_left'} >0 ) &&($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT && !$measurementData->{'al_modified_left'} && !$measurementData->{'al_modified_right'})
 				{
-					$reason['reason'] = 'the composite SNR for both eyes is less than 15';
+					$reason['reason'] = 'the composite SNR for both eyes is less than 15'; $reason['code'] = 1;
 				}
 				else
 				{
-					if ( ($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT)) {
-						$reason['reason'] = 'the composite SNR for the right eye is less than 15';
-					} elseif (($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT) {
-						$reason['reason'] = 'the composite SNR for the left eye is less than 15';
+					if ( $measurementData->{'snr_right'} >0 &&  $measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT && !$measurementData->{'al_modified_right'}) {
+						$reason['reason'] = 'the composite SNR for the right eye is less than 15'; $reason['code'] = 1;
+					} elseif ( $measurementData->{'snr_left'} >0 && ($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT && !$measurementData->{'al_modified_left'}) {
+						$reason['reason'] = 'the composite SNR for the left eye is less than 15'; $reason['code'] = 1;
 					}
 				}
 
 			} else {
-				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT)) {
+				if (($measurementData->{'eye_id'} == 2) && ($measurementData->{'snr_right'} >0) && ($measurementData->{'snr_right'} < self::BORDERCOMSNRLIMIT && !$measurementData->{'al_modified_right'})) {
 					$reason['code'] = 1;
-					$reason['reason'] = 'the composite SNR for the left eye is right than 15';
-				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT) {
+					$reason['reason'] = 'the composite SNR for the right eye is less than 15';
+				} elseif ($measurementData->{'eye_id'} == 1 && ($measurementData->{'snr_left'} >0) && ($measurementData->{'snr_left'}) < self::BORDERCOMSNRLIMIT && !$measurementData->{'al_modified_left'}) {
 					$reason['code'] = 1;
 					$reason['reason'] = 'the composite SNR for the left eye is less than 15';
 				}
