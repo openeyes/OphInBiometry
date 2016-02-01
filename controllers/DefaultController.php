@@ -503,15 +503,20 @@ class DefaultController extends BaseEventTypeController
 		if ((($measurementData->{'axial_length_left'}) > ($measurementData->{'axial_length_right'}))) {
 			if ($measurementData->{'eye_id'} == 3) {
 				if ((($measurementData->{'axial_length_left'}) - ($measurementData->{'axial_length_right'})) >= self::ALDIFFONBOTHEYES) {
-					$reason['code'] = 1;
-					$reason['reason'] = 'The difference between Axial Length for the left eye and right eye is 0.3mm or greater.';
+
+					if($measurementData->{'axial_length_left'}>0 && $measurementData->{'axial_length_right'}>0){
+						$reason['code'] = 1;
+						$reason['reason'] = 'The difference between Axial Length for the left eye and right eye is 0.3mm or greater.';
+					}
 				}
 			}
 		} elseif ((($measurementData->{'axial_length_left'}) < ($measurementData->{'axial_length_right'}))) {
 			if ($measurementData->{'eye_id'} == 3) {
 				if ((($measurementData->{'axial_length_right'}) - ($measurementData->{'axial_length_left'})) >= self::ALDIFFONBOTHEYES) {
-					$reason['code'] = 1;
-					$reason['reason'] = 'The difference between Axial Length for the left eye and right eye is 0.3mm or greater.';
+					if($measurementData->{'axial_length_left'}>0 && $measurementData->{'axial_length_right'}>0) {
+						$reason['code'] = 1;
+						$reason['reason'] = 'The difference between Axial Length for the left eye and right eye is 0.3mm or greater.';
+					}
 				}
 			}
 		}
