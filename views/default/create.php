@@ -16,21 +16,29 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
+$assetManager = Yii::app()->getAssetManager();
+$assetManager->registerScriptFile('js/libs/uri-1.10.2.js');
 $this->beginContent('//patient/event_container');
-	$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-		'id'=>'create-form',
-		'enableAjaxValidation'=>false,
-		'layoutColumns' => array(
-			'label' => 2,
-			'field' => 10
-		)
-	));
-		$this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form'=>'create-form'));
-		$this->displayErrors($errors);
-		$this->renderPartial('//patient/event_elements', array(
-			'form' => $form,
-			'disableOptionalElementActions' => true
-		));
-		$this->displayErrors($errors, true);
-	$this->endWidget();
+$form = $this->beginWidget('BaseEventTypeCActiveForm', array(
+	'id' => 'create-form',
+	'enableAjaxValidation' => false,
+	'layoutColumns' => array(
+		'label' => 2,
+		'field' => 10
+	)
+));
+$isManualEntryDisabled = 0;
+if ($this->isManualEntryDisabled()) {
+	$isManualEntryDisabled = 1;
+}
+echo('<input type="hidden" id="show_disable_manual_warning" value=' . $isManualEntryDisabled . '>');
+$this->event_actions[] = EventAction::button('Save', 'save', array('level' => 'save'), array('form' => 'create-form'));
+$this->displayErrors($errors);
+$this->renderPartial('//patient/event_elements', array(
+	'form' => $form,
+	'disableOptionalElementActions' => true
+));
+
+$this->displayErrors($errors, true);
+$this->endWidget();
 $this->endContent();

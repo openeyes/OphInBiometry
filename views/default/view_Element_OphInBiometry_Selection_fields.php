@@ -1,31 +1,73 @@
-
 <div class="element-data">
-	<div class="row data-row">
-		<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('lens_id_'.$side))?></div></div>
-		<div class="large-9 column end"><div class="data-value" id="lens_<?php echo $side?>"><?php echo $element->{'lens_'.$side} ? $element->{'lens_'.$side}->name : 'None'?></div></div>
-	</div>
-	<div class="row field-row">
-		<div class="large-3 column">
-			<div class="data-label">Description</div>
-		</div>
-		<div class="large-9 column">
-			<div class="data-value" id="type_<?php echo $side?>"><?php echo $element->{'lens_'.$side} ? $element->{'lens_'.$side}->description : 'None'?></div>
-		</div>
-	</div>
-	<div class="row field-row">
-		<div class="large-3 column">
-			<div class="data-label">A constant</div>
-		</div>
-		<div class="large-9 column">
-			<div class="data-value" id="acon_<?php echo $side?>"><?php echo (($element->{'lens_'.$side}) ? number_format($element->{'lens_'.$side}->acon,1) : 'None') ?></div>
-		</div>
-	</div>
-	<div class="row data-row">
-		<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('iol_power_'.$side))?></div></div>
-		<div class="large-9 column end"><div class="iolDisplay"><?php echo CHtml::encode($element->{'iol_power_'.$side})?></div></div>
-	</div>
-	<div class="row data-row">
-		<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction_'.$side))?></div></div>
-		<div class="large-9 column end"><div class="data-value" id="tr_<?php echo $side?>"><?php echo CHtml::encode($element->{'predicted_refraction_'.$side})?></div></div>
-	</div>
+    <?php
+    if (empty($element->{'lens_' . $side})) {
+        ?>
+        <div class="row data-row">
+            <div class="large-12 column">
+                <div
+                    class="field-info">
+                    <?php
+                    echo 'No selection has been made - use edit mode to select a lens.';
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    } else {
+        $data = OphInBiometry_Calculation_Formula::Model()->findAllByAttributes(
+            array(
+                'id' => $this->selectionValues[0]->{"formula_id_$side"},
+            ));
+        ?>
+        <div class="row data-row">
+            <div class="large-6 column">
+                <div
+                    class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('lens_id_' . $side)) ?></b>:
+                </div>
+            </div>
+            <div class="large-6 column end">
+                <div class="field-info iolDisplay"
+                     id="lens_<?php echo $side ?>"><?php echo $element->{'lens_' . $side} ? $element->{'lens_' . $side}->name : 'None' ?></div>
+            </div>
+        </div>
+        <div class="row data-row">
+            <div class="large-6 column">
+                <div class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('formula_id_' . $side)) ?>&nbsp;Used</b>:
+                </div>
+            </div>
+            <div class="large-6 column">
+                <div class="field-info"><?php  foreach ($data as $k => $v) { echo $v->{"name"}; break; }?>&nbsp;</div>
+            </div>
+        </div>
+        <div class="row field-row">
+            <div class="large-6 column">
+                <div class="field-info"><b>A constant</b>:</div>
+            </div>
+            <div class="large-6 column">
+                <div class="field-info"
+                     id="acon_<?php echo $side ?>"><?php echo(($element->{'lens_' . $side}) ? number_format($element->{'lens_' . $side}->acon, 1) : 'None') ?></div>
+            </div>
+        </div>
+        <div class="row data-row">
+            <div class="large-6 column">
+                <div
+                    class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('iol_power_' . $side)) ?></b>:</div>
+            </div>
+            <div class="large-6 column end">
+                <div class="field-info iolDisplay"><?php echo CHtml::encode(number_format((float)$element->{'iol_power_' . $side}, 2, '.', '')) ?></div>
+            </div>
+        </div>
+        <div class="row data-row">
+            <div class="large-6 column">
+                <div
+                    class="field-info"><b><?php echo CHtml::encode($element->getAttributeLabel('predicted_refraction_' . $side)) ?></b>:</div>
+            </div>
+            <div class="large-6 column end">
+                <div class="field-info"
+                     id="tr_<?php echo $side ?>"><?php echo CHtml::encode($element->{'predicted_refraction_' . $side}) ?></div>
+            </div>
+        </div>
+        <?php
+    }
+    ?>
 </div>

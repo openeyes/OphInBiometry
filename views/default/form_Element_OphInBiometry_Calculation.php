@@ -17,6 +17,13 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
+<style>
+	.readonly-div{
+		height: auto;
+		border: 1px solid #6b8aaa;
+		background-color: #dddddd;
+	}
+</style>
 
 	<div class="element-fields element-eyes row">
 		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
@@ -47,7 +54,24 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
+
+<div id="comments">
+	<span class="field-info">
+	<?php
+	if($this->is_auto)
+	{
+		echo '<b>Comments:</b><div class="readonly-div">'.$element->{"comments"}.'</div>';
+	}
+	else
+	{
+		echo $form->textField($element, 'comments', array('style' => 'width:1027px;'), null, array('label' => 4, 'field' => 200));
+	}
+	?>
+	</span>
+</div>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		if ($('section.Element_OphInBiometry_Measurement').find('.element-eye.right-eye').hasClass('inactive')) {
