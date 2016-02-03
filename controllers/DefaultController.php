@@ -112,12 +112,12 @@ class DefaultController extends BaseEventTypeController
 			}
 
 			if(($isKMod['left']) && ($isKMod['right'])) {
-				$warning_flash_message .= '<li>* K value for both eyes was entered manually. Use with caution.</li>';
+				$warning_flash_message .= '<li>K value for both eyes was entered manually. Use with caution.</li>';
 			}else {
 				if ($isKMod['left']) {
-					$warning_flash_message .= '<li>* K value for left eye was entered manually. Use with caution.</li>';
+					$warning_flash_message .= '<li>K value for left eye was entered manually. Use with caution.</li>';
 				} elseif ($isKMod['right']) {
-					$warning_flash_message .= '<li>* K value for right eye was entered manually. Use with caution.</li>';
+					$warning_flash_message .= '<li>K value for right eye was entered manually. Use with caution.</li>';
 				}
 			}
 
