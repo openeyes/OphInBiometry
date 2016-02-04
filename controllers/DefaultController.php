@@ -112,12 +112,12 @@ class DefaultController extends BaseEventTypeController
 			}
 
 			if(($isKMod['left']) && ($isKMod['right'])) {
-				$warning_flash_message .= '<li>* K value for both eyes was entered manually. Use with caution.</li>';
+				$warning_flash_message .= '<li>K value for both eyes was entered manually. Use with caution.</li>';
 			}else {
 				if ($isKMod['left']) {
-					$warning_flash_message .= '<li>* K value for left eye was entered manually. Use with caution.</li>';
+					$warning_flash_message .= '<li>K value for left eye was entered manually. Use with caution.</li>';
 				} elseif ($isKMod['right']) {
-					$warning_flash_message .= '<li>* K value for right eye was entered manually. Use with caution.</li>';
+					$warning_flash_message .= '<li>K value for right eye was entered manually. Use with caution.</li>';
 				}
 			}
 
@@ -538,6 +538,24 @@ class DefaultController extends BaseEventTypeController
 			}
 		}
 		return $closest;
+	}
+
+	public function orderIOLData($data){
+		// A simple bubble order (should work with just array_size/2)
+		for($j=0; $j<count($data["IOL"]); $j++) {
+			for ($i = count($data["IOL"]) - 1; $i > 0; $i--) {
+				if ($data["IOL"][$i] > $data["IOL"][$i - 1]) {
+					$temp = $data["IOL"][$i];
+					$data["IOL"][$i] = $data["IOL"][$i - 1];
+					$data["IOL"][$i - 1] = $temp;
+					$temp = $data["REF"][$i];
+					$data["REF"][$i] = $data["REF"][$i - 1];
+					$data["REF"][$i - 1] = $temp;
+				}
+			}
+		}
+
+		return $data;
 	}
 
 	/**
