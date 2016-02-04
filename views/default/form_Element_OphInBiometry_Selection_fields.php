@@ -198,7 +198,7 @@
                         foreach ($iolrefdata_left as $k => $v) {
                             foreach ($v as $key => $value) {
                                 if (!empty($value)) {
-                                    $iolData = json_decode($value, true);
+                                    $iolData = $this->orderIOLData(json_decode($value, true));
                                     $divid = $side . '_' . $k . '_' . $key;
                                     $found = 0;
                                     $closet = $this->getClosest($emmetropiadata['left'][$k][$key],$iolData['IOL']);
@@ -232,7 +232,7 @@
                         foreach ($iolrefdata_right as $k => $v) {
                             foreach ($v as $key => $value) {
                                 if (!empty($value)) {
-                                    $iolData = json_decode($value, true);
+                                    $iolData = $this->orderIOLData(json_decode($value, true));
                                     $divid = $side . '_' . $k . '_' . $key;
                                     $found = 0;
                                     $closet = $this->getClosest($emmetropiadata['right'][$k][$key],$iolData['IOL']);

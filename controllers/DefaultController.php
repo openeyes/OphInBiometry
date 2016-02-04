@@ -540,6 +540,24 @@ class DefaultController extends BaseEventTypeController
 		return $closest;
 	}
 
+	public function orderIOLData($data){
+		// A simple bubble order (should work with just array_size/2)
+		for($j=0; $j<count($data["IOL"]); $j++) {
+			for ($i = count($data["IOL"]) - 1; $i > 0; $i--) {
+				if ($data["IOL"][$i] > $data["IOL"][$i - 1]) {
+					$temp = $data["IOL"][$i];
+					$data["IOL"][$i] = $data["IOL"][$i - 1];
+					$data["IOL"][$i - 1] = $temp;
+					$temp = $data["REF"][$i];
+					$data["REF"][$i] = $data["REF"][$i - 1];
+					$data["REF"][$i - 1] = $temp;
+				}
+			}
+		}
+
+		return $data;
+	}
+
 	/**
 	 * @param $id
 	 * @return mixed
