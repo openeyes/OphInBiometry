@@ -33,6 +33,25 @@
         ?>
         <div class="row">
             <div class="large-12 column">
+                <div class="row field-row">
+                    <div class="large-4 column">
+                        <span class="field-info">Surgeon:</span>
+                    </div>
+                    <div class="large-8 column">
+                        <b><?php
+                        if(isset(Element_OphInBiometry_IolRefValues::model()->findByAttributes(array('event_id' => $this->event->id))->surgeon_id)){
+                            echo(OphInBiometry_Surgeon::model()->findByAttributes(
+                                array('id' => Element_OphInBiometry_IolRefValues::model()->findByAttributes(array('event_id' => $this->event->id))->surgeon_id)
+                            )->name);
+                        }
+                        ?></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 column">
                 <?php
                 $criteria = new CDbCriteria();
                 if ($side == "left") {
