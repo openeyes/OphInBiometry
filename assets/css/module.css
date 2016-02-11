@@ -18,13 +18,14 @@
  */
 /* line 1, ../sass/components/_selection.scss */
 .iolDisplay {
-  font-size: 18px;
+  font-size: 17px;
   background-color: #ffff66;
   border-color: gray;
   border-width: 1px;
   border-style: solid;
-  width: 60px;
-  padding-left: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  float: left;
 }
 
 /* line 17, ../sass/components/_event.scss */
@@ -54,24 +55,33 @@
 }
 
 .highlighted-lens {
-  border-top: 3px solid #FF9900;
-  border-left: 3px solid #FF9900;
-  border-right: 3px solid #FF9900;
+  border-top: 3px solid #FF9900 !important;
+  border-left: 3px solid #FF9900 !important;
+  border-right: 3px solid #FF9900 !important;
 }
 
 .highlighted-selection{
-    border-left: 3px solid #FF9900;
-    border-right: 3px solid #FF9900;
+  border-left: 3px solid #FF9900 !important;
+  border-right: 3px solid #FF9900 !important;
+  border-top:3px solid transparent;
+  margin-bottom:3px;
 }
 
 .highlighted-calculation{
-    border-left: 3px solid #FF9900;
-    border-right: 3px solid #FF9900;
+    border-left: 3px solid #FF9900 !important;
+    border-right: 3px solid #FF9900 !important;
     border-bottom: 3px solid #FF9900;
 }
 
 .disabled{
     opacity: 0.60;
+    border-bottom: 3px solid transparent;
+}
+.top-pad{
+  border-top:3px solid transparent;
+  border-left:3px solid transparent;
+  border-right:3px solid transparent;
+  border-bottom:3px solid transparent;
 }
 
 /* line 41, ../sass/components/_event.scss */
@@ -82,7 +92,7 @@
 /* line 46, ../sass/components/_event.scss */
 input[type="text"] {
   display: inline-block;
-  width: 4em;
+  width: 3.5em;
 }
 
 /* line 51, ../sass/components/_event.scss */
@@ -115,4 +125,38 @@ label.rse_d_left, label.rse_d_right {
 /* line 73, ../sass/components/_event.scss */
 .element-header.left-side {
   margin-left: 14.5em;
+}
+
+tr:hover,tr.even:hover, tr:nth-of-type(even):hover, tr.alt.hover {
+  border:0px solid #FF9900;
+  background: #FFFFE0;
+}
+
+.highlighted,tr:nth-of-type(even).highlighted {
+  background-color : #FF9900;
+}
+
+.readonly-box  {
+  background-color: #dddddd;
+  padding: 4px 6px;
+  border: 1px solid #6b8aaa;
+  margin: 0;
+  font-size:small;
+  border-radius: 3px;
+}
+
+.box-margin  {
+  margin-left: 40px;
+  display: block;
+  min-width: 55px;
+}
+
+.readonly-div{
+  height: auto;
+  border: 1px solid #6b8aaa;
+  background-color: #dddddd;
+  width: 1025px;
+}
+.ui-dialog-titlebar-close {
+  visibility: hidden;
 }

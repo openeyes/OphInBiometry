@@ -1,7 +1,48 @@
 
 $(document).ready(function() {
 
+	var show_disable_manual_warning = false;
+	var sdmw = $('#show_disable_manual_warning').val();
+	if(sdmw ==1 ){
+		$("#event-content").hide();
+		$(".sticky-wrapper-event-header").hide();
+		$("#et_save").hide();
+		show_disable_manual_warning = true;
+	}
+
+	if(show_disable_manual_warning) {
+		var warning_message = 'No new biometry reports are available for this patient. Please generate a new event on your linked device first (e.g., IOL Master).';
+		var dialog_msg = '<div class="ui-dialog ui-widget ui-widget-content ui-corner-all dialog" id="dialog-msg" tabindex="-1" role="dialog" aria-labelledby="ui-id-1" style="outline: 0px; z-index: 10002; height: auto; width: 600px; top: 450px; left: 600px; display: block;">' +
+			'<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">' +
+			'<span id="ui-id-1" class="ui-dialog-title">No New Biometry Reports</span>' +
+			'</div><div id="site-and-firm-dialog" class="ui-dialog-content ui-widget-content" scrolltop="0" scrollleft="0" style="display: block; width: auto; min-height: 0px; height: auto;">' +
+			'<div class="alert-box alert with-icon" id="disabled-manual-dialog-message"> <strong>WARNING: ' + warning_message + ' </strong></div>' +
+			'<div style = "margin-top:20px; float:right">' +
+			'<input class="secondary small" id="prescription-yes" type="submit" name="yt0" style = "margin-right:10px" value="OK" onclick="goBack()">' +
+			'</div>';
+
+		var blackout_box = '<div id="blackout-box" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:black;opacity:0.6;z-index:10000">';
+
+		$(dialog_msg).prependTo("body");
+		$(blackout_box).prependTo("body");
+		$('div#blackout_box').css.opacity = 0.6;
+		$("input#prescription-no").focus();
+		$("input#prescription-yes").keyup(function (e) {
+			hide_dialog();
+		});
+	}
+
 	handleButton($('#et_save'),function() {
+	});
+
+	$('input[id^="iolrefrad-"]').click(function(event) {
+		var id = event.target.id;
+	//	alert ('radio  -  ' + id);
+		id = id.split("-").pop();
+		var d = id.split('__');
+		var s = d[0].split('_');
+		$("#Element_OphInBiometry_Selection_iol_power_"+s[0]).val($("#iolval-"+d[0]+"__"+d[1]).val());
+		$("#Element_OphInBiometry_Selection_predicted_refraction_"+s[0]).val($("#refval-"+d[0]+"__"+d[1]).val());
 	});
 
 	handleButton($('#et_cancel'),function(e) {
@@ -132,14 +173,26 @@ $(document).ready(function() {
 
 	$('#Element_OphInBiometry_Selection_lens_id_left').die('change').live('change',function() {
 		update('left');
+		updateIolRefTable('left');
 	})
 
 	$('#Element_OphInBiometry_Selection_lens_id_right').die('change').live('change',function() {
 		update('right');
+		updateIolRefTable('right');
+	})
+
+	$('#Element_OphInBiometry_Selection_formula_id_left').die('change').live('change',function() {
+		updateIolRefTable('left');
+	})
+	$('#Element_OphInBiometry_Selection_formula_id_right').die('change').live('change',function() {
+		updateIolRefTable('right');
 	})
 
 	renderCalculatedValues('left');
 	renderCalculatedValues('right');
+
+	updateIolRefRow('left');
+	updateIolRefRow('right');
 
 });
 
@@ -212,6 +265,81 @@ function updateBiometryData(side)
 	}
 }
 
+function updateIolRefRow(side) {
+
+	$('#Element_OphInBiometry_Selection_lens_id_' + side + ' option').each(function () {
+		var lensid = $(this).attr('value');
+		$('#Element_OphInBiometry_Selection_formula_id_' + side + ' option').each(function () {
+			var formulaid = $(this).attr('value');
+
+			if (!isNaN(parseInt(lensid)) && !isNaN(parseInt(formulaid))) {
+
+				var trstr = '#' + side + '_' + lensid + '_' + formulaid + ' tr';
+				$(trstr).each(function (i, el) {
+
+					var elem = $(el);
+					var rowstr = '#iolreftr-' + side + '_' + lensid + '_' + formulaid + '__';
+					var rowsrad = '#iolrefrad-' + side + '_' + lensid + '_' + formulaid + '__';
+					var iolvalstr = '#iolval-' + side + '_' + lensid + '_' + formulaid + '__';
+					var refvalstr = '#refval-' + side + '_' + lensid + '_' + formulaid + '__';
+
+					$(rowstr + i).click(function () {
+
+						$("#Element_OphInBiometry_Selection_iol_power_"+side).val($(iolvalstr+i).val());
+						$("#Element_OphInBiometry_Selection_predicted_refraction_"+side).val($(refvalstr+i).val());
+						$("#iol_power_"+side).text($(iolvalstr+i).val());
+						$("#predicted_refraction_"+side).text($(refvalstr+i).val());
+
+						for (j = 0; j < $(trstr).length; j++) {
+							if (i == j) {
+								//alert('clicked'+ rowstr + j);
+								$(rowstr + j).addClass("highlighted");
+								//$('#iolreftr-left_6_1__' + j).css("background-color", "#FFFFE0");
+								$(rowsrad + j).attr('checked', true);
+							}
+							else
+							{
+								$(rowstr + j).removeClass("highlighted");
+								$(rowsrad + j).attr('checked', false);
+							}
+						}
+					});
+				});
+			}
+
+		});
+	});
+}
+
+function updateIolRefTable(side) {
+
+	var l_id = ($('#Element_OphInBiometry_Selection_lens_id_' + side + ' option:selected').val());
+	var f_id = ($('#Element_OphInBiometry_Selection_formula_id_' + side + ' option:selected').val());
+	if (side == 'left') {
+		$('table[id^="left_"]').hide();
+		$('span[id^="emmetropia_left_"]').hide();
+		$('span[id^="aconstant_left_"]').hide();
+	}
+
+	if (side == 'right') {
+		$('table[id^="right_"]').hide();
+		$('span[id^="emmetropia_right_"]').hide();
+		$('span[id^="aconstant_right_"]').hide();
+	}
+
+	if (!isNaN(parseInt(l_id)) && !isNaN(parseInt(f_id))) {
+		var swtb = side + '_' + l_id + '_' + f_id;
+		var swsn = 'emmetropia_'+side + '_' + l_id + '_' + f_id;
+		var asn = 'aconstant_'+side + '_' + l_id + '_' + f_id;
+		$('table[id^=' + swtb + ']').show();
+		$('span[id^=' + swsn + ']').show();
+		$('span[id^=' + asn + ']').show();
+	}
+}
+
+
+
+
 function updateIolData(index,side) {
 
 	var acon = document.getElementById('acon_'+side);
@@ -219,10 +347,9 @@ function updateIolData(index,side) {
 	var type = document.getElementById('type_'+side);
 	var position = document.getElementById('position_'+side);
 	var comments = document.getElementById('comments_'+side);
-
 	if (typeof(OphInBioemtry_lens_types[index]) != 'undefined') {
 		if (acon) {
-			acon.innerHTML = OphInBioemtry_lens_types[index].acon.toFixed(1);
+			acon.innerHTML = OphInBioemtry_lens_types[index].acon.toFixed(2);
 		}
 
 		if(sf) {
@@ -246,6 +373,8 @@ function updateIolData(index,side) {
 	}
      */
 
+	updateIolRefTable('left');
+	updateIolRefTable('right');
 }
 
 function updateSuggestedPowerTable(side)
@@ -429,6 +558,19 @@ function Holladay1 (eyeMeasurements, iolConstants) {
 		return Numerator / Denominator;
 	};
 }
+
+function hide_dialog()
+{
+	$('#blackout-box').hide();
+	$('#dialog-msg').hide();
+
+}
+
+function goBack()
+{
+	window.history.back();
+}
+
 
 function SRKT (eyeMeasurements, iolConstants)
 {

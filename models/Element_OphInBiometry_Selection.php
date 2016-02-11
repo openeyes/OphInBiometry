@@ -64,7 +64,7 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('event_id, eye_id, iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right, lens_id_left, lens_id_right', 'safe'),
+			array('event_id, eye_id, iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right, lens_id_left, lens_id_right ,formula_id_left, formula_id_right', 'safe'),
 			// The following rule is used by search().
 			array('iol_power_left, predicted_refraction_left, iol_power_right, predicted_refraction_right', 'match', 'pattern'=>'/([0-9]*?)(\.[0-9]{0,2})?/'),
 			array('iol_power_left, predicted_refraction_left','requiredIfSide', 'side' => 'left'),
@@ -73,10 +73,57 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 			array('iol_power_right', 'checkNumericRangeIfSide', 'side' => 'right', 'max' => 40, 'min' => -10),
 			array('predicted_refraction_left', 'checkNumericRangeIfSide', 'side' => 'left', 'max' => 10, 'min' => -10),
 			array('predicted_refraction_right', 'checkNumericRangeIfSide', 'side' => 'right', 'max' => 10, 'min' => -10),
+			array('lens_id_left', 'checkSelectedLensFormula', 'selectData'=>'left_lens'),
+			array('formula_id_left', 'checkSelectedLensFormula', 'selectData'=>'left_formula'),
+			array('lens_id_right', 'checkSelectedLensFormula', 'selectData'=>'right_lens'),
+			array('formula_id_right', 'checkSelectedLensFormula', 'selectData'=>'right_formula'),
 
 			// Please remove those attributes that should not be searched.
 			array('id, event_id ', 'safe', 'on' => 'search'),
 		);
+	}
+
+	/**
+	 * @param $attribute
+	 * @param $params
+	 */
+	public function checkSelectedLensFormula($attribute, $params)
+	{
+		if(count(OphInBiometry_Imported_Events::model()->findAllByAttributes(array('event_id' => $this->event_id)))>0)
+		{
+			if ($params['selectData'] == "left_lens") {
+				if (((empty($this->formula_id_left)) && ((!empty($this->lens_id_left))))
+					|| ((!empty($this->formula_id_left)) && ((empty($this->lens_id_left))))
+				) {
+					if (empty($this->lens_id_left))
+						$this->addError('lens_id_left', "Lens and Formula must be selected or left blank (Left side).");
+				}
+			} elseif ($params['selectData'] == "left_formula") {
+				if (((empty($this->formula_id_left)) && ((!empty($this->lens_id_left))))
+					|| ((!empty($this->formula_id_left)) && ((empty($this->lens_id_left))))
+				) {
+
+					if (empty($this->formula_id_left))
+						$this->addError('formula_id_left', "Lens and Formula must be selected or left blank (Left side).");
+				}
+			} elseif ($params['selectData'] == "right_lens") {
+				if (((empty($this->formula_id_right)) && ((!empty($this->lens_id_right))))
+					|| ((!empty($this->formula_id_right)) && ((empty($this->lens_id_right))))
+				) {
+					if (empty($this->lens_id_right))
+						$this->addError('lens_id_right', "Lens and Formula must be selected or left blank (Right side).");
+
+				}
+
+			} elseif ($params['selectData'] == "right_formula") {
+				if (((empty($this->formula_id_right)) && ((!empty($this->lens_id_right))))
+					|| ((!empty($this->formula_id_right)) && ((empty($this->lens_id_right))))
+				) {
+					if (empty($this->lens_id_right))
+						$this->addError('formula_id_right', "Lens and Formula must be selected or left blank (Right side).");
+				}
+			}
+		}
 	}
 
 	/**
@@ -88,7 +135,6 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 		// class name for the relations automatically generated below.
 		return array(
 			'element_type' => array(self::HAS_ONE, 'ElementType', 'id','on' => "element_type.class_name='".get_class($this)."'"),
-			'eventType' => array(self::BELONGS_TO, 'EventType', 'event_type_id'),
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
@@ -113,6 +159,8 @@ class Element_OphInBiometry_Selection extends SplitEventTypeElement
 			'lens_id' => 'Lens',
 			'lens_id_right' => 'Lens',
 			'lens_id_left' => 'Lens',
+			'formula_id_right' => 'Formula',
+			'formula_id_left' => 'Formula',
 
 		);
 	}

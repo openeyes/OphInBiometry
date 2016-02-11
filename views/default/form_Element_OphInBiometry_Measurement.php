@@ -18,6 +18,20 @@
  */
 ?>
 
+<?php
+
+	if($element->event != null &&  $element->event->id > 0) {
+		$iolRefValues = Element_OphInBiometry_IolRefValues::Model()->findAllByAttributes(
+			array(
+				'event_id' => $element->event->id
+			));
+	}
+	else
+	{
+		$iolRefValues = array();
+	}
+?>
+
 <section class="element <?php echo $element->elementType->class_name?>"
 	data-element-type-id="<?php echo $element->elementType->id?>"
 	data-element-type-class="<?php echo $element->elementType->class_name?>"
@@ -25,13 +39,15 @@
 	data-element-display-order="<?php echo $element->elementType->display_order?>">
 	<div class="element-fields element-eyes row">
 		<?php echo $form->hiddenInput($element, 'eye_id', false, array('class' => 'sideField')); ?>
-		<div id="right-eye-lens" class="element-eye right-eye left side column  <?php if (!$element->hasRight()) { ?> inactive<?php } ?>" onClick="switchSides($(this));" data-side="right">
+		<div id="right-eye-lens" class="element-eye right-eye top-pad left side column  <?php if (!$element->hasRight()) {
+    ?> inactive<?php 
+} ?>" onClick="switchSides($(this));" data-side="right">
 			<div class="element-header right-side">
-				<h4>Right side</h4>
+				<h4><b>RIGHT</b></h4>
 			</div>
 			<div class="active-form">
 				<a href="#" class="icon-remove-side remove-side">Remove side</a>
-				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'right', 'element' => $element, 'form' => $form, 'data' => $data, 'measurementInput' => $iolRefValues)); ?>
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
@@ -41,13 +57,15 @@
 				</div>
 			</div>
 		</div>
-		<div id="left-eye-lens" class="element-eye left-eye right side column <?php if (!$element->hasLeft()) { ?> inactive<?php } ?>" onClick="switchSides($(this));" data-side="left">
+		<div id="left-eye-lens" class="element-eye left-eye top-pad right side column <?php if (!$element->hasLeft()) {
+    ?> inactive<?php 
+} ?>" onClick="switchSides($(this));" data-side="left">
 			<div class="element-header left-side">
-				<h4>Left side</h4>
+				<h4><b>LEFT</b></h4>
 			</div>
 			<div class="active-form">
 				<a href="#" class="icon-remove-side remove-side">Remove side</a>
-				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data)); ?>
+				<?php $this->renderPartial('form_Element_OphInBiometry_Measurement_fields', array('side' => 'left', 'element' => $element, 'form' => $form, 'data' => $data, 'measurementInput' => $iolRefValues)); ?>
 			</div>
 			<div class="inactive-form">
 				<div class="add-side">
