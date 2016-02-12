@@ -14,10 +14,12 @@
         </div>
         <?php
     } else {
-        $data = OphInBiometry_Calculation_Formula::Model()->findAllByAttributes(
-            array(
-                'id' => $this->selectionValues[0]->{"formula_id_$side"},
-            ));
+		if($this->selectionValues){
+			$data = OphInBiometry_Calculation_Formula::Model()->findAllByAttributes(
+				array(
+					'id' => $this->selectionValues[0]->{"formula_id_$side"},
+				));
+		}
         ?>
         <div class="row data-row">
             <div class="large-6 column">
