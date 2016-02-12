@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="large-6 column">
-                <div class="field-info"><?php  foreach ($data as $k => $v) { echo $v->{"name"}; break; }?>&nbsp;</div>
+                <div class="field-info"><?php  if($data){foreach ($data as $k => $v) { echo $v->{"name"}; break; }}?>&nbsp;</div>
             </div>
         </div>
         <div class="row field-row">
